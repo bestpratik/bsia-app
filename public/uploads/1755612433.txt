@@ -1,0 +1,48 @@
+Tasks - 13-08-2025
+==================
+1. Add role column to users table - set default user
+2. Create Model - Course with Migrations
+3. List/Create/Edit/Show/Change Status
+4. Fields - 
+			id
+			title - string
+			slug - string (auto)
+			short_description - text - nullable
+			about_course - text - nullable (Editor)
+			why_join_the_course - text - nullable (Editor)
+			instructor_name - string - nullable
+			instructor_designation - string - nullable
+			instructor_details - text - nullable (Editor)
+			mrp - decimal - default(0.00)
+			sellable_price - decimal - default(0.00),
+			is_popular - tinyInt - default 0 - 0/1,
+			show_on_home - tinyInt - default 0 - 0/1,
+			featured_image - string - nullable,
+			is_certificate - tinyInt - default 0 - 0/1,
+			certificate_file - string - nullable,
+			language - string - nullable,
+			status - tinyInt - default 0 - 0/1,
+			order_no - integer 
+			created_at
+			updated_at
+
+5. Create Model - CourseModules with Migrations
+6. Show Under Course (List/Create/Edit/Show/Change Status)
+7. Fields: 
+		course_id - FK,
+		name - string, 
+		description - text - nullable,
+		order_no - integer
+		status - tinyInt - default 0 - 0/1,
+
+8. Create Model - CourseLessons with Migrations
+9. Fields
+		module_id - FK, 
+		title - nullable, 
+		type (enum: 'video', 'text', quiz, 'downloadable'), 
+		content - nullable, 
+		video_url - nullable, 
+		downloadable_file - nullable, 
+		order_no - integer
+
+10. Show under Modules (List/Create/Edit/Show/Change Status)
