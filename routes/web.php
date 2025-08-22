@@ -27,8 +27,8 @@ Route::middleware('auth')->group(function () {
 
 //Course section
 Route::get('course', [CourseController::class, 'index'])->name('course');
-Route::get('create-course', [CourseController::class, 'create'])->name('create.course');
-Route::post('save-course', [CourseController::class, 'store'])->name('save.course');
+Route::get('course-create', [CourseController::class, 'create'])->name('create.course');
+Route::post('course-save', [CourseController::class, 'store'])->name('save.course');
 Route::get('/course/{id}', [CourseController::class, 'show'])->name('show.course');
 Route::patch('/course/{id}/status', [CourseController::class, 'toggleStatus'])->name('course.toggleStatus');
 Route::get('/course/{id}/edit', [CourseController::class, 'edit'])->name('edit.course');
@@ -37,26 +37,19 @@ Route::delete('/course/{id}/delete', [CourseController::class, 'destroy'])->name
 
 
 //Course Module section
-Route::get('coursemodules', [CourseModuleController::class, 'index'])->name('coursemodules');
-Route::get('create-coursemodules', [CourseModuleController::class, 'create'])->name('create.coursemodules');
-Route::post('save-coursemodules', [CourseModuleController::class, 'store'])->name('save.coursemodules');
-Route::get('/coursemodules/{id}', [CourseModuleController::class, 'show'])->name('show.coursemodules');
-Route::patch('/coursemodules/{id}/status', [CourseModuleController::class, 'toggleStatus'])->name('coursemodules.toggleStatus');
-Route::get('/coursemodules/{id}/edit', [CourseModuleController::class, 'edit'])->name('edit.coursemodules');
-Route::put('/coursemodules/{id}/update', [CourseModuleController::class, 'update'])->name('update.coursemodules');
-Route::delete('/coursemodules/{id}/delete', [CourseModuleController::class, 'destroy'])->name('delete.coursemodules');
+Route::post('/course-modules', [CourseModuleController::class, 'store'])->name('course-modules.store');
+Route::put('/course-modules/{id}', [CourseModuleController::class, 'update'])->name('course-modules.update');
+Route::delete('/course-modules/{id}/delete', [CourseModuleController::class, 'destroy'])->name('course-modules.destroy');
+Route::get('/coursemodules/{id}/show', [CourseModuleController::class, 'show'])->name('show.coursemodules');
+
 
 //Course Lesson section
-Route::get('courselessons', [CourseLessonController::class, 'index'])->name('courselessons');
-Route::get('create-courselessons', [CourseLessonController::class, 'create'])->name('create.courselessons');
-Route::post('save-courselessons', [CourseLessonController::class, 'store'])->name('save.courselessons');
-Route::get('/courselessons/{id}', [CourseLessonController::class, 'show'])->name('show.courselessons');
-Route::patch('/courselessons/{id}/status', [CourseLessonController::class, 'toggleStatus'])->name('courselessons.toggleStatus');
-Route::get('/courselessons/{id}/edit', [CourseLessonController::class, 'edit'])->name('edit.courselessons');
-Route::put('/courselessons/{id}/update', [CourseLessonController::class, 'update'])->name('update.courselessons');
-Route::delete('/courselessons/{id}/delete', [CourseLessonController::class, 'destroy'])->name('delete.courselessons');
+Route::post('/course-lessons', [CourseLessonController::class, 'store'])->name('course-lessons.store');
+Route::put('/course-lessons/{id}', [CourseLessonController::class, 'update'])->name('course-lessons.update');
+Route::delete('/course-lessons/{id}/delete', [CourseLessonController::class, 'destroy'])->name('course-lessons.destroy');
+Route::get('/courselessons/{id}/show', [CourseLessonController::class, 'show'])->name('show.courselessons');
 
 
 // Route::get('/', [FrontController::class, 'home'])->name('home');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

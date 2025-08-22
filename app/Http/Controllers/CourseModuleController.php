@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseLesson;
 use App\Models\CourseModules;
 use Illuminate\Http\Request;
 
@@ -10,93 +11,63 @@ class CourseModuleController extends Controller
 {
     public function index()
     {
-        $coursemod = CourseModules::all();
-        return view('admin.coursemodules.index', compact('coursemod'));
-    }
-
-    public function create()
-    {
-        $course = Course::all();
-        return view('admin.coursemodules.create', compact('course'));
+        $module = CourseModules::all();
+        return view('admin.coursemodules.index', compact('module'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'nullable|string|max:255',
+        $validated = $request->validate([
             'course_id' => 'required|exists:courses,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'order_no' => 'required|integer',
+            'status' => 'nullable|boolean',
         ]);
 
-        $coursemod = new CourseModules;
+        $module = new CourseModules;
+        $module->course_id = $request->course_id;
+        $module->name = $request->name;
+        $module->description = $request->description;
+        $module->order_no = $request->order_no;
+        $module->status = $request->status ? 1 : 0;
+        $module->save();
 
-        $coursemod->course_id = $request->course_id; 
-        $coursemod->name = $request->name;
-        $coursemod->description = $request->description;
-        $coursemod->status = $request->status;
-        $coursemod->order_no = $request->order_no;
-        $coursemod->created_at = date("Y-m-d H:i:s");
-        $coursemod->updated_at = null;
-
-        $coursemod->save();
-        return redirect('coursemodules')->with('success', 'Course Module created successfully!');
+        return response()->json(['message' => 'Course Module Form has been submitted successfully!', 'module'  => $module]);
     }
 
     public function show($id)
     {
-        $coursemod = CourseModules::find($id);
-        return view('admin.coursemodules.show', compact('coursemod'));
-    }
-
-    public function toggleStatus($id)
-    {
-        $coursemod = CourseModules::find($id);
-
-    if (!$coursemod) {
-        return redirect('coursemodules')->with('error', 'Course Module not found.');
-    }
-
-    $coursemod->status = !$coursemod->status; 
-        $coursemod->save();
-
-        return redirect('coursemodules')->with('success', 'Course Module status updated successfully.');
-    }
-
-    public function edit($id)
-    {
-        $coursemod = CourseModules::find($id);
-        $course = Course::all();
-        return view('admin.coursemodules.edit', compact('coursemod', 'course'));
+        $module = CourseModules::find($id);
+        $courseLesson = CourseLesson::where('course_module_id', $id)->get();
+        return view('admin.coursemodules.show', compact('module', 'courseLesson'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'nullable|string|max:255',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'order_no' => 'nullable|integer',
+            'status' => 'nullable|boolean'
         ]);
 
-        $coursemod = CourseModules::find($id);
+        $module = CourseModules::findOrFail($id);
+        $module->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? null,
+            'order_no' => $validated['order_no'] ?? null,
+            'status' => $request->has('status') ? 1 : 0
+        ]);
 
-        $coursemod->course_id = $request->course_id;
-        $coursemod->name = $request->name;
-        $coursemod->description = $request->description;
-        $coursemod->status = $request->status;
-        $coursemod->order_no = $request->order_no;
-        $coursemod->created_at = date("Y-m-d H:i:s");
-        $coursemod->updated_at = null;
-
-        $coursemod->update();
-        return redirect('coursemodules')->with('success', 'Course Module updated successfully!');
+        return response()->json(['message' => 'Course Module Form has been updated successfully!', 'module'  => $module]);
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $coursemod = CourseModules::find($id);
-        if($coursemod){
-            $coursemod->delete();
-            return redirect('coursemodules')->with('success', 'Course Module Deleted successfully');
-        }else{
-            return redirect('coursemodules')->with('success', 'No Course Module Deleted successfully');
+        $module = CourseModules::findOrFail($id);
+        $module->delete();
 
-        }
+        return response()->json(['message' => 'Course Module Form has been deleted successfully!']);
     }
 }

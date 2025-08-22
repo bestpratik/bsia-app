@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseModules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -32,7 +33,10 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'mrp' => 'required|numeric',
+            'sellable_price' => 'required|numeric',
+            'order_no' => 'required|integer'
         ]);
 
         $course = new Course;
@@ -80,8 +84,10 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::find($id);
-        return view('admin.course.show', compact('course'));
+        $course = Course::findOrFail($id);
+        $courseModules = CourseModules::where('course_id', $id)->get();
+        // dd($courseModules);
+        return view('admin.course.show', compact('course', 'courseModules'));
     }
 
     public function toggleStatus($id)
@@ -109,7 +115,10 @@ class CourseController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'mrp' => 'required|numeric',
+            'sellable_price' => 'required|numeric',
+            'order_no' => 'required|integer',
         ]);
 
         $course = Course::find($id);

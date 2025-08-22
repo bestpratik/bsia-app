@@ -72,11 +72,17 @@
                     <label class="block">MRP</label>
                     <input name="mrp" type="number" value="{{ $course->mrp }}"
                         class="w-full mt-1 p-2 border rounded">
+                        @error('mrp')
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                @enderror
                 </div>
                 <div>
                     <label class="block">Sellable Price</label>
                     <input name="sellable_price" type="number" value="{{ $course->sellable_price }}"
                         class="w-full mt-1 p-2 border rounded">
+                        @error('sellable_price')
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                @enderror
                 </div>
             </div>
 

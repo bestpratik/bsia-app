@@ -111,27 +111,292 @@
                         <span class="text-gray-400">Not uploaded</span>
                     @endif
                 </div>
+                <div>
+                    <button type="button" onclick="openCourseModuleModal({{ $course->id }})"
+                        class="ml-1 cursor-pointer hover:text-purple-500 dark:hover:text-purple-400" title="Add Module">
+                        <x-heroicon-o-book-open class="w-6 h-6 text-gray-700" />
+                    </button>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Course Modules</h4>
+                    <ul class="list-disc pl-6" id="modulesList">
+                        @if ($courseModules->isEmpty())
+                            <li class="text-gray-700">No Modules available.</li>
+                        @else
+                            @foreach ($courseModules as $row)
+                                <li class="pl-2">
+                                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
+                                        id="module-{{ $row->id }}">
+                                        <div>
+                                            <a href="{{ route('show.coursemodules', $row->id) }}"
+                                                class="text-blue-600 hover:underline">
+                                                {{ $row->name }}
+                                            </a>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <button type="button"
+                                                class="px-2 py-1 text-sm text-white bg-yellow-500 rounded hover:bg-yellow-600"
+                                                onclick="editCourseModule({{ $row->id }}, '{{ addslashes($row->name) }}', '{{ addslashes($row->description ?? '') }}', '{{ $row->order_no ?? '' }}', {{ $row->status ? 1 : 0 }})">
+                                                Edit
+                                            </button>
+                                            <button type="button"
+                                                class="px-2 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700"
+                                                onclick="deleteCourseModule({{ $row->id }})">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
+
+                </div>
             </div>
         </div>
 
-        <!-- Footer Buttons -->
-        <div class="flex gap-3 mt-10">
-            <a href="{{ route('edit.course', $course->id) }}"
-                class="px-6 py-2.5 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
-                <x-heroicon-o-pencil-square class="w-5 h-5 inline-block mr-1" />
-                Edit Course
-            </a>
-            <form action="{{ route('delete.course', $course->id) }}" method="POST"
-                onsubmit="return confirm('Delete this course?')">
-                @csrf
-                @method('DELETE')
-                <button type="submit"
-                    class="px-6 py-2.5 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition">
-                    <x-heroicon-o-trash class="w-5 h-5 inline-block mr-1" />
-                    Delete
-                </button>
+        {{-- Hidden Modal Templates --}}
+
+        <!-- Add Module Form -->
+        <div id="addModuleFormTemplate" class="hidden">
+            <form id="courseModuleForm" class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+                <input type="hidden" name="course_id" id="add-course-id">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Module Name <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="name" placeholder="Enter module name"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                    <textarea name="description" rows="3" placeholder="Enter description"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Order No<span
+                            class="text-red-500">*</span></label>
+                    <input type="number" name="order_no" placeholder="Order No"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400">
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" name="status" value="1" id="status"
+                        class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="status" class="ml-2 text-gray-700 font-medium">Active</label>
+                </div>
+            </form>
+        </div>
+
+        <!-- Edit Module Form -->
+        <div id="editModuleFormTemplate" class="hidden">
+            <form id="editCourseModuleForm"
+                class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+                <input type="hidden" name="id" id="edit-id">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Module Name <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="name" id="edit-name"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                    <textarea name="description" id="edit-description" rows="3"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Order No</label>
+                    <input type="number" name="order_no" id="edit-order_no"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800">
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" name="status" value="1" id="edit-status"
+                        class="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="edit-status" class="ml-2 text-gray-700 font-medium">Active</label>
+                </div>
             </form>
         </div>
 
     </div>
 </x-app-layout>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // ADD MODULE
+    function openCourseModuleModal(courseId) {
+        let formHtml = $("#addModuleFormTemplate").html();
+        Swal.fire({
+            title: 'Add Course Module',
+            html: formHtml,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            didOpen: (popup) => {
+                // Now setting inside popup correctly
+                $(popup).find("#add-course-id").val(courseId);
+            },
+            preConfirm: () => {
+                let form = Swal.getPopup().querySelector("#courseModuleForm");
+                let formData = new FormData(form);
+
+                return $.ajax({
+                        url: "{{ route('course-modules.store') }}",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response)
+                    .catch(xhr => {
+                        let error = xhr.responseJSON;
+                        if (error.errors) {
+                            // Show backend validation errors
+                            Swal.showValidationMessage(
+                                Object.values(error.errors).flat().join('<br>')
+                            );
+                        } else {
+                            Swal.showValidationMessage(`Request failed: ${xhr.statusText}`);
+                        }
+                    });
+            }
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                let module = result.value.module;
+                let moduleHtml = `
+                <li class="flex items-center justify-between mb-2" id="module-${module.id}">
+                    <div>
+                        <a href="{{ route('show.coursemodules', '') }}/${module.id}" class="text-blue-600 hover:underline">
+                            ${module.name}
+                        </a>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button"
+                            class="px-2 py-1 text-sm text-white bg-yellow-500 rounded hover:bg-yellow-600"
+                            onclick="editCourseModule(${module.id}, '${module.name}', '${module.description ?? ''}', '${module.order_no ?? ''}', ${module.status ? 1 : 0})">
+                            Edit
+                        </button>
+                        <button type="button"
+                            class="px-2 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700"
+                            onclick="deleteCourseModule(${module.id})">
+                            Delete
+                        </button>
+                    </div>
+                </li>
+            `;
+                $("#modulesList").append(moduleHtml);
+                Swal.fire('Success!', 'Course Module has been added successfully!', 'success');
+            }
+        });
+    }
+
+    // EDIT MODULE
+    function editCourseModule(id, name, description, orderNo, status) {
+        let formHtml = $("#editModuleFormTemplate").html();
+        Swal.fire({
+            title: 'Edit Course Module',
+            html: formHtml,
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            didOpen: (popup) => {
+                // Fill values inside SweetAlert popup
+                $(popup).find("#edit-id").val(id);
+                $(popup).find("#edit-name").val(name);
+                $(popup).find("#edit-description").val(description);
+                $(popup).find("#edit-order_no").val(orderNo);
+                $(popup).find("#edit-status").prop('checked', status == 1);
+            },
+            preConfirm: () => {
+                let form = Swal.getPopup().querySelector("#editCourseModuleForm");
+                let formData = new FormData(form);
+
+                return $.ajax({
+                        url: `/course-modules/${id}`,
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            "X-HTTP-Method-Override": "PUT"
+                        }
+                    })
+                    .then(response => response)
+                    .catch(xhr => {
+                        let error = xhr.responseJSON;
+                        if (error.errors) {
+                            Swal.showValidationMessage(
+                                Object.values(error.errors).flat().join('<br>')
+                            );
+                        } else {
+                            Swal.showValidationMessage(`Request failed: ${xhr.statusText}`);
+                        }
+                    });
+            }
+        }).then(result => {
+            if (result.isConfirmed && result.value) {
+                let module = result.value.module;
+                let moduleEl = $(`#module-${module.id}`);
+                if (moduleEl.length) {
+                    moduleEl.html(`
+                    <div>
+                        <a href="{{ route('show.coursemodules', '') }}/${module.id}" class="text-blue-600 hover:underline">
+                            ${module.name}
+                        </a>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button"
+                            class="px-2 py-1 text-sm text-white bg-yellow-500 rounded hover:bg-yellow-600"
+                            onclick="editCourseModule(${module.id}, '${module.name}', '${module.description ?? ''}', '${module.order_no ?? ''}', ${module.status ? 1 : 0})">
+                            Edit
+                        </button>
+                        <button type="button"
+                            class="px-2 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700"
+                            onclick="deleteCourseModule(${module.id})">
+                            Delete
+                        </button>
+                    </div>
+                `);
+                }
+                Swal.fire('Updated!', 'Course Module has been updated successfully!', 'success');
+            }
+        });
+    }
+
+    // DELETE MODULE
+    function deleteCourseModule(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This action cannot be undone.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                        url: `/course-modules/${id}`,
+                        type: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            "X-HTTP-Method-Override": "DELETE"
+                        }
+                    })
+                    .done(() => {
+                        $(`#module-${id}`).closest('li').remove();
+                        Swal.fire('Deleted!', 'Course Module has been deleted.', 'success');
+                    })
+                    .fail(() => {
+                        Swal.fire('Error!', 'Failed to delete module.', 'error');
+                    });
+            }
+        });
+    }
+</script>

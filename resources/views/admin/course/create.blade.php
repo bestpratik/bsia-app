@@ -68,13 +68,19 @@
             <!-- Pricing -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block">MRP</label>
+                    <label class="block">MRP<span class="text-red-700">*</span></label>
                     <input name="mrp" type="number" class="w-full mt-1 p-2 border rounded" placeholder="Enter MRP">
+                    @error('mrp')
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                @enderror
                 </div>
                 <div>
-                    <label class="block">Sellable Price</label>
+                    <label class="block">Sellable Price<span class="text-red-700">*</span></label>
                     <input name="sellable_price" type="number" class="w-full mt-1 p-2 border rounded"
                         placeholder="Enter Sellable Price">
+                        @error('sellable_price')
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                @enderror
                 </div>
             </div>
 
@@ -116,9 +122,12 @@
 
             <!-- Order No -->
             <div>
-                <label class="block">Order No</label>
+                <label class="block">Order No<span class="text-red-700">*</span></label>
                 <input name="order_no" type="number" class="w-full mt-1 p-2 border rounded"
                     placeholder="Enter Order No">
+                    @error('order_no')
+                    <span class="text-sm text-red-500">{{ $message }}</span>
+                @enderror
             </div>
 
             <!-- Checkboxes -->
