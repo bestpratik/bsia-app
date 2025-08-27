@@ -1,0 +1,612 @@
+/* 1) Theme & Base */
+.wow {
+  visibility: hidden;
+}
+
+:root {
+  --animate-duration: 1.2s;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: "Roboto", sans-serif;
+}
+
+/* 2) Mobile Menu */
+#mobile-menu.open {
+  transform: translateX(0);
+}
+
+#mobile-menu-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 3) Nav Underline */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+}
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #f26603, #900807);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::before {
+  width: 100%;
+}
+
+/* 4) Button Sheen */
+button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+button::before {
+  content: "";
+  position: absolute;
+  top: 17px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+button:hover::before {
+  left: 1px;
+}
+
+/* 5) Slick Common */
+.slick-dots {
+  bottom: -60px !important;
+  display: flex !important;
+  justify-content: center;
+  gap: 8px;
+}
+.slick-dots li button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #f26603;
+  opacity: 0.4;
+  border: none;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+.slick-dots li.slick-active button {
+  opacity: 1;
+  background: #900807;
+  transform: scale(1.2);
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.3098039216) !important;
+  border-radius: 50%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+.slick-prev::before,
+.slick-next::before {
+  font-size: 20px !important;
+  color: #3d0000 !important;
+  font-weight: bold;
+}
+.slick-prev:hover,
+.slick-next:hover {
+  background: #f26603 !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+.slick-prev:hover::before,
+.slick-next:hover::before {
+  color: #fff !important;
+}
+
+.slick-prev {
+  left: -25px !important;
+}
+
+.slick-next {
+  right: -25px !important;
+}
+
+/* 6) Hero-slider tweaks */
+.hero-slider {
+  position: relative;
+  /* reposition arrows into 7xl container */
+  /* fallback on smaller screens */
+  /* mobile-specific */
+}
+.hero-slider .slide {
+  height: 80vh;
+}
+.hero-slider .slide h1 {
+  font-size: clamp(1.5rem, 5vw, 3.75rem);
+}
+.hero-slider .slide p {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+}
+.hero-slider .slide a {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+.hero-slider .slick-prev i,
+.hero-slider .slick-next i {
+  color: #f26603;
+  font-size: 18px;
+}
+.hero-slider button::before {
+  top: 2px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-slider .slick-dots {
+  bottom: 40px !important;
+  list-style: none;
+}
+.hero-slider .slick-dots li button {
+  width: 30px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  text-indent: -9999px;
+  transition: background 0.3s;
+}
+.hero-slider .slick-dots li.slick-active button {
+  background: #f26603;
+}
+.hero-slider .fas {
+  display: none !important;
+}
+.hero-slider .slick-prev {
+  left: calc((100% - 80rem) / 2 - 25px) !important;
+}
+.hero-slider .slick-next {
+  right: calc((100% - 80rem) / 2 - 25px) !important;
+}
+@media (max-width: 80rem) {
+  .hero-slider .slick-prev {
+    left: 1rem !important;
+  }
+  .hero-slider .slick-next {
+    right: 1rem !important;
+  }
+}
+@media (max-width: 640px) {
+  .hero-slider .slick-prev,
+  .hero-slider .slick-next {
+    display: none !important;
+  }
+  .hero-slider .slide {
+    height: 60vh;
+  }
+}
+
+/* 7) Back-to-Top */
+#back-to-top {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+#back-to-top.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-3px) scale(1.1);
+}
+
+/* Testimonials Slider */
+.testimonials-slider .testimonial-card {
+  border-color: rgba(156, 163, 175, 0.3);
+  border-top: 24px solid rgba(156, 163, 175, 0.3);
+}
+.testimonials-slider .slick-center .testimonial-card {
+  border-color: #f26603;
+  border-width: 2px;
+  border-top: 24px solid #f26603;
+}
+.testimonials-slider .slick-center .testimonial-card img {
+  border-color: #f26603;
+  border-width: 5px;
+}
+.testimonials-slider .slick-track {
+  padding-bottom: 15px;
+}
+.testimonials-slider .slick-dots {
+  bottom: -26px !important;
+}
+.testimonials-slider .slick-dots button::before {
+  display: none !important;
+}
+.testimonials-slider .slick-slide {
+  display: flex !important;
+  justify-content: center;
+}
+
+/* 8) Enroll Button Pseudo */
+.enroll-button::before {
+  content: "";
+  top: 0px !important;
+}
+
+#coursess .slick-dots {
+  bottom: -46px !important;
+}
+#coursess .slick-dots button::before {
+  display: none !important;
+} /*# sourceMappingURL=style.css.map */
+
+/* 9) Video Reviews Section Styles */
+.video-reviews-slider .slick-dots {
+  bottom: -46px !important;
+}
+.video-reviews-slider .slick-dots button::before {
+  display: none !important;
+}
+.video-reviews-slider .slick-slide {
+  display: flex !important;
+  justify-content: center;
+}
+
+/* Video responsive */
+.video-reviews-slider iframe {
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+.video-reviews-slider .group:hover iframe {
+  transform: scale(1.02);
+}
+
+/* Video overlay effects */
+.video-reviews-slider .group {
+  position: relative;
+}
+.video-reviews-slider .group::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(240, 102, 3, 0.05),
+    rgba(144, 8, 7, 0.05)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 24px;
+  z-index: 1;
+  pointer-events: none;
+}
+.video-reviews-slider .group:hover::before {
+  opacity: 1;
+}
+.video-reviews-slider .slick-list {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.video-reviews-slider .slick-track {
+  display: flex !important;
+  align-items: stretch;
+}
+.video-reviews-slider .slick-slide {
+  height: auto !important;
+}
+.video-reviews-slider .slick-slide > div {
+  /* slide content wrapper */
+  width: 100%;
+}
+/* Guarantee visible height via aspect-ratio */
+.video-card {
+  position: relative;
+  background: #000;
+  aspect-ratio: 16 / 9;
+  /* min-height: 220px; */
+}
+.video-card > * {
+  position: absolute;
+  inset: 0;
+}
+.video-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 10) Grid/List view toggles for courses/ebooks pages */
+.view-toggle button {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 14px;
+}
+.view-toggle button.active {
+  background: linear-gradient(90deg, #ffd700, #f26603);
+  color: #3d0000;
+  border-color: transparent;
+}
+
+/* Hide labels on small screens for cleaner UI */
+@media (max-width: 768px) {
+  .view-toggle .vt-label {
+    display: none;
+  }
+  .view-toggle button i {
+    margin-right: 0 !important;
+  }
+  .view-toggle button {
+    padding: 8px 10px;
+    min-width: 44px;
+  }
+}
+
+#courses-page.list-view .items-grid,
+#ebooks-page.list-view .items-grid {
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+}
+
+#courses-page.list-view .course-card,
+#ebooks-page.list-view .ebook-card {
+  display: flex;
+  gap: 16px;
+}
+#courses-page.list-view .course-card .thumb,
+#ebooks-page.list-view .ebook-card .thumb {
+  width: 280px;
+  flex: none;
+}
+#courses-page.list-view .course-card img,
+#ebooks-page.list-view .ebook-card img {
+  height: 180px;
+  object-fit: cover;
+}
+#courses-page.list-view .course-card .body,
+#ebooks-page.list-view .ebook-card .body {
+  flex: 1;
+}
+
+/* List view button sizing overrides */
+#courses-page.list-view .course-card .enroll-button {
+  width: auto !important;
+  height: 42px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+#ebooks-page.list-view .ebook-card .buy-button {
+  width: auto !important;
+  height: 42px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+/* eBook card enhancements */
+.ebook-card .price-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #fff;
+  color: #3d0000;
+  border-radius: 9999px;
+  padding: 6px 10px;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+.buy-button {
+  background: linear-gradient(90deg, #f26603, #ff7a1a);
+  color: #fff;
+  border-radius: 12px;
+  height: 44px;
+  padding: 0 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.buy-button:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(242, 102, 3, 0.25);
+}
+
+@media (max-width: 768px) {
+  #courses-page.list-view .course-card,
+  #ebooks-page.list-view .ebook-card {
+    display: block;
+  }
+  #courses-page.list-view .course-card .thumb,
+  #ebooks-page.list-view .ebook-card .thumb {
+    width: 100%;
+  }
+}
+/* Play button overlay */
+.yt-play-button {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 9999px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.yt-play-button::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 18px solid #900807;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  margin-left: 4px;
+}
+.yt-thumb:hover .yt-play-button {
+  transform: scale(1.06);
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(144, 8, 7, 0.25);
+}
+/* Mobile video optimization */
+@media (max-width: 768px) {
+  .video-reviews-slider iframe {
+    height: 200px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .video-reviews-slider iframe {
+    height: 180px !important;
+    border-radius: 8px;
+  }
+} /*# sourceMappingURL=style.css.map */
+/* Hero slider adjustments */
+.hero-slider .video-slide {
+  background: none !important; /* remove background image */
+}
+
+.video-wrapper {
+  position: absolute;
+  inset: 0;
+}
+
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.yt-play-button::before {
+  left: 22px !important;
+  top: 19px !important;
+}
+.yt-play-button {
+  opacity: 0.8;
+}
+#login-form button:before {
+  top: 1px !important;
+}
+.testimonial-section {
+  background-color: #fff;
+}
+
+.testimonial-slider p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #333;
+  font-size: 24px;
+}
+
+.slick-dots li button:before {
+  font-size: 10px;
+  color: #bbb;
+  opacity: 1;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #000;
+}
+.faq {
+  padding: 40px 20px;
+  text-align: center;
+  color: #023a3c;
+}
+
+.faq h2 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  font-weight: normal;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.faq-item {
+  border-bottom: 1px solid transparent;
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.faq-question .arrow {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+  transform: rotate(180deg); /* Default closed */
+}
+
+.faq-item.active .faq-question .arrow {
+  transform: rotate(0deg); /* Open */
+}
+
+.faq-answer {
+  display: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+.faq-footer {
+  margin-top: 30px;
+}
+
+.faq-footer a {
+  color: #023a3c;
+  text-decoration: none;
+  font-weight: 500;
+}
+/* .faq-question span:last-child {
+  display: inline-block;
+  transition: transform 0.3s ease;
+} */
+
+.faq-question span:last-child.rotate {
+  transform: rotate(180deg);
+}
+
+.testimonial-section .slick-dots button::before {
+  display: none !important;
+}
+@media (max-width: 640px) {
+  .testimonial-section .slick-arrow {
+    display: none!important;
+  }
+}

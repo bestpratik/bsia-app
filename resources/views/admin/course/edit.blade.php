@@ -162,6 +162,14 @@
         </form>
 </x-app-layout>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const statusCheckbox = document.querySelector('input[name="status"]');
+        if (!statusCheckbox.checked) {
+            statusCheckbox.checked = true;
+        }
+    });
+</script>
 
 <script>
     var loadFile = function(event) {

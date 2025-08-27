@@ -61,6 +61,12 @@
                                         {{ $row->title }}
                                     </a>
                                     <div class="flex gap-2">
+                                        <!-- Show Button -->
+                                        <a href="{{ route('show.courselessons', $row->id) }}"
+                                                class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
+                                                title="View">
+                                                <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
+                                            </a>
                                         <!-- Edit Button -->
                                         <button type="button"
                                             onclick="editLesson({{ $module->id }}, {{ $row->id }}, `{{ addslashes($row->title) }}`, `{{ $row->type }}`, `{{ addslashes($row->content ?? '') }}`, `{{ $row->video_url ?? '' }}`, `{{ $row->order_no ?? '' }}`, `{{ $row->downloadable_file ?? '' }}`)"
@@ -86,7 +92,7 @@
         <div class="flex gap-3 mt-10">
             <button type="button" onclick="openLessonModal({{ $module->id }})"
                 class="ml-1 cursor-pointer hover:text-purple-500 dark:hover:text-purple-400" title="Add Lesson">
-                <x-heroicon-o-list-bullet class="w-6 h-6 text-gray-700" />
+                <x-heroicon-o-list-bullet class="w-6 h-6 text-gray-700 inline-block" /> Add Course Lesson
             </button>
         </div>
 

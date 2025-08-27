@@ -114,7 +114,7 @@
                 <div>
                     <button type="button" onclick="openCourseModuleModal({{ $course->id }})"
                         class="ml-1 cursor-pointer hover:text-purple-500 dark:hover:text-purple-400" title="Add Module">
-                        <x-heroicon-o-book-open class="w-6 h-6 text-gray-700" />
+                        <x-heroicon-o-book-open class="w-6 h-6 text-gray-700 inline-block" /> Add Course Module
                     </button>
                 </div>
                 <div>
@@ -134,6 +134,12 @@
                                             </a>
                                         </div>
                                         <div class="flex gap-2">
+                                            <!-- Show Button -->
+                                            <a href="{{ route('show.coursemodules', $row->id) }}"
+                                                class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
+                                                title="View">
+                                                <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
+                                            </a>
                                             <button type="button"
                                                 class="px-2 py-1 text-sm text-white bg-yellow-500 rounded hover:bg-yellow-600"
                                                 onclick="editCourseModule({{ $row->id }}, '{{ addslashes($row->name) }}', '{{ addslashes($row->description ?? '') }}', '{{ $row->order_no ?? '' }}', {{ $row->status ? 1 : 0 }})">
@@ -150,7 +156,6 @@
                             @endforeach
                         @endif
                     </ul>
-
                 </div>
             </div>
         </div>
@@ -159,7 +164,7 @@
 
         <!-- Add Module Form -->
         <div id="addModuleFormTemplate" class="hidden">
-            <form id="courseModuleForm" class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+            <form id="courseModuleForm" class="max-w-5xl space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
                 <input type="hidden" name="course_id" id="add-course-id">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Module Name <span
@@ -391,7 +396,10 @@
                     })
                     .done(() => {
                         $(`#module-${id}`).closest('li').remove();
-                        Swal.fire('Deleted!', 'Course Module has been deleted.', 'success');
+                        Swal.fire('Deleted!', 'Course Module has been deleted.', 'success').then(
+                            () => {
+                                location.reload();
+                            });
                     })
                     .fail(() => {
                         Swal.fire('Error!', 'Failed to delete module.', 'error');

@@ -1,0 +1,299 @@
+/* 1) Theme & Base */
+$brand-red: #900807;
+$brand-orange: #f26603;
+$brand-dark: #3d0000;
+$transition-speed: 0.3s;
+$shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.15);
+$shadow-heavy: 0 20px 40px rgba(0, 0, 0, 0.2);
+.wow {
+  visibility: hidden;
+}
+:root {
+  --animate-duration: 1.2s;
+}
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: "Roboto", sans-serif;
+}
+
+/* 2) Mobile Menu */
+#mobile-menu {
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+#mobile-menu-overlay {
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* 3) Nav Underline */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, $brand-orange, $brand-red);
+    transition: width $transition-speed ease;
+  }
+
+  &:hover::before {
+    width: 100%;
+  }
+}
+
+/* 4) Button Sheen */
+button {
+  position: relative;
+  overflow: hidden;
+  transition: all $transition-speed ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 17px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.6s ease;
+  }
+
+  &:hover::before {
+    left: 1px;
+  }
+}
+
+/* 5) Slick Common */
+.slick-dots {
+  bottom: -60px !important;
+  display: flex !important;
+  justify-content: center;
+  gap: 8px;
+
+  li {
+    button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: $brand-orange;
+      opacity: 0.4;
+      border: none;
+      padding: 0;
+      transition: all $transition-speed ease;
+    }
+
+    &.slick-active {
+      button {
+        opacity: 1;
+        background: $brand-red;
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+  background: #ffffff4f !important;
+  border-radius: 50%;
+  box-shadow: $shadow-medium;
+  transition: all $transition-speed ease;
+
+  &::before {
+    font-size: 20px !important;
+    color: $brand-dark !important;
+    font-weight: bold;
+  }
+
+  &:hover {
+    background: $brand-orange !important;
+    box-shadow: $shadow-heavy;
+
+    &::before {
+      color: #fff !important;
+    }
+  }
+}
+
+.slick-prev {
+  left: -25px !important;
+}
+
+.slick-next {
+  right: -25px !important;
+}
+
+/* 6) Hero-slider tweaks */
+.hero-slider {
+  position: relative;
+
+  .slide {
+    height: 70vh;
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 3.75rem);
+    }
+
+    p {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+    }
+
+    a {
+      font-size: clamp(0.875rem, 2.5vw, 1rem);
+    }
+  }
+
+  .slick-prev i,
+  .slick-next i {
+    color: $brand-orange;
+    font-size: 18px;
+  }
+  button::before {
+    top: 2px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .slick-dots {
+    bottom: 40px !important;
+    list-style: none;
+
+    li {
+      button {
+        width: 30px;
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.6);
+        text-indent: -9999px;
+        transition: background 0.3s;
+      }
+
+      &.slick-active {
+        button {
+          background: $brand-orange;
+        }
+      }
+    }
+  }
+
+  .fas {
+    display: none !important;
+  }
+
+  /* reposition arrows into 7xl container */
+  .slick-prev {
+    left: calc((100% - 80rem) / 2 - 25px) !important;
+  }
+
+  .slick-next {
+    right: calc((100% - 80rem) / 2 - 25px) !important;
+  }
+
+  /* fallback on smaller screens */
+  @media (max-width: 80rem) {
+    .slick-prev {
+      left: 1rem !important;
+    }
+
+    .slick-next {
+      right: 1rem !important;
+    }
+  }
+
+  /* mobile-specific */
+  @media (max-width: 640px) {
+    .slick-prev,
+    .slick-next {
+      display: none !important;
+    }
+
+    .slide {
+      height: 60vh;
+    }
+  }
+}
+
+/* 7) Back-to-Top */
+#back-to-top {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-speed, visibility $transition-speed;
+
+  &.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(-3px) scale(1.1);
+  }
+}
+
+/* Testimonials Slider */
+.testimonials-slider {
+  .testimonial-card {
+    border-color: rgba(156, 163, 175, 0.3);
+    border-top: 24px solid rgba(156, 163, 175, 0.3);
+  }
+
+  .slick-center {
+    .testimonial-card {
+      border-color: $brand-orange;
+      border-width: 2px;
+      border-top: 24px solid $brand-orange;
+
+      img {
+        border-color: $brand-orange;
+        border-width: 5px;
+      }
+    }
+  }
+  .slick-track {
+    padding-bottom: 15px;
+  }
+  .slick-dots {
+    bottom: -26px !important;
+  }
+  .slick-dots button::before {
+    display: none !important;
+  }
+  .slick-slide {
+    display: flex !important;
+    justify-content: center;
+  }
+}
+
+/* 8) Enroll Button Pseudo */
+.enroll-button {
+  &::before {
+    content: "";
+    top: 0px !important;
+  }
+}
+#coursess {
+  .slick-dots {
+    bottom: -46px !important;
+  }
+  .slick-dots button::before {
+    display: none !important;
+  }
+}

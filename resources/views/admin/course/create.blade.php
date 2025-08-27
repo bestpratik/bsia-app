@@ -71,16 +71,16 @@
                     <label class="block">MRP<span class="text-red-700">*</span></label>
                     <input name="mrp" type="number" class="w-full mt-1 p-2 border rounded" placeholder="Enter MRP">
                     @error('mrp')
-                    <span class="text-sm text-red-500">{{ $message }}</span>
-                @enderror
+                        <span class="text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div>
                     <label class="block">Sellable Price<span class="text-red-700">*</span></label>
                     <input name="sellable_price" type="number" class="w-full mt-1 p-2 border rounded"
                         placeholder="Enter Sellable Price">
-                        @error('sellable_price')
-                    <span class="text-sm text-red-500">{{ $message }}</span>
-                @enderror
+                    @error('sellable_price')
+                        <span class="text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
@@ -125,7 +125,7 @@
                 <label class="block">Order No<span class="text-red-700">*</span></label>
                 <input name="order_no" type="number" class="w-full mt-1 p-2 border rounded"
                     placeholder="Enter Order No">
-                    @error('order_no')
+                @error('order_no')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                 @enderror
             </div>
@@ -159,6 +159,15 @@
             <button type="submit" class="w-full mt-4 p-2 bg-blue-600 text-white rounded">Submit</button>
         </form>
 </x-app-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const statusCheckbox = document.querySelector('input[name="status"]');
+        if (!statusCheckbox.checked) {
+            statusCheckbox.checked = true;
+        }
+    });
+</script>
 
 <script>
     function previewImage(event) {
