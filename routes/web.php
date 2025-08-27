@@ -63,6 +63,15 @@ Route::delete('/course-lessons/{id}/delete', [CourseLessonController::class, 'de
 Route::get('/courselessons/{id}/show', [CourseLessonController::class, 'show'])->name('show.courselessons');
 
 
+
+//CourseFaq section
+Route::post('/course/faq/store', [CourseFaqsController::class, 'store'])->name('courseFaq.store');
+Route::post('/course/faq/{id}/update', [CourseFaqsController::class, 'update'])->name('courseFaq.update');
+Route::delete('/course-faq/{id}/delete', [CourseFaqsController::class, 'destroy'])->name('courseFaq.destroy');
+Route::get('/coursefaq/{id}', [CourseFaqsController::class, 'show'])->name('show.coursefaq');
+
+
+
 //Ebook section
 Route::get('ebook', [EbookController::class, 'index'])->name('ebook');
 Route::get('ebook/create', [EbookController::class, 'create'])->name('create.ebook');
@@ -72,16 +81,6 @@ Route::patch('/ebook/{id}/status', [EbookController::class, 'toggleStatus'])->na
 Route::get('/ebook/{id}/edit', [EbookController::class, 'edit'])->name('edit.ebook');
 Route::put('/ebook/{id}/update', [EbookController::class, 'update'])->name('update.ebook');
 Route::delete('/ebook/{id}/delete', [EbookController::class, 'destroy'])->name('delete.ebook');
-
-
-//CourseFaq section
-Route::get('coursefaq', [CourseFaqsController::class, 'index'])->name('coursefaq');
-Route::get('coursefaq/create', [CourseFaqsController::class, 'create'])->name('create.coursefaq');
-Route::post('coursefaq/save', [CourseFaqsController::class, 'store'])->name('save.coursefaq');
-Route::get('/coursefaq/{id}', [CourseFaqsController::class, 'show'])->name('show.coursefaq');
-Route::get('/coursefaq/{id}/edit', [CourseFaqsController::class, 'edit'])->name('edit.coursefaq');
-Route::put('/coursefaq/{id}/update', [CourseFaqsController::class, 'update'])->name('update.coursefaq');
-Route::delete('/coursefaq/{id}/delete', [CourseFaqsController::class, 'destroy'])->name('delete.coursefaq');
 
 
 //About sections

@@ -13,8 +13,7 @@ class CourseFaqsController extends Controller
      */
     public function index()
     {
-        $coursefaq = CourseFaqs::all();
-        return view('admin.coursefaq.index', compact('coursefaq'));
+        //
     }
 
     /**
@@ -22,8 +21,7 @@ class CourseFaqsController extends Controller
      */
     public function create()
     {
-        $course = Course::all();
-        return view('admin.coursefaq.create', compact('course'));
+        //
     }
 
     /**
@@ -43,15 +41,16 @@ class CourseFaqsController extends Controller
         $coursefaq->order_no = $request->order_no;
 
         $coursefaq->save();
-        return redirect('coursefaq')->with('success', 'Coursefaq created successfully!');
+        return response()->json(['message' => 'Course faq Form has been added successfully!', 'coursefaq'  => $coursefaq]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(CourseFaqs $courseFaqs)
+    public function show($id)
     {
-        //
+        $coursefaq = CourseFaqs::find($id);
+        return view('admin.coursefaq.show', compact('coursefaq'));
     }
 
     /**
@@ -59,9 +58,7 @@ class CourseFaqsController extends Controller
      */
     public function edit($id)
     {
-        $course = Course::all();
-        $coursefaq = CourseFaqs::find($id);
-        return view('admin.coursefaq.edit', compact('course', 'coursefaq'));
+        //
     }
 
     /**
@@ -81,7 +78,7 @@ class CourseFaqsController extends Controller
         $coursefaq->order_no = $request->order_no;
 
         $coursefaq->update();
-        return redirect('coursefaq')->with('success', 'Coursefaq updated successfully!');
+        return response()->json(['message' => 'Course faq Form has been updated successfully!', 'coursefaq'  => $coursefaq]);
     }
 
     /**
@@ -92,6 +89,6 @@ class CourseFaqsController extends Controller
         $coursefaq = CourseFaqs::findOrFail($id);
         $coursefaq->delete();
 
-        return redirect('coursefaq')->with('success', 'Coursefaq deleted successfully!');
+        return response()->json(['message' => 'Course faq Form has been deleted successfully!', 'coursefaq'  => $coursefaq]);
     }
 }

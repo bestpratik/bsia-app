@@ -85,6 +85,46 @@
                         <p class="text-gray-800">{{ $course->order_no ?? 'N/A' }}</p>
                     </div>
                 </div>
+                <div>
+                    <button type="button" onclick="openCourseFaqModal({{ $course->id }})"
+                        class="ml-1 cursor-pointer hover:text-purple-500 dark:hover:text-purple-400" title="Add Faq">
+                        <x-heroicon-o-book-open class="w-6 h-6 text-gray-700 inline-block" /> Add Course Faq
+                    </button>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Course Faqs</h4>
+                    <ul class="list-disc pl-6" id="modulesList">
+                        @if ($courseFaq->isEmpty())
+                            <li class="text-gray-700">No Faq available.</li>
+                        @else
+                            @foreach ($courseFaq as $row)
+                                <li class="pl-2">
+                                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
+                                        id="module-{{ $row->id }}">
+                                        <div>
+                                            <a href="{{ route('show.coursefaq', $row->id) }}"
+                                                class="text-blue-600 hover:underline">
+                                                {{ $row->title }}
+                                            </a>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <!-- Show Button -->
+                                            <a href="{{ route('show.coursefaq', $row->id) }}"
+                                                class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
+                                                title="View">
+                                                <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
+                                            </a>
+                                            <button onclick='openEditFaqModal(@json($row))'
+                                                class="px-3 py-1 bg-yellow-500 text-white rounded-lg">Edit</button>
+                                            <button onclick="deleteFaq({{ $row->id }})"
+                                                class="px-3 py-1 bg-red-600 text-white rounded-lg">Delete</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
+                </div>
             </div>
 
             <!-- Right Column -->
@@ -164,7 +204,8 @@
 
         <!-- Add Module Form -->
         <div id="addModuleFormTemplate" class="hidden">
-            <form id="courseModuleForm" class="max-w-5xl space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+            <form id="courseModuleForm"
+                class="max-w-5xl space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
                 <input type="hidden" name="course_id" id="add-course-id">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Module Name <span
@@ -221,6 +262,63 @@
             </form>
         </div>
 
+
+        <!-- Add FAQ Form -->
+        <div id="addFaqFormTemplate" class="hidden">
+            <form id="courseFaqForm" class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+                <input type="hidden" name="course_id" id="faq-course-id">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">FAQ Title <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="title" placeholder="Enter FAQ title"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description <span
+                            class="text-red-500">*</span></label>
+                    <textarea name="description" rows="3" placeholder="Enter description"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400"
+                        required></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Order No <span
+                            class="text-red-500">*</span></label>
+                    <input type="number" name="order_no" placeholder="Order No"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400"
+                        required>
+                </div>
+            </form>
+        </div>
+
+        <!-- Edit FAQ Form -->
+        <div id="editFaqFormTemplate" class="hidden">
+            <form id="editCourseFaqForm" class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+                <input type="hidden" name="faq_id" id="edit-faq-id">
+                <input type="hidden" name="course_id" id="edit-faq-course-id">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">FAQ Title <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="title" id="edit-faq-title"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"
+                        required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description <span
+                            class="text-red-500">*</span></label>
+                    <textarea name="description" id="edit-faq-description" rows="3"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"
+                        required></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Order No <span
+                            class="text-red-500">*</span></label>
+                    <input type="number" name="order_no" id="edit-faq-order-no"
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"
+                        required>
+                </div>
+            </form>
+        </div>
     </div>
 </x-app-layout>
 
@@ -404,6 +502,138 @@
                     .fail(() => {
                         Swal.fire('Error!', 'Failed to delete module.', 'error');
                     });
+            }
+        });
+    }
+</script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // ADD FAQ
+    function openCourseFaqModal(courseId) {
+        let formHtml = $("#addFaqFormTemplate").html();
+        Swal.fire({
+            title: 'Add Course FAQ',
+            html: formHtml,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            didOpen: (popup) => {
+                $(popup).find("#faq-course-id").val(courseId);
+            },
+            preConfirm: () => {
+                let form = Swal.getPopup().querySelector("#courseFaqForm");
+                let formData = new FormData(form);
+
+                return $.ajax({
+                        url: "{{ route('courseFaq.store') }}",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response)
+                    .catch(xhr => {
+                        let error = xhr.responseJSON;
+                        if (error.errors) {
+                            Swal.showValidationMessage(
+                                Object.values(error.errors).flat().join('<br>')
+                            );
+                        } else {
+                            Swal.showValidationMessage(`Request failed: ${xhr.statusText}`);
+                        }
+                    });
+            }
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                Swal.fire('Success!', 'FAQ has been added successfully!', 'success')
+                    .then(() => location.reload());
+            }
+        });
+    }
+
+    // EDIT FAQ
+    function openEditFaqModal(faq) {
+        let formHtml = $("#editFaqFormTemplate").html();
+        Swal.fire({
+            title: 'Edit Course FAQ',
+            html: formHtml,
+            focusConfirm: false,
+            showCancelButton: true,
+            confirmButtonText: 'Update',
+            didOpen: (popup) => {
+                $(popup).find("#edit-faq-id").val(faq.id);
+                $(popup).find("#edit-faq-course-id").val(faq.course_id);
+                $(popup).find("#edit-faq-title").val(faq.title);
+                $(popup).find("#edit-faq-description").val(faq.description);
+                $(popup).find("#edit-faq-order-no").val(faq.order_no);
+            },
+            preConfirm: () => {
+                let form = Swal.getPopup().querySelector("#editCourseFaqForm");
+                let formData = new FormData(form);
+
+                return $.ajax({
+                        url: "/course/faq/" + formData.get("faq_id") + "/update",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response)
+                    .catch(xhr => {
+                        let error = xhr.responseJSON;
+                        if (error.errors) {
+                            Swal.showValidationMessage(
+                                Object.values(error.errors).flat().join('<br>')
+                            );
+                        } else {
+                            Swal.showValidationMessage(`Request failed: ${xhr.statusText}`);
+                        }
+                    });
+            }
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                Swal.fire('Success!', 'FAQ has been updated successfully!', 'success')
+                    .then(() => location.reload());
+            }
+        });
+    }
+
+    // DELETE FAQ
+    function deleteFaq(faqId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This FAQ will be permanently deleted!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/course-faq/" + faqId + "/delete",
+                    type: "DELETE",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        Swal.fire('Deleted!', response.message, 'success')
+                            .then(() => location.reload());
+                    },
+                    error: function(xhr) {
+                        Swal.fire('Error!', 'Failed to delete FAQ.', 'error');
+                    }
+                });
             }
         });
     }

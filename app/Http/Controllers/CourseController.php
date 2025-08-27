@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\CourseFaqs;
 use App\Models\CourseModules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -86,8 +87,9 @@ class CourseController extends Controller
     {
         $course = Course::findOrFail($id);
         $courseModules = CourseModules::where('course_id', $id)->get();
+        $courseFaq = CourseFaqs::where('course_id', $id)->get();
         // dd($courseModules);
-        return view('admin.course.show', compact('course', 'courseModules'));
+        return view('admin.course.show', compact('course', 'courseModules', 'courseFaq'));
     }
 
     public function toggleStatus($id)
