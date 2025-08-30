@@ -1,9 +1,9 @@
 <x-app-layout>
     @if ($message = Session::get('message'))
-        <div class="alert alert-success alert-dismissible max-w-4xl mx-auto">
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
-            {{ $message }}
-        </div>
+    <div class="alert alert-success alert-dismissible max-w-4xl mx-auto">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+        {{ $message }}
+    </div>
     @endif
 
     <div
@@ -29,7 +29,7 @@
                         placeholder="Enter Name"
                         value="{{ old('name', $videoTestimonial->name) }}">
                     @if ($errors->has('name'))
-                        <span class="mt-1 text-sm text-red-500">{{ $errors->first('name') }}</span>
+                    <span class="mt-1 text-sm text-red-500">{{ $errors->first('name') }}</span>
                     @endif
                 </label>
             </div>
@@ -54,20 +54,38 @@
                         placeholder="Enter Location"
                         value="{{ old('location', $videoTestimonial->location) }}">
                     @if ($errors->has('location'))
-                        <span class="mt-1 text-sm text-red-500">{{ $errors->first('location') }}</span>
+                    <span class="mt-1 text-sm text-red-500">{{ $errors->first('location') }}</span>
                     @endif
                 </label>
             </div>
 
             <!-- Video File -->
-            <div>
+            <!-- <div>
                 <label class="block font-medium">Video File</label>
                 <input type="file" name="video_path" class="w-full border rounded p-2" accept="video/*">
                 @if ($videoTestimonial->video_path)
                     <video class="mt-2 border rounded" style="height: 100px;" controls>
-                        <source src="{{ asset($videoTestimonial->video_path) }}" type="video/mp4">
+                        <source src="{{ asset('uploads/testimonialvideos/' . $videoTestimonial->video_path) }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                @endif
+            </div> -->
+
+
+            <div>
+                <label class="block font-medium">Video File</label>
+                <input type="file" name="video_path" id="videoInput"
+                    class="w-full border rounded p-2"
+                    accept="video/*" onchange="previewVideo(event)">
+
+                <!-- Existing Video -->
+                @if ($videoTestimonial->video_path)
+                <video id="preview_video" class="mt-2 border rounded" style="height: 100px;" controls>
+                    <source src="{{ asset('uploads/testimonialvideos/' . $videoTestimonial->video_path) }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                @else
+                <video id="preview_video" class="mt-2 border rounded hidden" style="height: 100px;" controls></video>
                 @endif
             </div>
 
@@ -92,4 +110,19 @@
             URL.revokeObjectURL(output.src)
         }
     };
+
+
+    function previewVideo(event) {
+        const file = event.target.files[0];
+        const video = document.getElementById('preview_video');
+
+        if (file && file.type.startsWith("video/")) {
+            const url = URL.createObjectURL(file);
+            video.src = url;
+            video.classList.remove("hidden");
+            video.load();
+            video.play(); // autoplay preview
+            video.onloadeddata = () => URL.revokeObjectURL(url);
+        }
+    }
 </script>

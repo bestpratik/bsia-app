@@ -42,11 +42,13 @@ class VideoTestimonialController extends Controller
 
         // Upload video
         if ($request->hasFile('video_path')) {
-            $file = $request->file('video_path');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads'), $filename);
-            $videoTestimonial->video_path = $filename;
+            $videoFile = $request->file('video_path');
+            $vidfilename = time() . '_' . uniqid() . '.' . $videoFile->getClientOriginalExtension();
+            $videoFile->move(public_path('uploads/testimonialvideos'), $vidfilename);
+            $videoTestimonial->video_path = $vidfilename;
         }
+
+
 
         // Upload thumbnail
         if ($request->hasfile('image')) {
@@ -55,6 +57,7 @@ class VideoTestimonialController extends Controller
             $file->move(public_path('uploads'), $filename);
             $videoTestimonial->image = $filename;
         }
+
 
         $videoTestimonial->name = $request->name;
         $videoTestimonial->location = $request->location;
@@ -79,6 +82,7 @@ class VideoTestimonialController extends Controller
     public function edit($id)
     {
         $videoTestimonial = VideoTestimonial::find($id);
+        // dd($videoTestimonial);
         return view('admin.videotestimonial.edit', compact('videoTestimonial'));
     }
 
@@ -99,14 +103,14 @@ class VideoTestimonialController extends Controller
 
         // Replace video if new one is uploaded
         if ($request->hasFile('video_path')) {
-            $destination = public_path('uploads/' . $videoTestimonial->video_path);
+            $destination = public_path('uploads/testimonialvideos' . $videoTestimonial->video_path);
             if (File::exists($destination)) {
                 File::delete($destination);
             }
 
             $file = $request->file('video_path');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads'), $filename);
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/testimonialvideos'), $filename);
             $videoTestimonial->video_path = $filename;
         }
 
@@ -127,7 +131,7 @@ class VideoTestimonialController extends Controller
 
         $videoTestimonial->name = $request->name;
         $videoTestimonial->location = $request->location;
-        $videoTestimonial->created_at = null; 
+        $videoTestimonial->created_at = null;
         $videoTestimonial->updated_at = now();
 
         $videoTestimonial->update();
@@ -144,6 +148,11 @@ class VideoTestimonialController extends Controller
             $destination = public_path('uploads/' . $videoTestimonial->image);
             if (File::exists($destination)) {
                 File::delete($destination);
+            }
+
+            $dest = public_path('uploads/testimonialvideos/' . $videoTestimonial->video_path);
+            if (File::exists($dest)) {
+                File::delete($dest);
             }
 
             $videoTestimonial->delete();

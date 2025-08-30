@@ -50,39 +50,80 @@
                 <h4 class="text-lg font-semibold text-gray-800 mb-4">Course Lessons</h4>
                 <ul class="list-disc pl-6" id="lessonList">
                     @if ($courseLesson->isEmpty())
-                        <li class="text-gray-700">No Lesson available.</li>
+                    <li class="text-gray-700">No Lesson available.</li>
                     @else
-                        @foreach ($courseLesson as $row)
-                            <li class="pl-2">
-                                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
-                                    id="lesson-{{ $row->id }}">
-                                    <a href="{{ route('show.courselessons', $row->id) }}"
-                                        class="text-blue-600 hover:underline">
-                                        {{ $row->title }}
-                                    </a>
-                                    <div class="flex gap-2">
-                                        <!-- Show Button -->
-                                        <a href="{{ route('show.courselessons', $row->id) }}"
-                                                class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
-                                                title="View">
-                                                <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
-                                            </a>
-                                        <!-- Edit Button -->
-                                        <button type="button"
-                                            onclick="editLesson({{ $module->id }}, {{ $row->id }}, `{{ addslashes($row->title) }}`, `{{ $row->type }}`, `{{ addslashes($row->content ?? '') }}`, `{{ $row->video_url ?? '' }}`, `{{ $row->order_no ?? '' }}`, `{{ $row->downloadable_file ?? '' }}`)"
-                                            class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
-                                            Edit
-                                        </button>
+                    @foreach ($courseLesson as $row)
+                    <li class="pl-2">
+                        <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
+                            id="lesson-{{ $row->id }}">
+                            <a href="{{ route('show.courselessons', $row->id) }}"
+                                class="text-blue-600 hover:underline">
+                                {{ $row->title }}
+                            </a>
+                            <div class="flex gap-2">
+                                <!-- Show Button -->
+                                <a href="{{ route('show.courselessons', $row->id) }}"
+                                    class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
+                                    title="View">
+                                    <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
+                                </a>
+                                <!-- Edit Button -->
+                                <button type="button"
+                                    onclick="editLesson({{ $module->id }}, {{ $row->id }}, `{{ addslashes($row->title) }}`, `{{ $row->type }}`, `{{ addslashes($row->content ?? '') }}`, `{{ $row->video_url ?? '' }}`, `{{ $row->order_no ?? '' }}`, `{{ $row->downloadable_file ?? '' }}`)"
+                                    class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
+                                    Edit
+                                </button>
 
-                                        <!-- Delete Button -->
-                                        <button type="button" onclick="deleteLesson({{ $row->id }})"
-                                            class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-                                            Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
+                                <!-- Delete Button -->
+                                <button type="button" onclick="deleteLesson({{ $row->id }})"
+                                    class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    @endforeach
+                    @endif
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold text-gray-800 mb-4">Quiz</h4>
+                <ul class="list-disc pl-6" id="lessonList">
+                    @if ($quiz->isEmpty())
+                    <li class="text-gray-700">No Quiz available.</li>
+                    @else
+                    @foreach ($quiz as $row)
+                    <li class="pl-2">
+                        <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
+                            id="lesson-{{ $row->id }}">
+                            <a href=""
+                                class="text-blue-600 hover:underline">
+                                {{ $row->question }}
+                            </a>
+                            <div class="flex gap-2">
+                                <!-- Show Button -->
+                                <a href="{{ route('quizzes.show', $row->id) }}"
+                                    class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
+                                    title="View">
+                                    <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
+                                </a>
+                                <!-- Edit Button -->
+                                <button type="button"
+                                    onclick="openQuizModal({{ $module->id }}, {{ $row->id }})"
+                                    class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
+                                    Edit
+                                </button>
+
+                                <!-- Delete Button -->
+                                <button type="button" onclick="deleteQuiz({{ $row->id }})"
+                                    class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    @endforeach
                     @endif
                 </ul>
             </div>
@@ -95,6 +136,14 @@
                 <x-heroicon-o-list-bullet class="w-6 h-6 text-gray-700 inline-block" /> Add Course Lesson
             </button>
         </div>
+
+        <div class="flex gap-3 mt-10">
+            <button type="button" onclick="openQuizModal({{ $module->id }})"
+                class="ml-1 cursor-pointer hover:text-blue-500 dark:hover:text-blue-400" title="Add Quiz">
+                <x-heroicon-o-clipboard-document-check class="w-6 h-6 text-gray-700 inline-block" /> Add Quiz
+            </button>
+        </div>
+
 
     </div>
 
@@ -180,6 +229,75 @@
             </div>
         </form>
     </div>
+
+
+    <!-- Quiz Form -->
+    <!-- Quiz Modal -->
+    <!-- Quiz Modal Template (hidden, only for cloning) -->
+    <div id="quizModal" class="hidden">
+        <form id="quizForm" method="POST" action=""
+            enctype="multipart/form-data"
+            class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+            @csrf
+
+            <input type="hidden" name="module_id" value="{{ $module->id }}">
+
+            <!-- Question -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    Question <span class="text-red-500">*</span>
+                </label>
+                <input type="text" name="question" placeholder="Enter Question"
+                    value=""
+                    class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 
+                   focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400">
+            </div>
+
+            <!-- Options -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Option One</label>
+                <input type="text" name="option_one" placeholder="Enter option one" value=""
+                    class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none text-gray-800">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Option Two</label>
+                <input type="text" name="option_two" placeholder="Enter option two" value=""
+                    class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none text-gray-800">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Option Three</label>
+                <input type="text" name="option_three" placeholder="Enter option three" value=""
+                    class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none text-gray-800">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Option Four</label>
+                <input type="text" name="option_four" placeholder="Enter option four" value=""
+                    class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none text-gray-800">
+            </div>
+
+            <!-- Correct Answer -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Correct Answer</label>
+                <input type="text" name="correct_answer" placeholder="Enter correct answer" value=""
+                    class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-green-500 outline-none text-gray-800">
+            </div>
+        </form>
+    </div>
+
+    <!-- Button -->
+    <div class="flex gap-3 mt-10">
+        <button type="button" onclick="openQuizModal({{ $module->id }})"
+            class="ml-1 cursor-pointer hover:text-blue-500 dark:hover:text-blue-400" title="Add Quiz">
+            <x-heroicon-o-clipboard-document-check class="w-6 h-6 text-gray-700 inline-block" /> Add Quiz
+        </button>
+    </div>
+
+
+
+
+
+
+
 </x-app-layout>
 
 <!-- jQuery -->
@@ -310,6 +428,105 @@
                     },
                     error: function() {
                         Swal.fire("Error", "Failed to delete the lesson.", "error");
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+
+
+<script>
+    function openQuizModal(moduleId, quizId = null) {
+        Swal.fire({
+            title: quizId ? 'Edit Quiz' : 'Add Quiz',
+            html: $("#quizModal").html(),
+            showCancelButton: true,
+            confirmButtonText: quizId ? 'Update' : 'Save',
+            width: "600px",
+            didOpen: () => {
+                let container = Swal.getHtmlContainer().querySelector("#quizForm");
+                let $container = $(container);
+
+                // set module_id
+                $container.find("input[name='module_id']").val(moduleId);
+
+                // Prefill if editing
+                if (quizId) {
+                    $.get("{{ url('quizzes') }}/" + quizId + "/data", function(data) {
+                        $container.find("input[name='question']").val(data.question);
+                        $container.find("input[name='option_one']").val(data.option_one);
+                        $container.find("input[name='option_two']").val(data.option_two);
+                        $container.find("input[name='option_three']").val(data.option_three);
+                        $container.find("input[name='option_four']").val(data.option_four);
+                        $container.find("input[name='correct_answer']").val(data.correct_answer);
+                    });
+                }
+            },
+            preConfirm: () => {
+                let form = Swal.getHtmlContainer().querySelector("#quizForm");
+                let formData = new FormData(form);
+
+                let url = quizId ? "{{ url('quizzes') }}/" + quizId : "{{ route('quizzes.store') }}";
+                if (quizId) formData.append('_method', 'PUT'); // Laravel update method spoofing
+
+                return $.ajax({
+                        url: url,
+                        type: "POST", // Always POST, Laravel will detect `_method` for PUT
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        }
+                    }).then(response => response)
+                    .catch(xhr => {
+                        let error = xhr.responseJSON;
+                        if (error && error.errors) {
+                            Swal.showValidationMessage(
+                                Object.values(error.errors).flat().join('<br>')
+                            );
+                        } else {
+                            Swal.showValidationMessage(`Request failed: ${xhr.statusText}`);
+                        }
+                        return Promise.reject();
+                    });
+            }
+        }).then(result => {
+            if (result.isConfirmed && result.value) {
+                Swal.fire("Success!", quizId ? "Quiz updated!" : "Quiz added!", "success")
+                    .then(() => location.reload());
+            }
+        });
+    }
+</script>
+
+<script>
+    // DELETE QUIZ
+    function deleteQuiz(quizId) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This will permanently delete the quiz!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/quizzes/${quizId}`,
+                    type: "DELETE",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        Swal.fire("Deleted!", response.message ?? "The quiz has been deleted.", "success")
+                            .then(() => location.reload());
+                    },
+                    error: function(xhr) {
+                        Swal.fire("Error", "Failed to delete the quiz.", "error");
                     }
                 });
             }

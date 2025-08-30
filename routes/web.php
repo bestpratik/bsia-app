@@ -11,7 +11,8 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\VideoTestimonialController;
-use App\Models\CourseFaqs;
+// use App\Models\CourseFaqs;
+use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -117,6 +118,12 @@ Route::post('save/testimonial', [TestimonialController::class, 'store'])->name('
 Route::get('/testimonial/{id}/edit', [TestimonialController::class, 'edit'])->name('edit.testimonial');
 Route::put('/testimonial/{id}/update', [TestimonialController::class, 'update'])->name('update.testimonial');
 Route::delete('/testimonial/{id}/delete', [TestimonialController::class, 'destroy'])->name('delete.testimonial');
+
+
+//Quiz Section
+Route::resource('quizzes', QuizController::class);
+Route::get('quizzes/{id}/data', [QuizController::class, 'getQuiz']);
+
 
 
 Route::get('/', [FrontController::class, 'home'])->name('home');

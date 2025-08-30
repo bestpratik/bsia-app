@@ -121,7 +121,7 @@
                     class="group bg-white rounded-2xl mb-4 border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300">
                     <div class="video-card">
                         <div class="local-video-thumb absolute inset-0 cursor-pointer flex items-center justify-center"
-                            data-video-src="{{ asset('video/testimonial.mp4') }}" data-poster="{{ asset('uploads/' . $row->image) }}"
+                            data-video-src="{{ asset('uploads/testimonialvideos/' . $row->video_path) }}" data-poster="{{ asset('uploads/' . $row->image) }}"
                             aria-label="Play video testimonial 1">
                             <img src="{{ asset('uploads/' . $row->image) }}" alt="Video testimonial 1"
                                 class="w-full h-full object-cover" loading="lazy" decoding="async" />
@@ -139,75 +139,7 @@
                 </div>
             </div>
             @endforeach
-            {{-- <!-- Local Video 2 -->
-            <div class="px-2 sm:px-3">
-                <div
-                    class="group bg-white rounded-2xl mb-4 border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300">
-                    <div class="video-card">
-                        <div class="local-video-thumb absolute inset-0 cursor-pointer flex items-center justify-center"
-                            data-video-src="videos/testimonial.mp4" data-poster="{{ asset('photo/c2.jpg') }}"
-                            aria-label="Play video testimonial 2">
-                            <img src="{{ asset('photo/c2.jpg') }}" alt="Video testimonial 2"
-                                class="w-full h-full object-cover" loading="lazy" decoding="async" />
-                            <button class="yt-play-button" aria-hidden="true"></button>
-                        </div>
-                    </div>
-
-                    <!-- Caption -->
-                    <div class="px-4 py-3 bg-gray-50 border-t text-center">
-                        <p class="font-roboto text-sm lg:text-base font-medium text-blue-900">
-                            Mr. Debraj Chaki,
-                            <span class="text-gray-700">West Bengal</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Local Video 3 -->
-            <div class="px-2 sm:px-3">
-                <div
-                    class="group bg-white rounded-2xl mb-4 border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300">
-                    <div class="video-card">
-                        <div class="local-video-thumb absolute inset-0 cursor-pointer flex items-center justify-center"
-                            data-video-src="videos/testimonial.mp4" data-poster="{{ asset('photo/c3.jpg') }}"
-                            aria-label="Play video testimonial 3">
-                            <img src="{{ asset('photo/c3.jpg') }}" alt="Video testimonial 3"
-                                class="w-full h-full object-cover" loading="lazy" decoding="async" />
-                            <button class="yt-play-button" aria-hidden="true"></button>
-                        </div>
-                    </div>
-
-                    <!-- Caption -->
-                    <div class="px-4 py-3 bg-gray-50 border-t text-center">
-                        <p class="font-roboto text-sm lg:text-base font-medium text-blue-900">
-                            Mr. Harjeet Singh, <span class="text-gray-700">Delhi</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Local Video 4 -->
-            <div class="px-2 sm:px-3">
-                <div
-                    class="group bg-white rounded-2xl mb-4 border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300">
-                    <div class="video-card">
-                        <div class="local-video-thumb absolute inset-0 cursor-pointer flex items-center justify-center"
-                            data-video-src="videos/testimonial.mp4" data-poster="{{ asset('photo/abutus.png') }}"
-                            aria-label="Play video testimonial 4">
-                            <img src="{{ asset('photo/abutus.png') }}" alt="Video testimonial 4" class="w-full h-full object-cover"
-                                loading="lazy" decoding="async" />
-                            <button class="yt-play-button" aria-hidden="true"></button>
-                        </div>
-                    </div>
-
-                    <!-- Caption -->
-                    <div class="px-4 py-3 bg-gray-50 border-t text-center">
-                        <p class="font-roboto text-sm lg:text-base font-medium text-blue-900">
-                            Mr. ________, <span class="text-gray-700">________</span>
-                        </p>
-                    </div>
-                </div>
-            </div> --}}
+            
         </div>
     </div>
 </section>

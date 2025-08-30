@@ -18,6 +18,7 @@ class FrontController extends Controller
         $courses = Course::all();
         $testimonial = Testimonial::all();
         $videotestimonial = VideoTestimonial::all();
+        // dd($videotestimonial);
         return view('frontend.home', compact('about', 'banner', 'courses', 'testimonial', 'videotestimonial'));
     }
 

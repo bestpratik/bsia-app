@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseLesson;
 use App\Models\CourseModules;
+use App\Models\Quiz;
 use Illuminate\Http\Request;
 
 class CourseModuleController extends Controller
@@ -40,7 +41,8 @@ class CourseModuleController extends Controller
     {
         $module = CourseModules::find($id);
         $courseLesson = CourseLesson::where('course_module_id', $id)->get();
-        return view('admin.coursemodules.show', compact('module', 'courseLesson'));
+        $quiz = Quiz::where('module_id', $id)->get();
+        return view('admin.coursemodules.show', compact('module', 'courseLesson', 'quiz'));
     }
 
     public function update(Request $request, $id)
