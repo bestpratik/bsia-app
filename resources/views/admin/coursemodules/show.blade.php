@@ -50,40 +50,47 @@
                 <h4 class="text-lg font-semibold text-gray-800 mb-4">Course Lessons</h4>
                 <ul class="list-disc pl-6" id="lessonList">
                     @if ($courseLesson->isEmpty())
-                    <li class="text-gray-700">No Lesson available.</li>
+                        <li class="text-gray-700">No Lesson available.</li>
                     @else
-                    @foreach ($courseLesson as $row)
-                    <li class="pl-2">
-                        <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
-                            id="lesson-{{ $row->id }}">
-                            <a href="{{ route('show.courselessons', $row->id) }}"
-                                class="text-blue-600 hover:underline">
-                                {{ $row->title }}
-                            </a>
-                            <div class="flex gap-2">
-                                <!-- Show Button -->
-                                <a href="{{ route('show.courselessons', $row->id) }}"
-                                    class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
-                                    title="View">
-                                    <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
-                                </a>
-                                <!-- Edit Button -->
-                                <button type="button"
-                                    onclick="editLesson({{ $module->id }}, {{ $row->id }}, `{{ addslashes($row->title) }}`, `{{ $row->type }}`, `{{ addslashes($row->content ?? '') }}`, `{{ $row->video_url ?? '' }}`, `{{ $row->order_no ?? '' }}`, `{{ $row->downloadable_file ?? '' }}`)"
-                                    class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
-                                    Edit
-                                </button>
+                        @foreach ($courseLesson as $row)
+                            <li class="pl-2">
+                                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
+                                    id="lesson-{{ $row->id }}">
+                                    <a href="{{ route('show.courselessons', $row->id) }}"
+                                        class="text-blue-600 hover:underline">
+                                        {{ $row->title }}
+                                    </a>
+                                    <div class="flex gap-2">
+                                        <!-- Show Button -->
+                                        <a href="{{ route('show.courselessons', $row->id) }}"
+                                            class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
+                                            title="View">
+                                            <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
+                                        </a>
+                                        <!-- Edit Button -->
+                                        <button type="button"
+                                            onclick="editLesson({{ $module->id }}, {{ $row->id }}, `{{ addslashes($row->title) }}`, `{{ $row->type }}`, `{{ addslashes($row->content ?? '') }}`, `{{ $row->video_url ?? '' }}`, `{{ $row->order_no ?? '' }}`, `{{ $row->downloadable_file ?? '' }}`)"
+                                            class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
+                                            Edit
+                                        </button>
 
-                                <!-- Delete Button -->
-                                <button type="button" onclick="deleteLesson({{ $row->id }})"
-                                    class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
+                                        <!-- Delete Button -->
+                                        <button type="button" onclick="deleteLesson({{ $row->id }})"
+                                            class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
                     @endif
+                    <div class="flex gap-3 mt-10">
+                        <button type="button" onclick="openLessonModal({{ $module->id }})"
+                            class="ml-1 cursor-pointer hover:text-purple-500 dark:hover:text-purple-400"
+                            title="Add Lesson">
+                            <x-heroicon-o-list-bullet class="w-6 h-6 text-gray-700 inline-block" /> Add Course Lesson
+                        </button>
+                    </div>
                 </ul>
             </div>
 
@@ -91,40 +98,38 @@
                 <h4 class="text-lg font-semibold text-gray-800 mb-4">Quiz</h4>
                 <ul class="list-disc pl-6" id="lessonList">
                     @if ($quiz->isEmpty())
-                    <li class="text-gray-700">No Quiz available.</li>
+                        <li class="text-gray-700">No Quiz available.</li>
                     @else
-                    @foreach ($quiz as $row)
-                    <li class="pl-2">
-                        <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
-                            id="lesson-{{ $row->id }}">
-                            <a href=""
-                                class="text-blue-600 hover:underline">
-                                {{ $row->question }}
-                            </a>
-                            <div class="flex gap-2">
-                                <!-- Show Button -->
-                                <a href="{{ route('quizzes.show', $row->id) }}"
-                                    class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
-                                    title="View">
-                                    <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
-                                </a>
-                                <!-- Edit Button -->
-                                <button type="button"
-                                    onclick="openQuizModal({{ $module->id }}, {{ $row->id }})"
-                                    class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
-                                    Edit
-                                </button>
+                        @foreach ($quiz as $row)
+                            <li class="pl-2">
+                                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
+                                    id="lesson-{{ $row->id }}">
+                                    <a href="" class="text-blue-600 hover:underline">
+                                        {{ $row->question }}
+                                    </a>
+                                    <div class="flex gap-2">
+                                        <!-- Show Button -->
+                                        <a href="{{ route('quizzes.show', $row->id) }}"
+                                            class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
+                                            title="View">
+                                            <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
+                                        </a>
+                                        <!-- Edit Button -->
+                                        <button type="button"
+                                            onclick="openQuizModal({{ $module->id }}, {{ $row->id }})"
+                                            class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
+                                            Edit
+                                        </button>
 
-                                <!-- Delete Button -->
-                                <button type="button" onclick="deleteQuiz({{ $row->id }})"
-                                    class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
-
+                                        <!-- Delete Button -->
+                                        <button type="button" onclick="deleteQuiz({{ $row->id }})"
+                                            class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
                     @endif
                 </ul>
             </div>
@@ -132,20 +137,11 @@
 
         <!-- Footer Buttons -->
         <div class="flex gap-3 mt-10">
-            <button type="button" onclick="openLessonModal({{ $module->id }})"
-                class="ml-1 cursor-pointer hover:text-purple-500 dark:hover:text-purple-400" title="Add Lesson">
-                <x-heroicon-o-list-bullet class="w-6 h-6 text-gray-700 inline-block" /> Add Course Lesson
-            </button>
-        </div>
-
-        <div class="flex gap-3 mt-10">
             <button type="button" onclick="openQuizModal({{ $module->id }})"
                 class="ml-1 cursor-pointer hover:text-blue-500 dark:hover:text-blue-400" title="Add Quiz">
                 <x-heroicon-o-clipboard-document-check class="w-6 h-6 text-gray-700 inline-block" /> Add Quiz
             </button>
         </div>
-
-
     </div>
 
     <!-- Add Lesson Modal (Hidden Template) -->
@@ -233,26 +229,20 @@
         </form>
     </div>
 
-
-
     <!-- Quiz Form -->
     <!-- Quiz Modal -->
     <!-- Quiz Modal Template (hidden, only for cloning) -->
     <div id="quizModal" class="hidden">
-        <form id="quizForm" method="POST" action=""
-            enctype="multipart/form-data"
-            class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+        <form id="quizForm" method="POST" action="" enctype="multipart/form-data"
+            class="w-[950px] max-w-full space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
             @csrf
-
             <input type="hidden" name="module_id" value="{{ $module->id }}">
-
             <!-- Question -->
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">
                     Question <span class="text-red-500">*</span>
                 </label>
-                <input type="text" name="question" placeholder="Enter Question"
-                    value=""
+                <input type="text" name="question" placeholder="Enter Question" value=""
                     class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 
                    focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400">
             </div>
@@ -288,11 +278,6 @@
         </form>
     </div>
 
-   
-
-
-
-
     <style>
         /* Allow the popup to size based on HTML content (forms) instead of default SweetAlert max-width */
         .swal2-popup {
@@ -318,19 +303,17 @@
 <script>
     // ADD LESSON
     function openLessonModal(courseModuleId) {
-        alert(courseModuleId);
         Swal.fire({
             title: 'Add Lesson',
             html: $("#addLessonModal").html(),
-            // width: '1000px',
             showCancelButton: true,
             confirmButtonText: 'Save',
             didOpen: () => {
-                let container = $(".swal2-container #courseLessonForm");
+                let container = $(".swal2-container #CourseLessonForm");
                 container.find("input[name='course_module_id']").val(courseModuleId);
             },
             preConfirm: () => {
-                let form = $(".swal2-container #courseLessonForm")[0];
+                let form = $(".swal2-container #CourseLessonForm")[0];
                 let formData = new FormData(form);
 
                 return $.ajax({
@@ -365,7 +348,6 @@
         Swal.fire({
             title: 'Edit Course Lesson',
             html: $("#editLessonModal").html(),
-            // width: '1000px',
             showCancelButton: true,
             confirmButtonText: 'Update',
             didOpen: () => {
@@ -449,8 +431,6 @@
     }
 </script>
 
-
-
 <script>
     function openQuizModal(moduleId, quizId = null) {
         Swal.fire({
@@ -458,7 +438,6 @@
             html: $("#quizModal").html(),
             showCancelButton: true,
             confirmButtonText: quizId ? 'Update' : 'Save',
-            width: "600px",
             didOpen: () => {
                 let container = Swal.getHtmlContainer().querySelector("#quizForm");
                 let $container = $(container);
@@ -536,7 +515,8 @@
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
                     success: function(response) {
-                        Swal.fire("Deleted!", response.message ?? "The quiz has been deleted.", "success")
+                        Swal.fire("Deleted!", response.message ?? "The quiz has been deleted.",
+                                "success")
                             .then(() => location.reload());
                     },
                     error: function(xhr) {
