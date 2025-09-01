@@ -17,7 +17,7 @@ class CourseLessonController extends Controller
             'type'             => 'required|in:text,video,quiz,downloadable',
             'content'          => 'nullable|string',
             'video_url'        => 'nullable|url',
-            'downloadable_file' => 'nullable|file|mimes:pdf,doc,docx,zip,ppt,pptx,xls,xlsx,txt|max:10240', // 10MB
+            'downloadable_file' => 'nullable|file|mimes:pdf,doc,docx,zip,ppt,pptx,xls,xlsx,txt,jpg,jpeg,png,gif,webp',
             'order_no'         => 'required|integer',
         ]);
 

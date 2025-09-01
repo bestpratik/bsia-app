@@ -205,7 +205,7 @@
         <!-- Add Module Form -->
         <div id="addModuleFormTemplate" class="hidden">
             <form id="courseModuleForm"
-                class="max-w-5xl space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+                class="w-[950px] max-w-full space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
                 <input type="hidden" name="course_id" id="add-course-id">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Module Name <span
@@ -235,14 +235,13 @@
         <!-- Edit Module Form -->
         <div id="editModuleFormTemplate" class="hidden">
             <form id="editCourseModuleForm"
-                class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+                class="w-[950px] max-w-full space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
                 <input type="hidden" name="id" id="edit-id">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Module Name <span
                             class="text-red-500">*</span></label>
                     <input type="text" name="name" id="edit-name"
-                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"
-                        required>
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Description</label>
@@ -265,61 +264,72 @@
 
         <!-- Add FAQ Form -->
         <div id="addFaqFormTemplate" class="hidden">
-            <form id="courseFaqForm" class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+            <form id="courseFaqForm"
+                class="w-[950px] max-w-full space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
                 <input type="hidden" name="course_id" id="faq-course-id">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">FAQ Title <span
                             class="text-red-500">*</span></label>
                     <input type="text" name="title" placeholder="Enter FAQ title"
-                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400"
-                        required>
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description <span
-                            class="text-red-500">*</span></label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2"><span
+                            class="text-gray-500">Description</span></label>
                     <textarea name="description" rows="3" placeholder="Enter description"
-                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400"
-                        required></textarea>
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400"></textarea>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">Order No <span
                             class="text-red-500">*</span></label>
                     <input type="number" name="order_no" placeholder="Order No"
-                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400"
-                        required>
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800 placeholder-gray-400">
                 </div>
             </form>
         </div>
 
         <!-- Edit FAQ Form -->
         <div id="editFaqFormTemplate" class="hidden">
-            <form id="editCourseFaqForm" class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+            <form id="editCourseFaqForm"
+                class="w-[950px] max-w-full space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
                 <input type="hidden" name="faq_id" id="edit-faq-id">
                 <input type="hidden" name="course_id" id="edit-faq-course-id">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-2">FAQ Title <span
                             class="text-red-500">*</span></label>
                     <input type="text" name="title" id="edit-faq-title"
-                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"
-                        required>
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800">
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Description <span
-                            class="text-red-500">*</span></label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2"><span
+                            class="text-gray-500">Description</span></label>
                     <textarea name="description" id="edit-faq-description" rows="3"
-                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"
-                        required></textarea>
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"></textarea>
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Order No <span
-                            class="text-red-500">*</span></label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2"><span class="text-gray-500">Order
+                            No</span></label>
                     <input type="number" name="order_no" id="edit-faq-order-no"
-                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800"
-                        required>
+                        class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-gray-800">
                 </div>
             </form>
         </div>
     </div>
+    <style>
+        /* Allow the popup to size based on HTML content (forms) instead of default SweetAlert max-width */
+        .swal2-popup {
+            width: auto !important;
+            max-width: none !important;
+            display: inline-block;
+            /* important so popup wraps the inner form width */
+            box-sizing: border-box;
+        }
+
+        /* Optional: remove default padding inside content so the form padding stays consistent */
+        .swal2-html-container {
+            display: block;
+        }
+    </style>
 </x-app-layout>
 
 
@@ -327,7 +337,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- SweetAlert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+<!-- Summernote -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 <script>
     // ADD MODULE
     function openCourseModuleModal(courseId) {
@@ -339,13 +351,17 @@
             showCancelButton: true,
             confirmButtonText: 'Save',
             didOpen: (popup) => {
-                // Now setting inside popup correctly
                 $(popup).find("#add-course-id").val(courseId);
+                $(popup).find("textarea[name='description']").summernote({
+                    height: 150
+                });
             },
             preConfirm: () => {
                 let form = Swal.getPopup().querySelector("#courseModuleForm");
                 let formData = new FormData(form);
-
+                let summernoteContent = $(Swal.getPopup()).find("textarea[name='description']").summernote(
+                    'code');
+                formData.set("description", summernoteContent);
                 return $.ajax({
                         url: "{{ route('course-modules.store') }}",
                         type: "POST",
@@ -360,7 +376,6 @@
                     .catch(xhr => {
                         let error = xhr.responseJSON;
                         if (error.errors) {
-                            // Show backend validation errors
                             Swal.showValidationMessage(
                                 Object.values(error.errors).flat().join('<br>')
                             );
@@ -371,30 +386,8 @@
             }
         }).then((result) => {
             if (result.isConfirmed && result.value) {
-                let module = result.value.module;
-                let moduleHtml = `
-                <li class="flex items-center justify-between mb-2" id="module-${module.id}">
-                    <div>
-                        <a href="{{ route('show.coursemodules', '') }}/${module.id}" class="text-blue-600 hover:underline">
-                            ${module.name}
-                        </a>
-                    </div>
-                    <div class="flex gap-2">
-                        <button type="button"
-                            class="px-2 py-1 text-sm text-white bg-yellow-500 rounded hover:bg-yellow-600"
-                            onclick="editCourseModule(${module.id}, '${module.name}', '${module.description ?? ''}', '${module.order_no ?? ''}', ${module.status ? 1 : 0})">
-                            Edit
-                        </button>
-                        <button type="button"
-                            class="px-2 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700"
-                            onclick="deleteCourseModule(${module.id})">
-                            Delete
-                        </button>
-                    </div>
-                </li>
-            `;
-                $("#modulesList").append(moduleHtml);
-                Swal.fire('Success!', 'Course Module has been added successfully!', 'success');
+                Swal.fire('Success!', 'Course Module has been added successfully!', 'success')
+                    .then(() => location.reload());
             }
         });
     }
@@ -411,14 +404,17 @@
                 // Fill values inside SweetAlert popup
                 $(popup).find("#edit-id").val(id);
                 $(popup).find("#edit-name").val(name);
-                $(popup).find("#edit-description").val(description);
+                $(popup).find("#edit-description").summernote({
+                    height: 150
+                }).summernote('code', description);
                 $(popup).find("#edit-order_no").val(orderNo);
                 $(popup).find("#edit-status").prop('checked', status == 1);
             },
             preConfirm: () => {
                 let form = Swal.getPopup().querySelector("#editCourseModuleForm");
                 let formData = new FormData(form);
-
+                let summernoteContent = $(Swal.getPopup()).find("#edit-description").summernote('code');
+                formData.set("description", summernoteContent);
                 return $.ajax({
                         url: `/course-modules/${id}`,
                         type: "POST",
@@ -442,32 +438,10 @@
                         }
                     });
             }
-        }).then(result => {
+        }).then((result) => {
             if (result.isConfirmed && result.value) {
-                let module = result.value.module;
-                let moduleEl = $(`#module-${module.id}`);
-                if (moduleEl.length) {
-                    moduleEl.html(`
-                    <div>
-                        <a href="{{ route('show.coursemodules', '') }}/${module.id}" class="text-blue-600 hover:underline">
-                            ${module.name}
-                        </a>
-                    </div>
-                    <div class="flex gap-2">
-                        <button type="button"
-                            class="px-2 py-1 text-sm text-white bg-yellow-500 rounded hover:bg-yellow-600"
-                            onclick="editCourseModule(${module.id}, '${module.name}', '${module.description ?? ''}', '${module.order_no ?? ''}', ${module.status ? 1 : 0})">
-                            Edit
-                        </button>
-                        <button type="button"
-                            class="px-2 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700"
-                            onclick="deleteCourseModule(${module.id})">
-                            Delete
-                        </button>
-                    </div>
-                `);
-                }
-                Swal.fire('Updated!', 'Course Module has been updated successfully!', 'success');
+                Swal.fire('Update!', 'Course Module has been updated successfully!', 'success')
+                    .then(() => location.reload());
             }
         });
     }
@@ -505,14 +479,7 @@
             }
         });
     }
-</script>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
     // ADD FAQ
     function openCourseFaqModal(courseId) {
         let formHtml = $("#addFaqFormTemplate").html();
@@ -524,11 +491,16 @@
             confirmButtonText: 'Save',
             didOpen: (popup) => {
                 $(popup).find("#faq-course-id").val(courseId);
+                $(popup).find("textarea[name='description']").summernote({
+                    height: 150
+                });
             },
             preConfirm: () => {
                 let form = Swal.getPopup().querySelector("#courseFaqForm");
                 let formData = new FormData(form);
-
+                let summernoteContent = $(Swal.getPopup()).find("textarea[name='description']").summernote(
+                    'code');
+                formData.set("description", summernoteContent);
                 return $.ajax({
                         url: "{{ route('courseFaq.store') }}",
                         type: "POST",
@@ -565,6 +537,7 @@
         Swal.fire({
             title: 'Edit Course FAQ',
             html: formHtml,
+            // width: '1000px',
             focusConfirm: false,
             showCancelButton: true,
             confirmButtonText: 'Update',
@@ -572,13 +545,16 @@
                 $(popup).find("#edit-faq-id").val(faq.id);
                 $(popup).find("#edit-faq-course-id").val(faq.course_id);
                 $(popup).find("#edit-faq-title").val(faq.title);
-                $(popup).find("#edit-faq-description").val(faq.description);
+                $(popup).find("#edit-faq-description").summernote({
+                    height: 150
+                }).summernote('code', faq.description);
                 $(popup).find("#edit-faq-order-no").val(faq.order_no);
             },
             preConfirm: () => {
                 let form = Swal.getPopup().querySelector("#editCourseFaqForm");
                 let formData = new FormData(form);
-
+                let summernoteContent = $(Swal.getPopup()).find("#edit-faq-description").summernote('code');
+                formData.set("description", summernoteContent);
                 return $.ajax({
                         url: "/course/faq/" + formData.get("faq_id") + "/update",
                         type: "POST",

@@ -32,7 +32,7 @@
             <div class="md:col-span-2 p-5 rounded-xl bg-gray-50 border">
                 <p class="mb-2 text-sm text-gray-500">Description</p>
                 <p class="text-gray-700 leading-relaxed">
-                    {{ $module->description ?? 'N/A' }}
+                    {!! $module->description ?? 'N/A' !!}
                 </p>
             </div>
 
@@ -124,6 +124,7 @@
                         </div>
                     </li>
                     @endforeach
+
                     @endif
                 </ul>
             </div>
@@ -149,7 +150,8 @@
 
     <!-- Add Lesson Modal (Hidden Template) -->
     <div id="addLessonModal" class="hidden">
-        <form id="courseLessonForm" class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+        <form id="CourseLessonForm"
+            class="w-[950px] max-w-full space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
             <input type="hidden" name="course_module_id" value="">
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Lesson Title<span
@@ -192,7 +194,8 @@
 
     <!-- Edit Lesson Modal (Hidden Template) -->
     <div id="editLessonModal" class="hidden">
-        <form id="editLessonForm" class="space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
+        <form id="editLessonForm"
+            class="w-[950px] max-w-full space-y-5 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
             <input type="hidden" name="id" value="">
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Lesson Title <span
@@ -229,6 +232,7 @@
             </div>
         </form>
     </div>
+
 
 
     <!-- Quiz Form -->
@@ -284,19 +288,26 @@
         </form>
     </div>
 
-    <!-- Button -->
-    <div class="flex gap-3 mt-10">
-        <button type="button" onclick="openQuizModal({{ $module->id }})"
-            class="ml-1 cursor-pointer hover:text-blue-500 dark:hover:text-blue-400" title="Add Quiz">
-            <x-heroicon-o-clipboard-document-check class="w-6 h-6 text-gray-700 inline-block" /> Add Quiz
-        </button>
-    </div>
+   
 
 
 
 
+    <style>
+        /* Allow the popup to size based on HTML content (forms) instead of default SweetAlert max-width */
+        .swal2-popup {
+            width: auto !important;
+            max-width: none !important;
+            display: inline-block;
+            /* important so popup wraps the inner form width */
+            box-sizing: border-box;
+        }
 
-
+        /* Optional: remove default padding inside content so the form padding stays consistent */
+        .swal2-html-container {
+            display: block;
+        }
+    </style>
 
 </x-app-layout>
 
@@ -307,9 +318,11 @@
 <script>
     // ADD LESSON
     function openLessonModal(courseModuleId) {
+        alert(courseModuleId);
         Swal.fire({
             title: 'Add Lesson',
-            html: $("#addLessonModal").html(), // clone form template
+            html: $("#addLessonModal").html(),
+            // width: '1000px',
             showCancelButton: true,
             confirmButtonText: 'Save',
             didOpen: () => {
@@ -321,7 +334,7 @@
                 let formData = new FormData(form);
 
                 return $.ajax({
-                        url: "{{ route('course-lessons.store') }}",
+                        url: "{{ route('courselessons.store') }}",
                         type: "POST",
                         data: formData,
                         processData: false,
@@ -351,7 +364,8 @@
     function editLesson(moduleId, lessonId, title, type, content, videoUrl, orderNo, downloadableFile = '') {
         Swal.fire({
             title: 'Edit Course Lesson',
-            html: $("#editLessonModal").html(), // load template
+            html: $("#editLessonModal").html(),
+            // width: '1000px',
             showCancelButton: true,
             confirmButtonText: 'Update',
             didOpen: () => {
@@ -375,7 +389,7 @@
                 let formData = new FormData(form[0]);
 
                 return $.ajax({
-                        url: `/course-lessons/${lessonId}`,
+                        url: `/courselessons/${lessonId}`,
                         type: "POST",
                         data: formData,
                         processData: false,
@@ -415,7 +429,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/course-lessons/${lessonId}`,
+                    url: `/courselessons/${lessonId}`,
                     type: "DELETE",
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"

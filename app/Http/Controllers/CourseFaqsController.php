@@ -31,6 +31,7 @@ class CourseFaqsController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'order_no' => 'required',
         ]);
 
         $coursefaq = new CourseFaqs;

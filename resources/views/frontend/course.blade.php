@@ -36,53 +36,56 @@
          <div class="container mx-auto px-4 max-w-7xl">
              <div class="items-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                  <!-- Card 1 -->
-                 <a href="{{ route('course.details') }}"
-                     class="course-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl hover:shadow-brand-orange/10 transition-all duration-500 hover:-translate-y-2 h-full">
-                     <div class="relative overflow-hidden thumb">
-                         <img src="{{ asset('photo/c1.jpg') }}" alt="Infinite Astrology"
-                             class="w-full h-40 sm:h-48 lg:h-56 object-cover group-hover:scale-110 transition-transform duration-500" />
-                         <div
-                             class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                         </div>
-                         <div
-                             class="absolute top-3 sm:top-4 right-3 sm:right-4 bg-brand-red text-white px-2 sm:px-3 py-1 rounded-full text-xs font-roboto font-medium">
-                             Beginner
-                         </div>
-                         <div
-                             class="absolute top-3 sm:top-4 left-3 sm:left-4 bg-white/90 backdrop-blur-sm text-brand-dark px-2 sm:px-3 py-1 rounded-full text-xs font-roboto font-bold">
-                             ⭐ 4.9
-                         </div>
-                     </div>
-                     <div class="p-4 sm:p-6 body">
-                         <h3
-                             class="font-roboto font-bold text-lg sm:text-xl lg:text-2xl text-brand-dark mb-2 sm:mb-3 group-hover:text-brand-red transition-colors">
-                             Infinite Astrology
-                         </h3>
-                         <p class="font-roboto text-xs sm:text-sm lg:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
-                             Infinite Astrology is a beginner-friendly course that opens the
-                             doorway to the mysterious world of Vedic astrology. Designed
-                             entirely i...<span class="span text-blue-400 text-sm cursor-pointer">Read More</span>
-                         </p>
-                         <div class="flex items-center justify-between mb-3 sm:mb-4 text-xs sm:text-sm">
-                             <div class="flex items-center text-brand-orange">
-                                 <i class="fas fa-clock mr-1 sm:mr-2"></i><span class="font-roboto">12 Weeks</span>
+                 @foreach ($course as $row)
+                     <a href="{{ route('course.details') }}"
+                         class="course-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl hover:shadow-brand-orange/10 transition-all duration-500 hover:-translate-y-2 h-full">
+                         <div class="relative overflow-hidden thumb">
+                             <img src="{{ asset('uploads/' . $row->featured_image) }}" alt="Infinite Astrology"
+                                 class="w-full h-40 sm:h-48 lg:h-56 object-cover group-hover:scale-110 transition-transform duration-500" />
+                             <div
+                                 class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                              </div>
-                             <div class="flex items-center text-brand-orange">
-                                 <i class="fas fa-users mr-1 sm:mr-2"></i><span class="font-roboto">500+ Students</span>
+                             <div
+                                 class="absolute top-3 sm:top-4 right-3 sm:right-4 bg-brand-red text-white px-2 sm:px-3 py-1 rounded-full text-xs font-roboto font-medium">
+                                 Beginner
                              </div>
-                             <div class="flex items-center text-brand-orange">
-                                 <i class="fas fa-certificate mr-1 sm:mr-2"></i><span class="font-roboto">Certified</span>
+                             <div
+                                 class="absolute top-3 sm:top-4 left-3 sm:left-4 bg-white/90 backdrop-blur-sm text-brand-dark px-2 sm:px-3 py-1 rounded-full text-xs font-roboto font-bold">
+                                 ⭐ 4.9
                              </div>
                          </div>
-                         <button
-                             class="w-full h-10 sm:h-12 lg:h-14 bg-gradient-to-r from-brand-orange to-orange-600 hover:from-orange-600 hover:to-brand-orange rounded-xl text-white font-roboto text-sm sm:text-base lg:text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 enroll-button">
-                             <i class="fas fa-play mr-2"></i>
-                             Enroll Now
-                         </button>
-                     </div>
-                 </a>
+                         <div class="p-4 sm:p-6 body">
+                             <h3
+                                 class="font-roboto font-bold text-lg sm:text-xl lg:text-2xl text-brand-dark mb-2 sm:mb-3 group-hover:text-brand-red transition-colors">
+                                 {{ $row->title }}
+                             </h3>
+                             <p
+                                 class="font-roboto text-xs sm:text-sm lg:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed line-clamp-3">
+                                 {!! \Illuminate\Support\Str::limit(strip_tags($row->about_course), 150) !!}
+                                 <span class="text-blue-400 text-sm cursor-pointer">Read More</span>
+                             </p>
 
-                 <!-- Card 2 -->
+                             <div class="flex items-center justify-between mb-3 sm:mb-4 text-xs sm:text-sm">
+                                 <div class="flex items-center text-brand-orange">
+                                     <i class="fas fa-clock mr-1 sm:mr-2"></i><span class="font-roboto">12 Weeks</span>
+                                 </div>
+                                 <div class="flex items-center text-brand-orange">
+                                     <i class="fas fa-users mr-1 sm:mr-2"></i><span class="font-roboto">500+ Students</span>
+                                 </div>
+                                 <div class="flex items-center text-brand-orange">
+                                     <i class="fas fa-certificate mr-1 sm:mr-2"></i><span
+                                         class="font-roboto">Certified</span>
+                                 </div>
+                             </div>
+                             <button
+                                 class="w-full h-10 sm:h-12 lg:h-14 bg-gradient-to-r from-brand-orange to-orange-600 hover:from-orange-600 hover:to-brand-orange rounded-xl text-white font-roboto text-sm sm:text-base lg:text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 enroll-button">
+                                 <i class="fas fa-play mr-2"></i>
+                                 Enroll Now
+                             </button>
+                         </div>
+                     </a>
+                 @endforeach
+                 {{-- <!-- Card 2 -->
                  <a href="{{ route('course.details') }}"
                      class="course-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl hover:shadow-brand-orange/10 transition-all duration-500 hover:-translate-y-2 h-full">
                      <div class="relative overflow-hidden thumb">
@@ -216,7 +219,7 @@
                              Enroll Now
                          </button>
                      </div>
-                 </a>
+                 </a> --}}
              </div>
          </div>
      </main>

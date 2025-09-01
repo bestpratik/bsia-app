@@ -53,14 +53,14 @@ Route::delete('/course/{id}/delete', [CourseController::class, 'destroy'])->name
 //Course Module section
 Route::post('/course/modules', [CourseModuleController::class, 'store'])->name('course-modules.store');
 Route::put('/course-modules/{id}', [CourseModuleController::class, 'update'])->name('course-modules.update');
-Route::delete('/course-modules/{id}/delete', [CourseModuleController::class, 'destroy'])->name('course-modules.destroy');
+Route::delete('/course-modules/{id}', [CourseModuleController::class, 'destroy'])->name('course-modules.destroy');
 Route::get('/coursemodules/{id}/show', [CourseModuleController::class, 'show'])->name('show.coursemodules');
 
 
 //Course Lesson section
-Route::post('/course-lessons', [CourseLessonController::class, 'store'])->name('course-lessons.store');
-Route::put('/course-lessons/{id}', [CourseLessonController::class, 'update'])->name('course-lessons.update');
-Route::delete('/course-lessons/{id}/delete', [CourseLessonController::class, 'destroy'])->name('course-lessons.destroy');
+Route::post('/courselessons', [CourseLessonController::class, 'store'])->name('courselessons.store');
+Route::put('/courselessons/{id}', [CourseLessonController::class, 'update'])->name('courselessons.update');
+Route::delete('/courselessons/{id}', [CourseLessonController::class, 'destroy'])->name('courselessons.destroy');
 Route::get('/courselessons/{id}/show', [CourseLessonController::class, 'show'])->name('show.courselessons');
 
 

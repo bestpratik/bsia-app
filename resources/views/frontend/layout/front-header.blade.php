@@ -22,14 +22,20 @@
             <!-- Desktop Nav Links -->
             <nav class="hidden lg:flex space-x-6 flex-1 justify-end me-3">
                 <a href="/"
-                    class="nav-link font-roboto text-gray-800 text-sm xl:text-base 2xl:text-lg transition-colors duration-300 py-2 px-3 rounded-lg hover:text-brand-red hover:bg-gray-50 wow animate__animated animate__fadeInUp"
+                    class="nav-link font-roboto text-sm xl:text-base 2xl:text-lg transition-colors duration-300 py-2 px-3 rounded-lg wow animate__animated animate__fadeInUp
+       {{ request()->is('/') ? 'text-brand-red bg-gray-50' : 'text-gray-800 hover:text-brand-red hover:bg-gray-50' }}"
                     data-wow-delay="0.2s">Home</a>
+
                 <a href="{{ route('courses') }}"
-                    class="nav-link font-roboto text-gray-800 text-sm xl:text-base 2xl:text-lg transition-colors duration-300 py-2 px-3 rounded-lg hover:text-brand-red hover:bg-gray-50 wow animate__animated animate__fadeInUp"
+                    class="nav-link font-roboto text-sm xl:text-base 2xl:text-lg transition-colors duration-300 py-2 px-3 rounded-lg wow animate__animated animate__fadeInUp
+       {{ request()->routeIs('courses') ? 'text-brand-red bg-gray-50' : 'text-gray-800 hover:text-brand-red hover:bg-gray-50' }}"
                     data-wow-delay="0.3s">Courses</a>
+
                 <a href="{{ route('ebooks') }}"
-                    class="nav-link font-roboto text-gray-800 text-sm xl:text-base 2xl:text-lg transition-colors duration-300 py-2 px-3 rounded-lg hover:text-brand-red hover:bg-gray-50 wow animate__animated animate__fadeInUp"
+                    class="nav-link font-roboto text-sm xl:text-base 2xl:text-lg transition-colors duration-300 py-2 px-3 rounded-lg wow animate__animated animate__fadeInUp
+       {{ request()->routeIs('ebooks') ? 'text-brand-red bg-gray-50' : 'text-gray-800 hover:text-brand-red hover:bg-gray-50' }}"
                     data-wow-delay="0.4s">E-book</a>
+
                 <!-- <a
               href="#testimonials"
               class="nav-link font-roboto text-gray-800 text-sm xl:text-base 2xl:text-lg transition-colors duration-300 py-2 px-3 rounded-lg hover:text-brand-red hover:bg-gray-50 wow animate__animated animate__fadeInUp"
@@ -48,11 +54,11 @@
             <div class="flex items-center space-x-4">
                 <!-- Log in -->
                 <a href="{{ route('front.login') }}">
-                <button 
-                    class="hidden md:inline-block enroll-button h-8 xl:h-10 px-4 rounded-lg border-2 border-brand-red font-roboto text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 transform hover:scale-105 wow animate__animated animate__bounceIn"
-                    data-wow-delay="0.8s">
-                    Log in
-                </button>
+                    <button
+                        class="hidden md:inline-block enroll-button h-8 xl:h-10 px-4 rounded-lg border-2 border-brand-red font-roboto text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 transform hover:scale-105 wow animate__animated animate__bounceIn"
+                        data-wow-delay="0.8s">
+                        Log in
+                    </button>
                 </a>
 
                 <!-- Enroll Now -->

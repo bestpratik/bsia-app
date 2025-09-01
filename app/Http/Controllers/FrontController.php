@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\About;
 use App\Models\Banner;
 use App\Models\Course;
+use App\Models\Ebook;
 use App\Models\Testimonial;
 use App\Models\VideoTestimonial;
 use Illuminate\Http\Request;
@@ -24,13 +25,14 @@ class FrontController extends Controller
 
     public function course()
     {
-        // $courses = Course::all();
-        return view('frontend.course');
+        $course = Course::all();
+        return view('frontend.course', compact('course'));
     }
 
-    public function course_details()
+    public function course_details($slug)
     {
-        return view('frontend.coursedetails');
+        $courses = Course::where('slug', $slug)->firstOrFail();
+        return view('frontend.coursedetails', compact('courses'));
     }
 
     public function course_learning()
@@ -40,7 +42,8 @@ class FrontController extends Controller
 
     public function ebooks()
     {
-        return view('frontend.ebook');
+        $ebook = Ebook::all();
+        return view('frontend.ebook', compact('ebook'));
     }
 
     public function login()
