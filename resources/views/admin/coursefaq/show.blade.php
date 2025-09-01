@@ -32,7 +32,7 @@
             <div class="md:col-span-2 p-5 rounded-xl bg-gray-50 border">
                 <p class="mb-2 text-sm text-gray-500">Description</p>
                 <p class="text-gray-700 leading-relaxed">
-                    {{ $coursefaq->description ?? 'N/A' }}
+                    {!! $coursefaq->description ?? 'N/A' !!}
                 </p>
             </div>
         </div>

@@ -35,21 +35,22 @@
     <main id="ebooks-page" class="pb-16">
         <div class="container mx-auto px-4 max-w-7xl">
             <div class="items-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($ebook as $row)
                 <!-- eBook 1 -->
                 <article
                     class="ebook-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
                     <div class="relative overflow-hidden thumb">
-                        <img src="{{ asset('photo/c4.png') }}"
+                        <img src="{{ asset('uploads/'. $row->featured_image) }}"
                             class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
                             alt="Astrology Basics" />
                         <span class="price-badge">₹299</span>
                     </div>
                     <div class="body p-4 sm:p-6">
                         <h3 class="font-roboto font-bold text-lg sm:text-xl lg:text-2xl text-brand-dark mb-2">
-                            Astrology Basics
+                            {{ $row->title }}
                         </h3>
                         <p class="text-gray-600 text-sm lg:text-base">
-                            An introduction to key concepts and charts.
+                            {!! $row->description !!}
                         </p>
                         <div class="mt-4 flex items-center justify-between">
                             <span class="text-brand-orange text-sm">PDF • 120 pages</span>
@@ -59,7 +60,8 @@
                         </div>
                     </div>
                 </article>
-                <!-- eBook 2 -->
+                @endforeach
+                {{-- <!-- eBook 2 -->
                 <article
                     class="ebook-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
                     <div class="relative overflow-hidden thumb">
@@ -106,7 +108,7 @@
                             </button>
                         </div>
                     </div>
-                </article>
+                </article> --}}
             </div>
         </div>
     </main>

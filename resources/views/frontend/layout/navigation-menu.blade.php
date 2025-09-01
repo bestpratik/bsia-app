@@ -31,23 +31,29 @@
 
             <nav class="flex-1 space-y-2 relative z-10">
                 <a href="/"
-                    class="flex items-center px-4 py-4 text-white hover:bg-white/15 rounded-xl transition-all duration-300 group transform hover:translate-x-2">
+                    class="flex items-center px-4 py-4 rounded-xl transition-all duration-300 group transform hover:translate-x-2 
+       {{ request()->is('/') ? 'bg-white/15 text-brand-gold' : 'text-white hover:bg-white/15' }}">
                     <i
                         class="fas fa-home mr-4 text-brand-gold group-hover:scale-125 transition-transform duration-300"></i>
                     <span class="font-roboto text-lg font-medium">Home</span>
                 </a>
+
                 <a href="{{ route('courses') }}"
-                    class="flex items-center px-4 py-4 text-white hover:bg-white/15 rounded-xl transition-all duration-300 group transform hover:translate-x-2">
+                    class="flex items-center px-4 py-4 rounded-xl transition-all duration-300 group transform hover:translate-x-2 
+       {{ request()->routeIs('courses') ? 'bg-white/15 text-brand-gold' : 'text-white hover:bg-white/15' }}">
                     <i
                         class="fas fa-graduation-cap mr-4 text-brand-gold group-hover:scale-125 transition-transform duration-300"></i>
                     <span class="font-roboto text-lg font-medium">Courses</span>
                 </a>
+
                 <a href="{{ route('ebooks') }}"
-                    class="flex items-center px-4 py-4 text-white hover:bg-white/15 rounded-xl transition-all duration-300 group transform hover:translate-x-2">
+                    class="flex items-center px-4 py-4 rounded-xl transition-all duration-300 group transform hover:translate-x-2 
+       {{ request()->routeIs('ebooks') ? 'bg-white/15 text-brand-gold' : 'text-white hover:bg-white/15' }}">
                     <i
                         class="fas fa-info-circle mr-4 text-brand-gold group-hover:scale-125 transition-transform duration-300"></i>
                     <span class="font-roboto text-lg font-medium">E-book</span>
                 </a>
+
                 <!-- <a
             href="#testimonials"
             class="flex items-center px-4 py-4 text-white hover:bg-white/15 rounded-xl transition-all duration-300 group transform hover:translate-x-2"
