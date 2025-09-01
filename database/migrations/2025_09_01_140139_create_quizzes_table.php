@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->integer('module_id');
+            $table->unsignedBigInteger('course_module_id');
             $table->text('question')->nullable();
             $table->text('option_one')->nullable();
             $table->text('option_two')->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('option_four')->nullable();
             $table->text('correct_answer')->nullable();
             $table->timestamps();
-            $table->foreign('module_id')->references('id')->on('course_modules')->onDelete('cascade');
+            $table->foreign('course_module_id')->references('id')->on('course_modules')->onDelete('cascade');
         });
     }
 
