@@ -8,7 +8,7 @@ class Quiz extends Model
 {
     protected $table = 'quizzes';
     protected $fillable = [
-        'module_id',
+        'course_module_id',
         'question',
         'option_one',
         'option_two',

@@ -41,7 +41,7 @@ class CourseModuleController extends Controller
     {
         $module = CourseModules::find($id);
         $courseLesson = CourseLesson::where('course_module_id', $id)->get();
-        $quiz = Quiz::where('module_id', $id)->get();
+        $quiz = Quiz::where('course_module_id', $id)->get();
         return view('admin.coursemodules.show', compact('module', 'courseLesson', 'quiz'));
     }
 

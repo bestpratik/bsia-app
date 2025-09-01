@@ -62,7 +62,7 @@ class QuizController extends Controller
         // Quiz::create($request->all());
 
         $quiz = new Quiz();
-        $quiz->module_id = $request->module_id;
+        $quiz->course_module_id = $request->module_id;
         $quiz->question = $request->question;
         $quiz->option_one = $request->option_one;
         $quiz->option_two = $request->option_two;
@@ -90,7 +90,7 @@ class QuizController extends Controller
         ]);
 
         $quiz = Quiz::findOrFail($id);
-        $quiz->module_id = $request->module_id;
+        $quiz->course_module_id = $request->module_id;
         $quiz->question = $request->question;
         $quiz->option_one = $request->option_one;
         $quiz->option_two = $request->option_two;
