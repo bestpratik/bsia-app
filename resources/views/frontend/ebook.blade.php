@@ -40,17 +40,17 @@
                 <article
                     class="ebook-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
                     <div class="relative overflow-hidden thumb">
-                        <img src="{{ asset('uploads/'. $row->featured_image) }}"
+                        <img src="{{ $row->featured_image ? asset('uploads/' . $row->featured_image) : asset('photo/default-banner.jpg') }}"
                             class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
                             alt="Astrology Basics" />
                         <span class="price-badge">₹299</span>
                     </div>
                     <div class="body p-4 sm:p-6">
                         <h3 class="font-roboto font-bold text-lg sm:text-xl lg:text-2xl text-brand-dark mb-2">
-                            {{ $row->title }}
+                            {{ $row->title ?? '' }}
                         </h3>
                         <p class="text-gray-600 text-sm lg:text-base">
-                            {!! $row->description !!}
+                            {!! $row->description ?? '' !!}
                         </p>
                         <div class="mt-4 flex items-center justify-between">
                             <span class="text-brand-orange text-sm">PDF • 120 pages</span>

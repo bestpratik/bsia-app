@@ -40,7 +40,7 @@
                      <a href="{{ route('course.details') }}"
                          class="course-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl hover:shadow-brand-orange/10 transition-all duration-500 hover:-translate-y-2 h-full">
                          <div class="relative overflow-hidden thumb">
-                             <img src="{{ asset('uploads/' . $row->featured_image) }}" alt="Infinite Astrology"
+                             <img src="{{ $row->featured_image ? asset('uploads/' . $row->featured_image) : asset('photo/default-banner.jpg') }}" alt="Infinite Astrology"
                                  class="w-full h-40 sm:h-48 lg:h-56 object-cover group-hover:scale-110 transition-transform duration-500" />
                              <div
                                  class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -57,11 +57,11 @@
                          <div class="p-4 sm:p-6 body">
                              <h3
                                  class="font-roboto font-bold text-lg sm:text-xl lg:text-2xl text-brand-dark mb-2 sm:mb-3 group-hover:text-brand-red transition-colors">
-                                 {{ $row->title }}
+                                 {{ $row->title ?? '' }}
                              </h3>
                              <p
                                  class="font-roboto text-xs sm:text-sm lg:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed line-clamp-3">
-                                 {!! \Illuminate\Support\Str::limit(strip_tags($row->about_course), 150) !!}
+                                 {!! \Illuminate\Support\Str::limit(strip_tags($row->about_course), 150) ?? '' !!}
                                  <span class="text-blue-400 text-sm cursor-pointer">Read More</span>
                              </p>
 

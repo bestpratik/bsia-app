@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-lg border border-gray-200">
+    <div class="max-w-7xl mx-auto p-8 bg-white rounded-2xl shadow-lg border border-gray-200">
 
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 border-b pb-4">
@@ -58,7 +58,7 @@
                                     id="lesson-{{ $row->id }}">
                                     <a href="{{ route('show.courselessons', $row->id) }}"
                                         class="text-blue-600 hover:underline">
-                                        {{ $row->title }}
+                                        {{ $row->title ?? '' }}
                                     </a>
                                     <div class="flex gap-2">
                                         <!-- Show Button -->
@@ -104,8 +104,8 @@
                             <li class="pl-2">
                                 <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
                                     id="lesson-{{ $row->id }}">
-                                    <a href="" class="text-blue-600 hover:underline">
-                                        {{ $row->question }}
+                                    <a href="{{ route('quizzes.show', $row->id) }}" class="text-blue-600 hover:underline">
+                                        {{ $row->question ?? '' }}
                                     </a>
                                     <div class="flex gap-2">
                                         <!-- Show Button -->

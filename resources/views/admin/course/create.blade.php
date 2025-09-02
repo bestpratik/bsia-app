@@ -6,7 +6,7 @@
         </div>
     @endif
     <div
-        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-4xl mx-auto">
+        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-7xl mx-auto">
         <h2 class="font-semibold text-xl text-gray-800 m-0">
             Add Course
         </h2>
@@ -22,7 +22,7 @@
             <!-- Title -->
             <div>
                 <label class="block">Title<span class="text-red-700">*</span></label>
-                <input name="title" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Title">
+                <input name="title" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Title" value="{{ old('title') }}">
                 @error('title')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                 @enderror
@@ -51,12 +51,12 @@
                 <div>
                     <label class="block">Instructor Name</label>
                     <input name="instructor_name" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Instructor Name">
+                        placeholder="Enter Instructor Name" value="{{ old('instructor_name') }}">
                 </div>
                 <div>
                     <label class="block">Instructor Designation</label>
                     <input name="instructor_designation" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Instructor Designation">
+                        placeholder="Enter Instructor Designation" value="{{ old('instructor_designation') }}">
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block">MRP<span class="text-red-700">*</span></label>
-                    <input name="mrp" type="number" class="w-full mt-1 p-2 border rounded" placeholder="Enter MRP">
+                    <input name="mrp" type="number" class="w-full mt-1 p-2 border rounded" placeholder="Enter MRP" value="{{ old('mrp') }}">
                     @error('mrp')
                         <span class="text-sm text-red-500">{{ $message }}</span>
                     @enderror
@@ -77,7 +77,7 @@
                 <div>
                     <label class="block">Sellable Price<span class="text-red-700">*</span></label>
                     <input name="sellable_price" type="number" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Sellable Price">
+                        placeholder="Enter Sellable Price" value="{{ old('sellable_price') }}">
                     @error('sellable_price')
                         <span class="text-sm text-red-500">{{ $message }}</span>
                     @enderror
@@ -117,14 +117,14 @@
             <div>
                 <label class="block">Language</label>
                 <input name="language" type="text" class="w-full mt-1 p-2 border rounded"
-                    placeholder="Enter Language">
+                    placeholder="Enter Language" value="{{ old('language') }}">
             </div>
 
             <!-- Order No -->
             <div>
                 <label class="block">Order No<span class="text-red-700">*</span></label>
                 <input name="order_no" type="number" class="w-full mt-1 p-2 border rounded"
-                    placeholder="Enter Order No">
+                    placeholder="Enter Order No" value="{{ old('order_no') }}">
                 @error('order_no')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                 @enderror

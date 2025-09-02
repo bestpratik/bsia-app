@@ -6,7 +6,7 @@
         </div>
     @endif
     <div
-        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-4xl mx-auto">
+        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-7xl mx-auto">
         <h2 class="font-semibold text-xl text-gray-800 m-0">
             Edit Testimonial
         </h2>
@@ -23,7 +23,7 @@
                 <label class="block">
                     <span class="text-gray-700">Name</span>
                     <input name="name" type="text" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $testimonial->name }}" placeholder="Enter Name">
+                        value="{{ $testimonial->name ?? '' }}" placeholder="Enter Name">
                 </label>
             </div>
 
@@ -43,7 +43,7 @@
                 <label class="block">
                     <span class="text-gray-700">Profession</span>
                     <input name="profession" type="text" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $testimonial->profession }}" placeholder="Enter Profession">
+                        value="{{ $testimonial->profession ?? '' }}" placeholder="Enter Profession">
                 </label>
             </div>
 
@@ -51,7 +51,7 @@
                 <label class="block">
                     <span class="text-gray-700">Review</span>
                     <textarea name="review" rows="5" class="w-full mt-1 p-2 border rounded summernote"
-                        placeholder="Enter Review"> value="{{ old('review', $testimonial->review) }}"</textarea>
+                        placeholder="Enter Review">{{ old('review', $testimonial->review) }}</textarea>
                 </label>
             </div>
 

@@ -6,7 +6,7 @@
         </div>
     @endif
     <div
-        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-4xl mx-auto">
+        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-7xl mx-auto">
         <h2 class="font-semibold text-xl text-gray-800 m-0">
             Add Testimonial
         </h2>
@@ -22,7 +22,7 @@
             <div>
                 <label class="block">Name<span class="text-red-700">*</span>
                     <input name="name" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Name">
+                        placeholder="Enter Name" value="{{ old('name') }}">
                     @if ($errors->has('name'))
                         <span class="mt-1 text-sm text-red-500">{{ $errors->first('name') }}</span>
                     @endif
@@ -53,7 +53,7 @@
                 <label class="block">
                     <span class="text-gray-700">Profession</span>
                     <input name="profession" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Profession">
+                        placeholder="Enter Profession" value="{{ old('profession') }}">
                 </label>
             </div>
             <!--Review-->

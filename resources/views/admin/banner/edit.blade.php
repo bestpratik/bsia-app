@@ -6,7 +6,7 @@
         </div>
     @endif
     <div
-        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-4xl mx-auto">
+        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-7xl mx-auto">
         <h2 class="font-semibold text-xl text-gray-800 m-0">
             Edit Banner
         </h2>
@@ -33,7 +33,7 @@
                 <label class="block">
                     <span class="text-gray-700">Title</span>
                     <input name="title" type="text" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $banner->title }}" placeholder="Enter Title">
+                        value="{{ $banner->title ?? '' }}" placeholder="Enter Title">
                     @if ($errors->has('title'))
                         <span class="mt-1 text-sm text-red-500">{{ $errors->first('title') }}</span>
                     @endif
@@ -45,7 +45,7 @@
                 <label class="block">
                     <span class="text-gray-700">Sub Title</span>
                     <input name="sub_title" type="text" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $banner->sub_title }}" placeholder="Enter Sub Title">
+                        value="{{ $banner->sub_title ?? '' }}" placeholder="Enter Sub Title">
                     @if ($errors->has('sub_title'))
                         <span class="mt-1 text-sm text-red-500">{{ $errors->first('sub_title') }}</span>
                     @endif
@@ -69,7 +69,7 @@
                 <label class="block">
                     <span class="text-gray-700">Video URL (for Video Type)</span>
                     <input name="video_url" type="url" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $banner->video_url }}" placeholder="https://www.youtube.com/embed/...">
+                        value="{{ $banner->video_url ?? '' }}" placeholder="https://www.youtube.com/embed/...">
                 </label>
             </div>
 
@@ -77,7 +77,7 @@
                 <label class="block">
                     <span class="text-gray-700">Button Text One</span>
                     <input name="button_text_one" type="text" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $banner->button_text_one }}" placeholder="Enter Button Text">
+                        value="{{ $banner->button_text_one ?? '' }}" placeholder="Enter Button Text">
                 </label>
             </div>
 
@@ -85,7 +85,7 @@
                 <label class="block">
                     <span class="text-gray-700">Button Link One</span>
                     <input name="button_link_one" type="text" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $banner->button_link_one }}" placeholder="Enter Button Link">
+                        value="{{ $banner->button_link_one ?? '' }}" placeholder="Enter Button Link">
                 </label>
             </div>
 
@@ -93,7 +93,7 @@
                 <label class="block">
                     <span class="text-gray-700">Button Text Two</span>
                     <input name="button_text_two" type="text" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $banner->button_text_two }}" placeholder="Enter Button Text">
+                        value="{{ $banner->button_text_two ?? '' }}" placeholder="Enter Button Text">
                 </label>
             </div>
 
@@ -101,7 +101,7 @@
                 <label class="block">
                     <span class="text-gray-700">Button Link Two</span>
                     <input name="button_link_two" type="text" class="w-full mt-1 p-2 border rounded"
-                        value="{{ $banner->button_link_two }}" placeholder="Enter Button Link">
+                        value="{{ $banner->button_link_two ?? '' }}" placeholder="Enter Button Link">
                 </label>
             </div>
 

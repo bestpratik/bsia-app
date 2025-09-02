@@ -6,7 +6,7 @@
         </div>
     @endif
     <div
-        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-4xl mx-auto">
+        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-7xl mx-auto">
         <h2 class="font-semibold text-xl text-gray-800 m-0">
             Edit Ebook
         </h2>
@@ -22,7 +22,7 @@
             <!-- Title -->
             <div>
                 <label class="block">Title<span class="text-red-700">*</span></label>
-                <input name="title" type="text" value="{{ $ebook->title }}" class="w-full mt-1 p-2 border rounded"
+                <input name="title" type="text" value="{{ $ebook->title ?? '' }}" class="w-full mt-1 p-2 border rounded"
                     placeholder="Enter Title">
                 @error('title')
                     <span class="text-sm text-red-500">{{ $message }}</span>
@@ -32,24 +32,22 @@
             <!-- Description -->
             <div>
                 <label class="block">Description</label>
-                <textarea name="description" rows="3" class="w-full mt-1 p-2 border rounded summernote">{{ $ebook->description }}</textarea>
+                <textarea name="description" rows="3" class="w-full mt-1 p-2 border rounded summernote">{{ $ebook->description ?? '' }}</textarea>
             </div>
             
             <!-- Pricing -->
                 <div>
                     <label class="block">Price</label>
-                    <input name="price" type="number" value="{{ $ebook->price }}"
+                    <input name="price" type="number" value="{{ $ebook->price ?? '' }}"
                         class="w-full mt-1 p-2 border rounded">
                 </div>
 
             <!-- Author -->
-            <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block">Author</label>
-                    <input name="author" type="text" value="{{ $ebook->author }}"
+                    <input name="author" type="text" value="{{ $ebook->author ?? '' }}"
                         class="w-full mt-1 p-2 border rounded">
                 </div>
-            </div>
 
             <!-- Featured Image -->
             <div>

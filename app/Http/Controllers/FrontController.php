@@ -29,10 +29,10 @@ class FrontController extends Controller
         return view('frontend.course', compact('course'));
     }
 
-    public function course_details($slug)
+    public function course_details()
     {
-        $courses = Course::where('slug', $slug)->firstOrFail();
-        return view('frontend.coursedetails', compact('courses'));
+        // $courses = Course::where('slug', $slug)->firstOrFail();
+        return view('frontend.coursedetails');
     }
 
     public function course_learning()

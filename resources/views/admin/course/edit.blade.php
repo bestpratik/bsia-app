@@ -6,7 +6,7 @@
         </div>
     @endif
     <div
-        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-4xl mx-auto">
+        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-7xl mx-auto">
         <h2 class="font-semibold text-xl text-gray-800 m-0">
             Edit Course
         </h2>
@@ -22,7 +22,7 @@
             <!-- Title -->
             <div>
                 <label class="block">Title<span class="text-red-700">*</span></label>
-                <input name="title" type="text" value="{{ $course->title }}" class="w-full mt-1 p-2 border rounded"
+                <input name="title" type="text" value="{{ $course->title ?? '' }}" class="w-full mt-1 p-2 border rounded"
                     placeholder="Enter Title">
                 @error('title')
                     <span class="text-sm text-red-500">{{ $message }}</span>
@@ -32,45 +32,45 @@
             <!-- Short Description -->
             <div>
                 <label class="block">Short Description</label>
-                <textarea name="short_description" rows="3" class="w-full mt-1 p-2 border rounded summernote">{{ $course->short_description }}</textarea>
+                <textarea name="short_description" rows="3" class="w-full mt-1 p-2 border rounded summernote">{{ $course->short_description ?? '' }}</textarea>
             </div>
 
             <!-- About Course -->
             <div>
                 <label class="block">About Course</label>
-                <textarea name="about_course" rows="4" class="w-full mt-1 p-2 border rounded summernote">{{ $course->about_course }}</textarea>
+                <textarea name="about_course" rows="4" class="w-full mt-1 p-2 border rounded summernote">{{ $course->about_course ?? '' }}</textarea>
             </div>
 
             <!-- Why Join -->
             <div>
                 <label class="block">Why Join The Course</label>
-                <textarea name="why_join_the_course" rows="3" class="w-full mt-1 p-2 border rounded summernote">{{ $course->why_join_the_course }}</textarea>
+                <textarea name="why_join_the_course" rows="3" class="w-full mt-1 p-2 border rounded summernote">{{ $course->why_join_the_course ?? '' }}</textarea>
             </div>
 
             <!-- Instructor Info -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block">Instructor Name</label>
-                    <input name="instructor_name" type="text" value="{{ $course->instructor_name }}"
+                    <input name="instructor_name" type="text" value="{{ $course->instructor_name ?? '' }}"
                         class="w-full mt-1 p-2 border rounded">
                 </div>
                 <div>
                     <label class="block">Instructor Designation</label>
-                    <input name="instructor_designation" type="text" value="{{ $course->instructor_designation }}"
+                    <input name="instructor_designation" type="text" value="{{ $course->instructor_designation ?? '' }}"
                         class="w-full mt-1 p-2 border rounded">
                 </div>
             </div>
 
             <div>
                 <label class="block">Instructor Details</label>
-                <textarea name="instructor_details" rows="3" class="w-full mt-1 p-2 border rounded summernote">{{ $course->instructor_details }}</textarea>
+                <textarea name="instructor_details" rows="3" class="w-full mt-1 p-2 border rounded summernote">{{ $course->instructor_details ?? '' }}</textarea>
             </div>
 
             <!-- Pricing -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block">MRP</label>
-                    <input name="mrp" type="number" value="{{ $course->mrp }}"
+                    <input name="mrp" type="number" value="{{ $course->mrp ?? '' }}"
                         class="w-full mt-1 p-2 border rounded">
                         @error('mrp')
                     <span class="text-sm text-red-500">{{ $message }}</span>
@@ -78,7 +78,7 @@
                 </div>
                 <div>
                     <label class="block">Sellable Price</label>
-                    <input name="sellable_price" type="number" value="{{ $course->sellable_price }}"
+                    <input name="sellable_price" type="number" value="{{ $course->sellable_price ?? '' }}"
                         class="w-full mt-1 p-2 border rounded">
                         @error('sellable_price')
                     <span class="text-sm text-red-500">{{ $message }}</span>
@@ -121,14 +121,14 @@
             <!-- Language -->
             <div>
                 <label class="block">Language</label>
-                <input name="language" type="text" value="{{ $course->language }}"
+                <input name="language" type="text" value="{{ $course->language ?? '' }}"
                     class="w-full mt-1 p-2 border rounded" placeholder="Enter Language">
             </div>
 
             <!-- Order No -->
             <div>
                 <label class="block">Order No</label>
-                <input name="order_no" type="number" value="{{ $course->order_no }}"
+                <input name="order_no" type="number" value="{{ $course->order_no ?? '' }}"
                     class="w-full mt-1 p-2 border rounded">
             </div>
 

@@ -6,7 +6,7 @@
         </div>
     @endif
     <div
-        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-4xl mx-auto">
+        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-7xl mx-auto">
         <h2 class="font-semibold text-xl text-gray-800 m-0">
             Add Banner
         </h2>
@@ -35,7 +35,7 @@
             <div>
                 <label class="block">Title<span class="text-red-700">*</span>
                     <input name="title" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Title">
+                        placeholder="Enter Title" value="{{ old('title') }}">
                     @if ($errors->has('title'))
                         <span class="mt-1 text-sm text-red-500">{{ $errors->first('title') }}</span>
                     @endif
@@ -47,7 +47,7 @@
             <div>
                 <label class="block">Sub Title<span class="text-red-700">*</span>
                     <input name="sub_title" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Sub Title">
+                        placeholder="Enter Sub Title" value="{{ old('sub_title') }}">
                     @if ($errors->has('sub_title'))
                         <span class="mt-1 text-sm text-red-500">{{ $errors->first('sub_title') }}</span>
                     @endif
@@ -83,7 +83,7 @@
                 <label class="block">
                     <span class="text-gray-700">Button Text One</span>
                     <input name="button_text_one" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Button Text">
+                        placeholder="Enter Button Text" value="{{ old('button_text_one') }}">
                 </label>
             </div>
 
@@ -91,7 +91,7 @@
                 <label class="block">
                     <span class="text-gray-700">Button Link One</span>
                     <input name="button_link_one" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Button Link">
+                        placeholder="Enter Button Link" value="{{ old('button_link_one') }}">
                 </label>
             </div>
 
@@ -99,7 +99,7 @@
                 <label class="block">
                     <span class="text-gray-700">Button Text Two</span>
                     <input name="button_text_two" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Button Text">
+                        placeholder="Enter Button Text" value="{{ old('button_text_two') }}">
                 </label>
             </div>
 
@@ -107,7 +107,7 @@
                 <label class="block">
                     <span class="text-gray-700">Button Link Two</span>
                     <input name="button_link_two" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Button Link">
+                        placeholder="Enter Button Link" value="{{ old('button_link_two') }}">
                 </label>
             </div>
 

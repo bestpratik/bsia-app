@@ -1,11 +1,11 @@
 <x-app-layout>
-    <div class="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-lg border border-gray-200">
+    <div class="max-w-7xl mx-auto p-8 bg-white rounded-2xl shadow-lg border border-gray-200">
 
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 border-b pb-4">
             <h2 class="text-3xl font-bold text-gray-800 flex items-center gap-2">
                 <x-heroicon-o-academic-cap class="w-8 h-8 text-blue-600" />
-                {{ $ebook->title }}
+                {{ $ebook->title ?? '' }}
             </h2>
             <a href="{{ route('ebook') }}"
                 class="mt-4 sm:mt-0 px-5 py-2.5 text-sm font-medium text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg transition duration-200">

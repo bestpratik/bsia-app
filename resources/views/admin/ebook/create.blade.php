@@ -6,7 +6,7 @@
         </div>
     @endif
     <div
-        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-4xl mx-auto">
+        class="bg-white border rounded-lg col-span-2 mt-4 p-8 flex flex-wrap align-center justify-between max-w-7xl mx-auto">
         <h2 class="font-semibold text-xl text-gray-800 m-0">
             Add Ebook
         </h2>
@@ -22,7 +22,7 @@
             <!-- Title -->
             <div>
                 <label class="block">Title<span class="text-red-700">*</span></label>
-                <input name="title" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Title">
+                <input name="title" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Title" value="{{ old('title') }}">
                 @error('title')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                 @enderror
@@ -37,7 +37,7 @@
             <!-- Pricing -->
             <div>
                 <label class="block">Price<span class="text-red-700">*</span></label>
-                <input name="price" type="number" class="w-full mt-1 p-2 border rounded" placeholder="Enter Price">
+                <input name="price" type="number" class="w-full mt-1 p-2 border rounded" placeholder="Enter Price" value="{{ old('price') }}">
                 @error('price')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                 @enderror
@@ -46,7 +46,7 @@
             <!-- Author -->
             <div>
                 <label class="block">Author</label>
-                <input name="author" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Author">
+                <input name="author" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Author" value="{{ old('author') }}">
             </div>
 
             <!-- Featured Image -->
