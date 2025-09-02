@@ -300,7 +300,29 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Summernote CSS & JS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+
 <script>
+    // Initialize Summernote on modal open
+    function initSummernote(container) {
+        container.find("textarea[name='content']").summernote({
+            placeholder: 'Write your lesson content here...',
+            tabsize: 2,
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+    }
+
     // ADD LESSON
     function openLessonModal(courseModuleId) {
         Swal.fire({
@@ -311,10 +333,17 @@
             didOpen: () => {
                 let container = $(".swal2-container #CourseLessonForm");
                 container.find("input[name='course_module_id']").val(courseModuleId);
+
+                // Initialize Summernote
+                initSummernote(container);
             },
             preConfirm: () => {
                 let form = $(".swal2-container #CourseLessonForm")[0];
                 let formData = new FormData(form);
+
+                // Add Summernote content manually
+                formData.set("content", $(".swal2-container #CourseLessonForm textarea[name='content']")
+                    .summernote('code'));
 
                 return $.ajax({
                         url: "{{ route('courselessons.store') }}",
@@ -365,10 +394,18 @@
                         `<p class="mt-2 text-sm">Current: <a href="/uploads/${downloadableFile}" target="_blank" class="text-blue-600 underline">Download</a></p>`
                     );
                 }
+
+                // Initialize Summernote with existing content
+                initSummernote(container);
+                container.find("textarea[name='content']").summernote('code', content);
             },
             preConfirm: () => {
                 let form = $(".swal2-container #editLessonForm");
                 let formData = new FormData(form[0]);
+
+                // Add Summernote content manually
+                formData.set("content", $(".swal2-container #editLessonForm textarea[name='content']")
+                    .summernote('code'));
 
                 return $.ajax({
                         url: `/courselessons/${lessonId}`,
