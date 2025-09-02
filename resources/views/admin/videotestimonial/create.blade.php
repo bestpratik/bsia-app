@@ -35,7 +35,7 @@
                 <label class="block">
                     <span class="text-gray-700">Image</span>
                     <input id="imageInput" name="image" type="file" class="w-full mt-1 p-2 border rounded"
-                        onchange="previewImage(event)">                    
+                        onchange="previewImage(event)">
                 </label>
 
                 <!-- Preview Image -->
@@ -45,22 +45,30 @@
                     style="height: 50px; width: 75px; {{ isset($videoTestimonial) && $videoTestimonial->image ? '' : 'display: none;' }}">
             </div>
             <!--end image file-->
+
             <!--Location-->
             <div>
                 <label class="block">Location
                     <span class="text-red-700">*</span>
                     <input name="location" type="text" class="w-full mt-1 p-2 border rounded"
                         placeholder="Enter Location">
-                        @if ($errors->has('location'))
+                    @if ($errors->has('location'))
                         <span class="mt-1 text-sm text-red-500">{{ $errors->first('location') }}</span>
                     @endif
                 </label>
             </div>
-            <!--Video Url-->
+            <!--end Location-->
+
+            <!--Video File-->
             <div>
                 <label class="block font-medium">Video File</label>
-                <input type="file" name="video_path" class="w-full border rounded p-2" accept="video/*">
+                <input type="file" name="video_path" id="videoInput" class="w-full border rounded p-2"
+                    accept="video/*" onchange="previewVideo(event)">
+
+                <!-- Preview Video (hidden initially, shown after upload) -->
+                <video id="preview_video" class="mt-2 border rounded hidden" style="height: 100px;" controls></video>
             </div>
+            <!--end Video File-->
 
             <button type="submit" class="w-full mt-4 p-2 bg-blue-600 text-white rounded">Submit</button>
         </form>
@@ -84,5 +92,18 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-</script>
 
+    function previewVideo(event) {
+        const video = document.getElementById('preview_video');
+        const file = event.target.files[0];
+
+        if (file) {
+            const src = URL.createObjectURL(file);
+            video.src = src;
+            video.classList.remove('hidden');
+        } else {
+            video.src = "";
+            video.classList.add('hidden');
+        }
+    }
+</script>

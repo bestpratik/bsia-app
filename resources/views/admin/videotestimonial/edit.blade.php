@@ -1,9 +1,9 @@
 <x-app-layout>
     @if ($message = Session::get('message'))
-    <div class="alert alert-success alert-dismissible max-w-4xl mx-auto">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
-        {{ $message }}
-    </div>
+        <div class="alert alert-success alert-dismissible max-w-4xl mx-auto">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-hidden="true">×</button>
+            {{ $message }}
+        </div>
     @endif
 
     <div
@@ -17,19 +17,17 @@
         </a>
 
         <form class="bg-white w-full space-y-4" method="post"
-            action="{{ route('update.videotestimonial', $videoTestimonial->id) }}"
-            enctype="multipart/form-data">
+            action="{{ route('update.videotestimonial', $videoTestimonial->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <!-- Name -->
             <div>
                 <label class="block">Name<span class="text-red-700">*</span>
-                    <input name="name" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Name"
+                    <input name="name" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Name"
                         value="{{ old('name', $videoTestimonial->name) }}">
                     @if ($errors->has('name'))
-                    <span class="mt-1 text-sm text-red-500">{{ $errors->first('name') }}</span>
+                        <span class="mt-1 text-sm text-red-500">{{ $errors->first('name') }}</span>
                     @endif
                 </label>
             </div>
@@ -42,8 +40,8 @@
                         class="w-full mt-1 p-2 border rounded">
                 </label>
                 <div class="shrink-0">
-                    <img id='preview_img' class="h-16 w-16 object-cover rounded-full" src="{{ asset('uploads/'.$videoTestimonial->image ) }}"
-                        alt="Current photo" />
+                    <img id='preview_img' class="h-16 w-16 object-cover rounded-full"
+                        src="{{ asset('uploads/' . $videoTestimonial->image) }}" alt="Current photo" />
                 </div>
             </div>
 
@@ -51,41 +49,29 @@
             <div>
                 <label class="block">Location<span class="text-red-700">*</span>
                     <input name="location" type="text" class="w-full mt-1 p-2 border rounded"
-                        placeholder="Enter Location"
-                        value="{{ old('location', $videoTestimonial->location) }}">
+                        placeholder="Enter Location" value="{{ old('location', $videoTestimonial->location) }}">
                     @if ($errors->has('location'))
-                    <span class="mt-1 text-sm text-red-500">{{ $errors->first('location') }}</span>
+                        <span class="mt-1 text-sm text-red-500">{{ $errors->first('location') }}</span>
                     @endif
                 </label>
             </div>
 
             <!-- Video File -->
-            <!-- <div>
-                <label class="block font-medium">Video File</label>
-                <input type="file" name="video_path" class="w-full border rounded p-2" accept="video/*">
-                @if ($videoTestimonial->video_path)
-                    <video class="mt-2 border rounded" style="height: 100px;" controls>
-                        <source src="{{ asset('uploads/testimonialvideos/' . $videoTestimonial->video_path) }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                @endif
-            </div> -->
-
-
             <div>
                 <label class="block font-medium">Video File</label>
-                <input type="file" name="video_path" id="videoInput"
-                    class="w-full border rounded p-2"
+                <input type="file" name="video_path" id="videoInput" class="w-full border rounded p-2"
                     accept="video/*" onchange="previewVideo(event)">
 
                 <!-- Existing Video -->
                 @if ($videoTestimonial->video_path)
-                <video id="preview_video" class="mt-2 border rounded" style="height: 100px;" controls>
-                    <source src="{{ asset('uploads/testimonialvideos/' . $videoTestimonial->video_path) }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+                    <video id="preview_video" class="mt-2 border rounded" style="height: 100px;" controls>
+                        <source src="{{ asset('uploads/testimonialvideos/' . $videoTestimonial->video_path) }}"
+                            type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 @else
-                <video id="preview_video" class="mt-2 border rounded hidden" style="height: 100px;" controls></video>
+                    <video id="preview_video" class="mt-2 border rounded hidden" style="height: 100px;"
+                        controls></video>
                 @endif
             </div>
 

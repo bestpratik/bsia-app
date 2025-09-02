@@ -67,6 +67,14 @@
 
             <div>
                 <label class="block">
+                    <span class="text-gray-700">Video URL (for Video Type)</span>
+                    <input name="video_url" type="url" class="w-full mt-1 p-2 border rounded"
+                        value="{{ $banner->video_url }}" placeholder="https://www.youtube.com/embed/...">
+                </label>
+            </div>
+
+            <div>
+                <label class="block">
                     <span class="text-gray-700">Button Text One</span>
                     <input name="button_text_one" type="text" class="w-full mt-1 p-2 border rounded"
                         value="{{ $banner->button_text_one }}" placeholder="Enter Button Text">

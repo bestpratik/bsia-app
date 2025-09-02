@@ -61,7 +61,7 @@
                 <label class="block">
                     <span class="text-gray-700">Review</span>
                     <textarea name="review" rows="5" class="w-full mt-1 p-2 border rounded summernote"
-                        placeholder="Enter Review"> value="{{ old('review') }}"</textarea>
+                        placeholder="Enter Review">{{ old('review') }}</textarea>
                 </label>
             </div>
 
