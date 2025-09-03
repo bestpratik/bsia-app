@@ -5,7 +5,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 border-b pb-4">
             <h2 class="text-3xl font-bold text-gray-800 flex items-center gap-2">
                 <x-heroicon-o-academic-cap class="w-8 h-8 text-blue-600" />
-                {{ $course->title }}
+                {{ $course->title ?? '' }}
             </h2>
             <a href="{{ route('course') }}"
                 class="mt-4 sm:mt-0 px-5 py-2.5 text-sm font-medium text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg transition duration-200">
@@ -346,6 +346,13 @@
 <!-- Summernote -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+<style>
+    .note-editor .note-editable {
+        display: block !important;
+        text-align: left !important;
+        vertical-align: top !important;
+    }
+</style>
 <script>
     // ADD MODULE
     function openCourseModuleModal(courseId) {
@@ -656,4 +663,3 @@
         });
     }
 </script>
-
