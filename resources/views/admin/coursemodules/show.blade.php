@@ -104,7 +104,8 @@
                             <li class="pl-2">
                                 <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
                                     id="lesson-{{ $row->id }}">
-                                    <a href="{{ route('quizzes.show', $row->id) }}" class="text-blue-600 hover:underline">
+                                    <a href="{{ route('quizzes.show', $row->id) }}"
+                                        class="text-blue-600 hover:underline">
                                         {{ $row->question ?? '' }}
                                     </a>
                                     <div class="flex gap-2">
@@ -292,6 +293,12 @@
         .swal2-html-container {
             display: block;
         }
+
+        /* Large Success Popup */
+        .swal2-popup.swal2-success-message {
+            width: 450px !important;
+            max-width: 50% !important;
+        }
     </style>
 
 </x-app-layout>
@@ -308,7 +315,6 @@
     // Initialize Summernote on modal open
     function initSummernote(container) {
         container.find("textarea[name='content']").summernote({
-            placeholder: 'Write your lesson content here...',
             tabsize: 2,
             height: 200,
             toolbar: [
@@ -366,8 +372,14 @@
             }
         }).then(result => {
             if (result.isConfirmed && result.value) {
-                Swal.fire("Saved!", "Lesson has been added.", "success")
-                    .then(() => location.reload());
+                Swal.fire({
+                    title: 'Added!',
+                    text: 'Lesson has been added successfully!',
+                    icon: 'success',
+                    customClass: {
+                        popup: 'swal2-success-message'
+                    }
+                }).then(() => location.reload());
             }
         });
     }
@@ -429,8 +441,14 @@
             }
         }).then(result => {
             if (result.isConfirmed && result.value) {
-                Swal.fire("Updated!", "Lesson has been updated.", "success")
-                    .then(() => location.reload());
+                Swal.fire({
+                    title: 'Update!',
+                    text: 'Lesson has been updated successfully!',
+                    icon: 'success',
+                    customClass: {
+                        popup: 'swal2-success-message'
+                    }
+                }).then(() => location.reload());
             }
         });
     }
@@ -453,12 +471,17 @@
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
-                    success: function() {
-                        Swal.fire("Deleted!", "The lesson has been deleted.", "success").then(
-                            () => {
-                                location.reload();
-                            });
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: response.message ?? "success",
+                            icon: "success",
+                            customClass: {
+                                popup: "swal2-success-message"
+                            }
+                        }).then(() => location.reload());
                     },
+
                     error: function() {
                         Swal.fire("Error", "Failed to delete the lesson.", "error");
                     }
@@ -525,8 +548,16 @@
             }
         }).then(result => {
             if (result.isConfirmed && result.value) {
-                Swal.fire("Success!", quizId ? "Quiz updated!" : "Quiz added!", "success")
-                    .then(() => location.reload());
+                Swal.fire({
+                    title: "Success!",
+                    text: quizId ? "Quiz has been updated successfully!" :
+                        "Quiz has been added successfully!",
+                    icon: "success",
+                    customClass: {
+                        popup: "swal2-success-message"
+                    }
+                }).then(() => location.reload());
+
             }
         });
     }
@@ -552,10 +583,16 @@
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
                     success: function(response) {
-                        Swal.fire("Deleted!", response.message ?? "The quiz has been deleted.",
-                                "success")
-                            .then(() => location.reload());
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: response.message ?? "The quiz has been deleted.",
+                            icon: "success",
+                            customClass: {
+                                popup: "swal2-success-message"
+                            }
+                        }).then(() => location.reload());
                     },
+
                     error: function(xhr) {
                         Swal.fire("Error", "Failed to delete the quiz.", "error");
                     }

@@ -329,6 +329,12 @@
         .swal2-html-container {
             display: block;
         }
+
+        /* Large Success Popup */
+        .swal2-popup.swal2-success-message {
+            width: 450px !important;
+            max-width: 50% !important;
+        }
     </style>
 </x-app-layout>
 
@@ -386,8 +392,14 @@
             }
         }).then((result) => {
             if (result.isConfirmed && result.value) {
-                Swal.fire('Success!', 'Course Module has been added successfully!', 'success')
-                    .then(() => location.reload());
+                Swal.fire({
+                    title: 'Added!',
+                    text: 'Course Module has been added successfully!',
+                    icon: 'success',
+                    customClass: {
+                        popup: 'swal2-success-message'
+                    }
+                }).then(() => location.reload());
             }
         });
     }
@@ -440,8 +452,14 @@
             }
         }).then((result) => {
             if (result.isConfirmed && result.value) {
-                Swal.fire('Update!', 'Course Module has been updated successfully!', 'success')
-                    .then(() => location.reload());
+                Swal.fire({
+                    title: 'Updated!',
+                    text: 'Course Module has been updated successfully!',
+                    icon: 'success',
+                    customClass: {
+                        popup: 'swal2-success-message'
+                    }
+                }).then(() => location.reload());
             }
         });
     }
@@ -468,10 +486,14 @@
                     })
                     .done(() => {
                         $(`#module-${id}`).closest('li').remove();
-                        Swal.fire('Deleted!', 'Course Module has been deleted.', 'success').then(
-                            () => {
-                                location.reload();
-                            });
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Course Module has been deleted successfully!',
+                            icon: 'success',
+                            customClass: {
+                                popup: 'swal2-success-message'
+                            }
+                        }).then(() => location.reload());
                     })
                     .fail(() => {
                         Swal.fire('Error!', 'Failed to delete module.', 'error');
@@ -525,8 +547,14 @@
             }
         }).then((result) => {
             if (result.isConfirmed && result.value) {
-                Swal.fire('Success!', 'FAQ has been added successfully!', 'success')
-                    .then(() => location.reload());
+                Swal.fire({
+                    title: 'Added!',
+                    text: 'FAQ has been added successfully!',
+                    icon: 'success',
+                    customClass: {
+                        popup: 'swal2-success-message'
+                    }
+                }).then(() => location.reload());
             }
         });
     }
@@ -537,7 +565,6 @@
         Swal.fire({
             title: 'Edit Course FAQ',
             html: formHtml,
-            // width: '1000px',
             focusConfirm: false,
             showCancelButton: true,
             confirmButtonText: 'Update',
@@ -579,8 +606,14 @@
             }
         }).then((result) => {
             if (result.isConfirmed && result.value) {
-                Swal.fire('Success!', 'FAQ has been updated successfully!', 'success')
-                    .then(() => location.reload());
+                Swal.fire({
+                    title: 'Update!',
+                    text: 'FAQ has been updated successfully!',
+                    icon: 'success',
+                    customClass: {
+                        popup: 'swal2-success-message'
+                    }
+                }).then(() => location.reload());
             }
         });
     }
@@ -592,6 +625,8 @@
             text: "This FAQ will be permanently deleted!",
             icon: 'warning',
             showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'Cancel'
         }).then((result) => {
@@ -603,9 +638,16 @@
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
                     success: function(response) {
-                        Swal.fire('Deleted!', response.message, 'success')
-                            .then(() => location.reload());
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: response.message ?? "success.",
+                            icon: "success",
+                            customClass: {
+                                popup: "swal2-success-message"
+                            }
+                        }).then(() => location.reload());
                     },
+
                     error: function(xhr) {
                         Swal.fire('Error!', 'Failed to delete FAQ.', 'error');
                     }
@@ -614,3 +656,4 @@
         });
     }
 </script>
+
