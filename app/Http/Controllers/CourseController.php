@@ -71,7 +71,7 @@ class CourseController extends Controller
         $course->show_on_home = $request->show_on_home;
         $course->is_certificate = $request->is_certificate;
         $course->language = $request->language;
-        $course->status = $request->status;
+        $course->status = 1;
         $course->order_no = $request->order_no;
         $course->created_at = date("Y-m-d H:i:s");
         $course->updated_at = null;
@@ -169,7 +169,7 @@ class CourseController extends Controller
         $course->show_on_home = $request->show_on_home;
         $course->is_certificate = $request->is_certificate;
         $course->language = $request->language;
-        $course->status = $request->status;
+        // $course->status = $request->status;
         $course->order_no = $request->order_no;
         $course->created_at = date("Y-m-d H:i:s");
         $course->updated_at = null;

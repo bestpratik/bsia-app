@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class EbookController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.  
      */
     public function index()
     {
@@ -51,7 +51,7 @@ class EbookController extends Controller
         $ebook->description = $request->description;
         $ebook->price = $request->price;
         $ebook->author = $request->author;
-        $ebook->status = $request->status;
+        $ebook->status = 1;
 
         $ebook->save();
         return redirect('ebook')->with('success', 'Ebook created successfully!');
@@ -115,7 +115,7 @@ class EbookController extends Controller
         $ebook->description = $request->description;
         $ebook->price = $request->price;
         $ebook->author = $request->author;
-        $ebook->status = $request->status;
+        // $ebook->status = $request->status;
 
         $ebook->update();
         return redirect('ebook')->with('success', 'Ebook updated successfully!');
