@@ -44,10 +44,10 @@
                         @if($quiz->correct_answer == $quiz->option_four) bg-green-100 border-green-300 text-green-800 font-semibold @else bg-white text-gray-700 @endif">
                         D) {{ $quiz->option_four }}
                     </li>
-                    <li class="px-4 py-2 rounded-lg border 
+                    <!-- <li class="px-4 py-2 rounded-lg border 
                         @if($quiz->correct_answer == $quiz->correct_answer) bg-green-100 border-green-300 text-green-800 font-semibold @else bg-white text-gray-700 @endif">
                         E) {{ $quiz->correct_answer }}
-                    </li>
+                    </li> -->
                 </ul>
             </div>
 
