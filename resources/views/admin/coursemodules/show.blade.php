@@ -37,112 +37,105 @@
             </div>
 
             <!-- Status -->
-            <div class="p-5 rounded-xl bg-gray-50 border">
+            <!-- <div class="p-5 rounded-xl bg-gray-50 border">
                 <p class="mb-2 text-sm text-gray-500">Status</p>
                 <span
                     class="px-3 py-1 text-sm font-medium rounded-full 
                     {{ $module->status ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
                     {{ $module->status ? 'Active' : 'Inactive' }}
                 </span>
-            </div>
+            </div> -->
 
-            <div>
-                <h4 class="text-lg font-semibold text-gray-800 mb-4">Course Lessons</h4>
-                <ul class="list-disc pl-6" id="lessonList">
-                    @if ($courseLesson->isEmpty())
-                    <li class="text-gray-700">No Lesson available.</li>
-                    @else
-                    @foreach ($courseLesson as $row)
-                    <li class="pl-2">
-                        <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
-                            id="lesson-{{ $row->id }}">
+            <!-- Lessons Section -->
+            <div class="mb-10">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+                        <x-heroicon-o-list-bullet class="w-6 h-6 text-purple-600" /> Lessons
+                    </h3>
+                    <button onclick="openLessonModal({{ $module->id }})"
+                        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">
+                        <x-heroicon-o-plus class="w-4 h-4" /> Add Lesson
+                    </button>
+                </div>
+                <ul class="space-y-3">
+                    @forelse ($courseLesson as $row)
+                    <li class="flex justify-between items-center bg-gray-50 p-4 rounded-lg border hover:shadow-sm transition">
+                        <a href="{{ route('show.courselessons', $row->id) }}" class="font-medium text-blue-600 hover:underline">
+                            {{ $row->title }}
+                        </a>
+                        <div class="flex gap-2">
                             <a href="{{ route('show.courselessons', $row->id) }}"
-                                class="text-blue-600 hover:underline">
-                                {{ $row->title ?? '' }}
+                                class="p-2 rounded-md hover:bg-green-100 text-green-600"
+                                title="View">
+                                <x-heroicon-o-eye class="w-5 h-5" />
                             </a>
-                            <div class="flex gap-2">
-                                <!-- Show Button -->
-                                <a href="{{ route('show.courselessons', $row->id) }}"
-                                    class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
-                                    title="View">
-                                    <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
-                                </a>
-                                <!-- Edit Button -->
-                                <button type="button"
-                                    onclick="editLesson({{ $module->id }}, {{ $row->id }}, `{{ addslashes($row->title) }}`, `{{ $row->type }}`, `{{ addslashes($row->content ?? '') }}`, `{{ $row->video_url ?? '' }}`, `{{ $row->order_no ?? '' }}`, `{{ $row->downloadable_file ?? '' }}`)"
-                                    class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
-                                    Edit
-                                </button>
-
-                                <!-- Delete Button -->
-                                <button type="button" onclick="deleteLesson({{ $row->id }})"
-                                    class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-                                    Delete
-                                </button>
-                            </div>
+                            <button onclick="editLesson({{ $module->id }}, {{ $row->id }}, `{{ addslashes($row->title) }}`, `{{ $row->type }}`, `{{ addslashes($row->content ?? '') }}`, `{{ $row->video_url ?? '' }}`, `{{ $row->order_no ?? '' }}`, `{{ $row->downloadable_file ?? '' }}`)"
+                                class="p-2 rounded-md hover:bg-yellow-100 text-yellow-600"
+                                title="Edit">
+                                <x-heroicon-o-pencil-square class="w-5 h-5" />
+                            </button>
+                            <button onclick="deleteLesson({{ $row->id }})"
+                                class="p-2 rounded-md hover:bg-red-100 text-red-600"
+                                title="Delete">
+                                <x-heroicon-o-trash class="w-5 h-5" />
+                            </button>
                         </div>
                     </li>
-                    @endforeach
-                    @endif
-                    <div class="flex gap-3 mt-10">
-                        <button type="button" onclick="openLessonModal({{ $module->id }})"
-                            class="ml-1 cursor-pointer hover:text-purple-500 dark:hover:text-purple-400"
-                            title="Add Lesson">
-                            <x-heroicon-o-list-bullet class="w-6 h-6 text-gray-700 inline-block" /> Add Course Lesson
-                        </button>
-                    </div>
+                    @empty
+                    <li class="text-gray-600">No lessons available.</li>
+                    @endforelse
                 </ul>
             </div>
 
+            <!-- Quiz Section -->
             <div>
-                <h4 class="text-lg font-semibold text-gray-800 mb-4">Quiz</h4>
-                <ul class="list-disc pl-6" id="lessonList">
-                    @if ($quiz->isEmpty())
-                    <li class="text-gray-700">No Quiz available.</li>
-                    @else
-                    @foreach ($quiz as $row)
-                    <li class="pl-2">
-                        <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border"
-                            id="lesson-{{ $row->id }}">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+                        <x-heroicon-o-clipboard-document-check class="w-6 h-6 text-blue-600" /> Quizzes
+                    </h3>
+                    <button onclick="openQuizModal({{ $module->id }})"
+                        class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        <x-heroicon-o-plus class="w-4 h-4" /> Add Quiz
+                    </button>
+                </div>
+                <ul class="space-y-3">
+                    @forelse ($quiz as $row)
+                    <li class="flex justify-between items-center bg-gray-50 p-4 rounded-lg border hover:shadow-sm transition">
+                        <a href="{{ route('quizzes.show', $row->id) }}" class="font-medium text-blue-600 hover:underline">
+                            {{ $row->question }}
+                        </a>
+                        <div class="flex gap-2">
                             <a href="{{ route('quizzes.show', $row->id) }}"
-                                class="text-blue-600 hover:underline">
-                                {{ $row->question ?? '' }}
+                                class="p-2 rounded-md hover:bg-green-100 text-green-600"
+                                title="View">
+                                <x-heroicon-o-eye class="w-5 h-5" />
                             </a>
-                            <div class="flex gap-2">
-                                <!-- Show Button -->
-                                <a href="{{ route('quizzes.show', $row->id) }}"
-                                    class="ml-1 cursor-pointer hover:text-green-500 dark:hover:text-green-400"
-                                    title="View">
-                                    <x-heroicon-o-eye class="w-6 h-6 text-gray-700" />
-                                </a>
-                                <!-- Edit Button -->
-                                <button type="button"
-                                    onclick="openQuizModal({{ $module->id }}, {{ $row->id }})"
-                                    class="px-3 py-1 text-xs bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
-                                    Edit
-                                </button>
-
-                                <!-- Delete Button -->
-                                <button type="button" onclick="deleteQuiz({{ $row->id }})"
-                                    class="px-3 py-1 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-                                    Delete
-                                </button>
-                            </div>
+                            <button onclick="openQuizModal({{ $module->id }}, {{ $row->id }})"
+                                class="p-2 rounded-md hover:bg-yellow-100 text-yellow-600"
+                                title="Edit">
+                                <x-heroicon-o-pencil-square class="w-5 h-5" />
+                            </button>
+                            <button onclick="deleteQuiz({{ $row->id }})"
+                                class="p-2 rounded-md hover:bg-red-100 text-red-600"
+                                title="Delete">
+                                <x-heroicon-o-trash class="w-5 h-5" />
+                            </button>
                         </div>
                     </li>
-                    @endforeach
-                    @endif
+                    @empty
+                    <li class="text-gray-600">No quizzes available.</li>
+                    @endforelse
                 </ul>
             </div>
         </div>
 
         <!-- Footer Buttons -->
-        <div class="flex gap-3 mt-10">
+        <!-- <div class="flex gap-3 mt-10">
             <button type="button" onclick="openQuizModal({{ $module->id }})"
                 class="ml-1 cursor-pointer hover:text-blue-500 dark:hover:text-blue-400" title="Add Quiz">
                 <x-heroicon-o-clipboard-document-check class="w-6 h-6 text-gray-700 inline-block" /> Add Quiz
             </button>
-        </div>
+        </div> -->
     </div>
 
     <!-- Add Lesson Modal (Hidden Template) -->

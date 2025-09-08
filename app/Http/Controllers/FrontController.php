@@ -8,7 +8,8 @@ use App\Models\Course;
 use App\Models\Ebook;
 use App\Models\Testimonial;
 use App\Models\VideoTestimonial;
-use Illuminate\Http\Request;
+use App\Models\CourseLesson;
+use Illuminate\Http\Request; 
 
 class FrontController extends Controller
 {
@@ -32,7 +33,8 @@ class FrontController extends Controller
     public function course_details()
     {
         // $courses = Course::where('slug', $slug)->firstOrFail();
-        return view('frontend.coursedetails');
+        $lession = CourseLesson::all();
+        return view('frontend.coursedetails', compact('lession'));
     }
 
     public function course_learning()

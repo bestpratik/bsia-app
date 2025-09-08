@@ -23,7 +23,7 @@ class CourseModuleController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'order_no' => 'required|integer',
-            'status' => 'nullable|boolean',
+            'status' => 'nullable|boolean', 
         ]);
 
         $module = new CourseModules;
@@ -31,7 +31,7 @@ class CourseModuleController extends Controller
         $module->name = $request->name;
         $module->description = $request->description;
         $module->order_no = $request->order_no;
-        $module->status = $request->status ? 1 : 0;
+        $module->status = 1;
         $module->save();
 
         return response()->json(['message' => 'Course Module Form has been submitted successfully!', 'module'  => $module]);
@@ -59,7 +59,7 @@ class CourseModuleController extends Controller
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
             'order_no' => $validated['order_no'] ?? null,
-            'status' => $request->has('status') ? 1 : 0
+            // 'status' => $request->has('status') ? 1 : 0
         ]);
 
         return response()->json(['message' => 'Course Module Form has been updated successfully!', 'module'  => $module]);

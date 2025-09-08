@@ -51,7 +51,7 @@ Route::delete('/course/{id}/delete', [CourseController::class, 'destroy'])->name
 
 
 //Course Module section
-Route::post('/course/modules', [CourseModuleController::class, 'store'])->name('course-modules.store');
+Route::post('/course/modules', [CourseModuleController::class, 'store'])->name('course-modules.store'); 
 Route::put('/course-modules/{id}', [CourseModuleController::class, 'update'])->name('course-modules.update');
 Route::delete('/course-modules/{id}', [CourseModuleController::class, 'destroy'])->name('course-modules.destroy');
 Route::get('/coursemodules/{id}/show', [CourseModuleController::class, 'show'])->name('show.coursemodules');

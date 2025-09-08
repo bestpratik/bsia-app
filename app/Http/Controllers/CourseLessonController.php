@@ -117,6 +117,6 @@ class CourseLessonController extends Controller
         $lesson = CourseLesson::findOrFail($id);
         $lesson->delete();
 
-        return response()->json(['message' => 'Course Lesson Form has been deleted successfully!', 'lesson'  => $lesson]);
+        return response()->json(['message' => 'Course Lesson has been deleted successfully!', 'lesson'  => $lesson]);
     }
 }
