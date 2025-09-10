@@ -126,7 +126,7 @@
                                         <div class="flex items-center">
                                             <div class="flex items-center gap-3">
                                                 <div>
-                                                    <img src="{{ asset('uploads/' .$row->image ) }}" alt="Testimonial Image"
+                                                    <img src="{{ $row->image ? asset('uploads/' . $row->image) : asset('photo/default-banner.jpg') }}" alt="Testimonial Image"
                                                         class="w-16 h-16 object-cover rounded-md border">
                                                 </div>
                                             </div>

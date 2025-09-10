@@ -11,19 +11,19 @@ use App\Models\CourseModules;
 use App\Models\Ebook;
 use App\Models\Testimonial;
 use App\Models\VideoTestimonial;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
     public function home()
     {
         $about = About::first();
-        $banner = Banner::first();
+        $banners = Banner::all();
         $courses = Course::all();
         $testimonial = Testimonial::all();
         $videotestimonial = VideoTestimonial::all();
         // dd($videotestimonial);
-        return view('frontend.home', compact('about', 'banner', 'courses', 'testimonial', 'videotestimonial'));
+        return view('frontend.home', compact('about', 'banners', 'courses', 'testimonial', 'videotestimonial'));
     }
 
     public function course()

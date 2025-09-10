@@ -550,20 +550,21 @@
             <h2 class="text-2xl font-semibold text-center text-teal-800 mb-6">
                 You Can Also Enroll
             </h2>
-            
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1 -->
-                @foreach($learn as $learning)
-                <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center">
-                    <img src="{{ asset('uploads/' .$learning->featured_image) }}" alt="Course 1" class="w-full h-auto rounded-lg mb-4" />
-                    <h3 class="text-lg font-medium text-gray-800 text-center">
-                        Lal Kitab E-book
-                    </h3>
-                    <p class="text-lg font-semibold text-gray-900 mt-2">₹199</p>
-                    <button class="mt-auto bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm">
-                        Enroll
-                    </button>
-                </div>
+                @foreach ($learn as $learning)
+                    <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center">
+                        <img src="{{ asset('uploads/' . $learning->featured_image) }}" alt="Course 1"
+                            class="w-full h-auto rounded-lg mb-4" />
+                        <h3 class="text-lg font-medium text-gray-800 text-center">
+                            Lal Kitab E-book
+                        </h3>
+                        <p class="text-lg font-semibold text-gray-900 mt-2">₹199</p>
+                        <button class="mt-auto bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm">
+                            Enroll
+                        </button>
+                    </div>
                 @endforeach
                 {{-- <!-- Card 2 -->
                 <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center">
@@ -726,38 +727,38 @@
         </section>
 
         <!-- <section class="faq">
-          <h2>Frequently asked questions</h2>
+                  <h2>Frequently asked questions</h2>
 
-          <div class="faq-grid">
-            <div class="faq-item">
-              <button class="faq-question text-[16px] font-semibold">
-                How do I access the recorded courses?
-                <span class="arrow">&#9650;</span>
-              </button>
-              <div class="faq-answer">
-                <p>
-                  To access our recorded courses, browse our courses, choose the course you're interested in, and make a
-                  purchase.
-                  You'll receive access instructions via email.
-                </p>
-              </div>
-            </div>
+                  <div class="faq-grid">
+                    <div class="faq-item">
+                      <button class="faq-question text-[16px] font-semibold">
+                        How do I access the recorded courses?
+                        <span class="arrow">&#9650;</span>
+                      </button>
+                      <div class="faq-answer">
+                        <p>
+                          To access our recorded courses, browse our courses, choose the course you're interested in, and make a
+                          purchase.
+                          You'll receive access instructions via email.
+                        </p>
+                      </div>
+                    </div>
 
-            <div class="faq-item">
-              <button class="faq-question text-[16px] font-semibold">
-                Will I receive a certificate upon course completion?
-                <span class="arrow">&#9650;</span>
-              </button>
-              <div class="faq-answer">
-                <p>
-                  Yes, you will receive a certificate for course completion once you have finished the course.
-                </p>
-              </div>
-            </div>
-          </div>
+                    <div class="faq-item">
+                      <button class="faq-question text-[16px] font-semibold">
+                        Will I receive a certificate upon course completion?
+                        <span class="arrow">&#9650;</span>
+                      </button>
+                      <div class="faq-answer">
+                        <p>
+                          Yes, you will receive a certificate for course completion once you have finished the course.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-          <p class="faq-footer">Have questions? <a href="#">Talk to our Support Team</a></p>
-        </section> -->
+                  <p class="faq-footer">Have questions? <a href="#">Talk to our Support Team</a></p>
+                </section> -->
 
         <section class="py-12 sm:py-16 bg-gray-50 px-4 sm:px-6" id="faqs">
             <div class="container mx-auto max-w-5xl">
@@ -773,22 +774,23 @@
 
                 <div class="space-y-4 sm:space-y-6">
                     <!-- FAQ 1 -->
-                    @foreach($faqs as $faq)
-                    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
-                        <button
-                            class="faq-question w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
-                            <span class="font-medium text-brand-dark text-base sm:text-lg font-roboto">
-                                {{ $faq->title }}
-                            </span>
-                            <span class="text-brand-orange transition-transform duration-300 transform">&#9650;</span>
-                        </button>
+                    @foreach ($faqs as $faq)
                         <div
-                            class="faq-answer px-4 sm:px-6 pb-4 sm:pb-6 pt-0 text-gray-700 text-sm sm:text-base font-roboto">
-                            <p class="border-t border-gray-100 pt-4">
-                                {!! $faq->description !!}
-                            </p>
+                            class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                            <button
+                                class="faq-question w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
+                                <span class="font-medium text-brand-dark text-base sm:text-lg font-roboto">
+                                    {{ $faq->title }}
+                                </span>
+                                <span class="text-brand-orange transition-transform duration-300 transform">&#9650;</span>
+                            </button>
+                            <div
+                                class="faq-answer px-4 sm:px-6 pb-4 sm:pb-6 pt-0 text-gray-700 text-sm sm:text-base font-roboto">
+                                <p class="border-t border-gray-100 pt-4">
+                                    {!! $faq->description !!}
+                                </p>
+                            </div>
                         </div>
-                    </div>
                     @endforeach
                     {{-- <!-- FAQ 2 -->
                     <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
@@ -838,3 +840,28 @@
         </section>
     </main>
 @endsection
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const headers = document.querySelectorAll(".accordion-header");
+
+        headers.forEach(header => {
+            header.addEventListener("click", () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector(".accordion-icon");
+
+                // Close all other accordions (optional, if you want only one open at a time)
+                document.querySelectorAll(".accordion-content").forEach(c => {
+                    if (c !== content) {
+                        c.classList.add("hidden");
+                        c.previousElementSibling.querySelector(".accordion-icon")
+                            .textContent = "➕";
+                    }
+                });
+
+                // Toggle the clicked accordion
+                content.classList.toggle("hidden");
+                icon.textContent = content.classList.contains("hidden") ? "➕" : "➖";
+            });
+        });
+    });
+</script>

@@ -59,7 +59,7 @@
                                     </div>
                                 </th>
 
-                                 <th class="px-6 py-3 whitespace-nowrap">
+                                <th class="px-6 py-3 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <p class="font-medium text-gray-500 text-theme-xs ">
                                             Location
@@ -126,7 +126,8 @@
                                         <div class="flex items-center">
                                             <div class="flex items-center gap-3">
                                                 <div>
-                                                    <img src="{{ asset('uploads/' .$row->image ) }}" alt="Testimonial Image"
+                                                    <img src="{{ $row->image ? asset('uploads/' . $row->image) : asset('photo/default-banner.jpg') }}"
+                                                        alt="Testimonial Image"
                                                         class="w-16 h-16 object-cover rounded-md border">
                                                 </div>
                                             </div>
@@ -149,9 +150,18 @@
                                         <div class="flex items-center">
                                             <div class="flex items-center gap-3">
                                                 <div>
-                                                    <span class="text-theme-sm mb-0.5 block font-medium text-gray-700 ">
-                                                        {!! \Illuminate\Support\Str::limit(strip_tags($row->video_path), 30) !!}
-                                                    </span>
+                                                    @if ($row->video_path)
+                                                        <video class="w-36 rounded-md border object-cover"
+                                                            controls>
+                                                            <source src="{{ asset('uploads/testimonialvideos/' . $row->video_path) }}"
+                                                                type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                    @else
+                                                        <img src="{{ asset('photo/default-video-thumbnail.jpg') }}"
+                                                            alt="Default Video Thumbnail"
+                                                            class="w-36 object-cover rounded-md border">
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -163,8 +173,8 @@
                                                 class="cursor-pointer hover:text-blue-500 dark:hover:text-blue-400">
                                                 <x-heroicon-o-pencil-square class="w-6 h-6 text-gray-700 " />
                                             </a>
-                                            <form action="{{ route('delete.videotestimonial', $row->id) }}" method="POST"
-                                                onsubmit="return confirmDelete()">
+                                            <form action="{{ route('delete.videotestimonial', $row->id) }}"
+                                                method="POST" onsubmit="return confirmDelete()">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" title="Delete"

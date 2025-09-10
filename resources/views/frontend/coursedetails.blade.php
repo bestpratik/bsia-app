@@ -188,33 +188,39 @@
                          <!-- Module 1 -->
                          @foreach ($modules as $module)
                              <div class="border border-gray-200 rounded-lg mb-4 overflow-hidden">
-                                 <div class="bg-gray-50 p-4 flex justify-between items-center cursor-pointer">
+                                 <!-- Accordion Header -->
+                                 <div
+                                     class="accordion-header bg-gray-50 p-4 flex justify-between items-center cursor-pointer">
                                      <div class="flex items-center">
                                          <div
                                              class="w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
                                              <i class="fas fa-book text-brand-red"></i>
                                          </div>
-                                         <h3 class="font-medium text-brand-dark">Module {{ $loop->iteration }}:
-                                             {{ $module->name }}</h3>
+                                         <h3 class="font-medium text-brand-dark">
+                                             Module {{ $loop->iteration }}: {{ $module->name }}
+                                         </h3>
                                      </div>
-                                     <i class="fas fa-chevron-down text-gray-400"></i>
+                                     <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
                                  </div>
-                                 <div class="p-4 border-t border-gray-200">
+
+                                 <!-- Accordion Content (hidden by default) -->
+                                 <div class="accordion-content hidden p-4 border-t border-gray-200">
                                      <ul class="space-y-3">
                                          @foreach ($module->lessons as $lesson)
                                              <li class="flex items-center text-gray-700">
                                                  <i class="fas fa-play-circle text-brand-orange mr-3"></i>
                                                  <span>{{ $lesson->title }}</span>
-                                                 <span class="ml-auto text-gray-500 text-sm">{{ $lesson->order_no }} min</span>
+                                                 <span class="ml-auto text-gray-500 text-sm">{{ $lesson->order_no }}
+                                                     min</span>
                                              </li>
                                          @endforeach
-                                         {{-- @foreach ($module->lessons as $lesson) --}}
-                                             <li class="flex items-center text-gray-700">
-                                                 <i class="fas fa-file-alt text-brand-blue mr-3"></i>
-                                                 <span>{!! $lesson->content !!}</span>
-                                                 <span class="ml-auto text-gray-500 text-sm">Reading</span>
-                                             </li>
-                                         {{-- @endforeach --}}
+
+                                         <li class="flex items-center text-gray-700">
+                                             <i class="fas fa-file-alt text-brand-blue mr-3"></i>
+                                             <span>{!! $lesson->content !!}</span>
+                                             <span class="ml-auto text-gray-500 text-sm">Reading</span>
+                                         </li>
+
                                          @foreach ($module->quizzes as $quiz)
                                              <li class="flex items-center text-gray-700">
                                                  <i class="fas fa-tasks text-brand-purple mr-3"></i>
@@ -226,7 +232,6 @@
                                  </div>
                              </div>
                          @endforeach
-
 
                          {{-- <!-- Module 2 -->
                          <div class="border border-gray-200 rounded-lg mb-4 overflow-hidden">
@@ -533,3 +538,27 @@
          </div>
      </main>
  @endsection
+ <script>
+     document.addEventListener("DOMContentLoaded", () => {
+         const headers = document.querySelectorAll(".accordion-header");
+
+         headers.forEach(header => {
+             const content = header.nextElementSibling;
+             const icon = header.querySelector(".accordion-icon");
+
+             // 🔹 Open all accordions on page load
+             content.classList.remove("hidden");
+             icon.classList.replace("fa-chevron-down", "fa-chevron-up");
+
+             // 🔹 Toggle functionality
+             header.addEventListener("click", () => {
+                 content.classList.toggle("hidden");
+                 if (icon.classList.contains("fa-chevron-down")) {
+                     icon.classList.replace("fa-chevron-down", "fa-chevron-up");
+                 } else {
+                     icon.classList.replace("fa-chevron-up", "fa-chevron-down");
+                 }
+             });
+         });
+     });
+ </script>
