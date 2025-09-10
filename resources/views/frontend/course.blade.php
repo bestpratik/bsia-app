@@ -37,7 +37,7 @@
              <div class="items-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                  <!-- Card 1 -->
                  @foreach ($course as $row)
-                     <a href="{{ route('course.details') }}"
+                     <a href="{{ route('course.details', $row->slug) }}"
                          class="course-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl hover:shadow-brand-orange/10 transition-all duration-500 hover:-translate-y-2 h-full">
                          <div class="relative overflow-hidden thumb">
                              <img src="{{ $row->featured_image ? asset('uploads/' . $row->featured_image) : asset('photo/default-banner.jpg') }}" alt="Infinite Astrology"

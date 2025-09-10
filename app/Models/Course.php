@@ -29,4 +29,9 @@ class Course extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function modules()
+    {
+        return $this->hasMany(CourseModules::class);
+    }
 }

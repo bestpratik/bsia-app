@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\About;
 use App\Models\Banner;
 use App\Models\Course;
+use App\Models\CourseFaqs;
+use App\Models\CourseLesson;
+use App\Models\CourseModules;
 use App\Models\Ebook;
 use App\Models\Testimonial;
 use App\Models\VideoTestimonial;
-use App\Models\CourseLesson;
 use Illuminate\Http\Request; 
 
 class FrontController extends Controller
@@ -30,16 +32,25 @@ class FrontController extends Controller
         return view('frontend.course', compact('course'));
     }
 
-    public function course_details()
+    public function course_details($slug)
     {
-        // $courses = Course::where('slug', $slug)->firstOrFail();
         $lession = CourseLesson::all();
-        return view('frontend.coursedetails', compact('lession'));
+        $course = Course::where('slug', $slug)->firstOrFail();
+        $modules = CourseModules::where('course_id', $course->id)
+            ->where('status', 1)
+            ->orderBy('order_no', 'desc')
+            ->with(['lessons', 'quizzes'])
+            ->get();
+        $relatedCourses = Course::where('id', '!=', $course->id)->get();
+        return view('frontend.coursedetails', compact('lession', 'course', 'modules', 'relatedCourses'));
     }
 
-    public function course_learning()
+    public function course_learning($slug)
     {
-        return view('frontend.courselearning');
+        $learn = Course::all();
+        $learning = Course::where('slug', $slug)->firstOrFail();
+        $faqs = CourseFaqs::all();
+        return view('frontend.courselearning', compact('learn', 'learning', 'faqs'));
     }
 
     public function ebooks()

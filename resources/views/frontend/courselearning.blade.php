@@ -15,7 +15,7 @@
                     <li class="flex-shrink-0">
                         <div class="flex items-center">
                             <i class="fas fa-chevron-right text-gray-400 text-xs mx-2"></i>
-                            <a href="co"
+                            <a href="{{ route('courses') }}"
                                 class="text-sm font-medium text-gray-700 hover:text-brand-red whitespace-nowrap">
                                 Courses
                             </a>
@@ -24,7 +24,7 @@
                     <li class="flex-shrink-0">
                         <div class="flex items-center">
                             <i class="fas fa-chevron-right text-gray-400 text-xs mx-2"></i>
-                            <a href="{{ route('course.details') }}"
+                            <a href="{{ route('course.details', $learning->slug) }}"
                                 class="text-sm font-medium text-gray-700 hover:text-brand-red whitespace-nowrap">
                                 <span class="hidden xs:inline">Infinite Astrology</span>
                                 <span class="xs:hidden">Astrology</span>
@@ -550,11 +550,12 @@
             <h2 class="text-2xl font-semibold text-center text-teal-800 mb-6">
                 You Can Also Enroll
             </h2>
-
+            
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1 -->
+                @foreach($learn as $learning)
                 <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center">
-                    <img src="images/courses/c1.jpg" alt="Course 1" class="w-full h-auto rounded-lg mb-4" />
+                    <img src="{{ asset('uploads/' .$learning->featured_image) }}" alt="Course 1" class="w-full h-auto rounded-lg mb-4" />
                     <h3 class="text-lg font-medium text-gray-800 text-center">
                         Lal Kitab E-book
                     </h3>
@@ -563,8 +564,8 @@
                         Enroll
                     </button>
                 </div>
-
-                <!-- Card 2 -->
+                @endforeach
+                {{-- <!-- Card 2 -->
                 <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center">
                     <img src="images/courses/c1.jpg" alt="Course 2" class="w-full h-auto rounded-lg mb-4" />
                     <h3 class="text-lg font-medium text-gray-800 text-center">
@@ -650,7 +651,7 @@
                     <button class="mt-auto bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm">
                         Enroll
                     </button>
-                </div>
+                </div> --}}
             </div>
         </section>
 
@@ -772,24 +773,24 @@
 
                 <div class="space-y-4 sm:space-y-6">
                     <!-- FAQ 1 -->
+                    @foreach($faqs as $faq)
                     <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
                         <button
                             class="faq-question w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
                             <span class="font-medium text-brand-dark text-base sm:text-lg font-roboto">
-                                Is this course suitable for complete beginners?
+                                {{ $faq->title }}
                             </span>
                             <span class="text-brand-orange transition-transform duration-300 transform">&#9650;</span>
                         </button>
                         <div
                             class="faq-answer px-4 sm:px-6 pb-4 sm:pb-6 pt-0 text-gray-700 text-sm sm:text-base font-roboto">
                             <p class="border-t border-gray-100 pt-4">
-                                Yes! It’s designed for those with zero knowledge of astrology.
-                                The course explains everything step-by-step in simple Bengali.
+                                {!! $faq->description !!}
                             </p>
                         </div>
                     </div>
-
-                    <!-- FAQ 2 -->
+                    @endforeach
+                    {{-- <!-- FAQ 2 -->
                     <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
                         <button
                             class="faq-question w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
@@ -824,7 +825,7 @@
                                 or desktop — anytime you want.
                             </p>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <p class="text-center mt-8 text-brand-dark font-roboto">
