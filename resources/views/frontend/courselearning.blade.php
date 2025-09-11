@@ -111,15 +111,9 @@
                         Beginner-friendly Vedic Astrology Program
                     </p>
                     <p class="mb-4 text-gray-700 font-roboto leading-relaxed text-sm sm:text-base">
-                        Infinite Astrology is a beginner-friendly course that opens the
-                        doorway to the mysterious world of Vedic astrology. Designed
-                        entirely in Bengali, this program makes complex astrological ideas
-                        accessible to everyone, regardless of age or educational
-                        background. It lays the perfect foundation for decoding your birth
-                        chart, understanding planetary influences, and grasping how cosmic
-                        energies affect your life.
+                        {!! $course->about_course !!}
                     </p>
-                    <p class="mb-4 text-gray-700 font-roboto leading-relaxed text-sm sm:text-base">
+                    {{-- <p class="mb-4 text-gray-700 font-roboto leading-relaxed text-sm sm:text-base">
                         Whether you're a curious learner, a spiritual seeker, or someone
                         who wants to start a new journey in astrology — this course will
                         equip you with the essential knowledge to read and interpret
@@ -127,7 +121,7 @@
                         forces shaping your reality. With a practical learning approach,
                         interactive examples, and real-life references, you’ll find
                         yourself truly connected to the stars.
-                    </p>
+                    </p> --}}
 
                     <!-- Why Join -->
                     <h3 class="mt-8 mb-4 text-xl sm:text-2xl font-playfair font-bold text-brand-dark">
@@ -281,41 +275,33 @@
             </div>
 
             <!-- Accordion Item -->
-            <div class="border-b border-gray-200 hover:border-brand-orange/30 transition-colors duration-300">
-                <button
-                    class="w-full flex items-center justify-between py-4 sm:py-5 text-left text-lg font-medium text-brand-dark focus:outline-none accordion-header hover:text-brand-red transition-colors duration-300">
-                    <div class="flex items-center gap-3 sm:gap-4">
-                        <span
-                            class="bg-brand-red text-white rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-sm sm:text-base font-medium shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">01</span>
-                        <span class="font-playfair text-lg sm:text-xl">Introduction to Vedic Astrology</span>
-                    </div>
-                    <span
-                        class="transition-transform duration-300 accordion-icon text-brand-gold text-xl sm:text-2xl">➖</span>
-                </button>
-                <div class="accordion-content pb-4 pl-4 sm:pl-16">
-                    <ul class="space-y-3 text-gray-700">
-                        <li
-                            class="flex justify-between border-b border-gray-100 pb-3 hover:bg-gray-50 px-2 py-1 rounded-lg">
-                            <span class="font-roboto"><i class="fas fa-play-circle text-brand-red mr-2"></i> Course
-                                Orientation & Goals</span>
-                            <span class="text-gray-500 font-roboto">05:00</span>
-                        </li>
-                        <li
-                            class="flex justify-between border-b border-gray-100 pb-3 hover:bg-gray-50 px-2 py-1 rounded-lg">
-                            <span class="font-roboto"><i class="fas fa-play-circle text-brand-red mr-2"></i>
-                                Understanding the Zodiac Signs</span>
-                            <span class="text-gray-500 font-roboto">12:30</span>
-                        </li>
-                        <li class="flex justify-between hover:bg-gray-50 px-2 py-1 rounded-lg">
-                            <span class="font-roboto"><i class="fas fa-file-alt text-brand-gold mr-2"></i>
-                                Downloadable Zodiac Chart PDF</span>
-                            <span class="text-gray-500 font-roboto">8 Pages</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            @foreach ($modules as $index => $module)
+                <div class="border-b border-gray-200 hover:border-brand-orange/30 transition-colors duration-300">
+                    <button
+                        class="w-full flex items-center justify-between py-4 sm:py-5 text-left text-lg font-medium text-brand-dark focus:outline-none accordion-header hover:text-brand-red transition-colors duration-300">
 
-            <!-- Repeat for Module 2 -->
+                        <!-- Left Number + Title -->
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <span
+                                class="bg-brand-red text-white rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-sm sm:text-base font-medium shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                                {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                            </span>
+                            <span class="font-playfair text-lg sm:text-xl">{{ $module->name }}</span>
+                        </div>
+
+                        <!-- Icon -->
+                        <span
+                            class="transition-transform duration-300 accordion-icon text-brand-gold text-xl sm:text-2xl">➖</span>
+                    </button>
+
+                    <!-- Content -->
+                    <div class="accordion-content pb-4 pl-4 sm:pl-16">
+                        <p class="text-gray-700 font-roboto">{!! $module->description !!}</p>
+                    </div>
+                </div>
+            @endforeach
+
+            {{-- <!-- Repeat for Module 2 -->
             <div class="border-b border-gray-200 hover:border-brand-orange/30 transition-colors duration-300">
                 <button
                     class="w-full flex items-center justify-between py-4 sm:py-5 text-left text-lg font-medium text-brand-dark focus:outline-none accordion-header hover:text-brand-red transition-colors duration-300">
@@ -399,7 +385,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
         </section>
 
         <section class="bg-gradient-to-b from-brand-orange/5 to-brand-red/5 py-16 px-4" id="instructor">
@@ -416,18 +402,14 @@
                         Meet your Mentor
                     </p>
                     <h2 class="text-2xl md:text-3xl lg:text-4xl font-playfair text-brand-dark mb-4 relative inline-block">
-                        Sujit Pathak – Vedic Astrologer & Co-Founder, BSIA
+                        {{ $course->instructor_name }} – {{ $course->instructor_designation }}
                         <span
                             class="absolute bottom-[-4px] left-0 w-full h-1 bg-gradient-to-r from-brand-orange to-brand-red"></span>
                     </h2>
                     <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
-                        Born and raised in a spiritually rooted family in Shyamnagar
-                        (North 24 Parganas), Sujit Pathak has over 20 years of experience
-                        in astrology, Vastu, palmistry, numerology, and medical astrology.
-                        He’s based near Kolkata and serves clients across Barrackpore,
-                        Hooghly, Serampore, and beyond.
+                        {!! $course->instructor_details !!}
                     </p>
-                    <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
+                    {{-- <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
                         Recognized as the “Most Trusted Astrologer” in North 24 Parganas,
                         Sujit has expanded his practice nationwide and overseas, with
                         clients in Singapore, Thailand, and beyond. His unique style
@@ -441,7 +423,7 @@
                         Sujit is a regular at Jyotish forums and lectures across India and
                         Southeast Asia. Students love his clear, practical, and
                         transformative teaching style.
-                    </p>
+                    </p> --}}
                 </div>
             </div>
         </section>
@@ -458,35 +440,34 @@
                 </h2>
 
                 <div class="testimonial-slider max-w-4xl mx-auto">
-                    <div
-                        class="bg-white p-6 sm:p-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 mx-2 my-4">
-                        <div class="mb-4">
-                            <i class="fas fa-quote-left text-3xl text-brand-orange/20"></i>
-                        </div>
-                        <p class="text-gray-700 text-sm sm:text-base mb-6 italic">
-                            I completed a basic numerology recorded course with Occult
-                            Gurukul, and it was truly amazing. The course was easy to follow
-                            and provided a great introduction to numerology. I learned a lot
-                            and found the content engaging, inspiring me to explore further
-                            studies and apply the knowledge in my everyday life.
-                        </p>
-                        <div class="flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-brand-orange/20 flex items-center justify-center mr-3">
-                                <span class="text-brand-orange font-bold text-xl">MR</span>
+                    @foreach ($testimonial as $test)
+                        <div
+                            class="bg-white p-6 sm:p-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 mx-2 my-4">
+                            <div class="mb-4">
+                                <i class="fas fa-quote-left text-3xl text-brand-orange/20"></i>
                             </div>
-                            <div class="text-left">
-                                <p class="font-medium text-brand-dark">Muskan Raut</p>
-                                <div class="flex text-brand-gold">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                            <p class="text-gray-700 text-sm sm:text-base mb-6 italic">
+                                {!! $test->review !!}
+                            </p>
+                            <div class="flex items-center justify-center">
+                                <div
+                                    class="w-24 h-24 rounded-full bg-brand-orange/20 flex items-center justify-center mr-3">
+                                    <span class="text-brand-orange font-bold text-sm">{{ $test->profession }}</span>
+                                </div>
+                                <div class="text-left">
+                                    <p class="font-medium text-brand-dark">{{ $test->name }}</p>
+                                    <div class="flex text-brand-gold">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div
+                    @endforeach
+                    {{-- <div
                         class="bg-white p-6 sm:p-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 mx-2 my-4">
                         <div class="mb-4">
                             <i class="fas fa-quote-left text-3xl text-brand-orange/20"></i>
@@ -541,7 +522,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
@@ -727,38 +708,38 @@
         </section>
 
         <!-- <section class="faq">
-                  <h2>Frequently asked questions</h2>
+                      <h2>Frequently asked questions</h2>
 
-                  <div class="faq-grid">
-                    <div class="faq-item">
-                      <button class="faq-question text-[16px] font-semibold">
-                        How do I access the recorded courses?
-                        <span class="arrow">&#9650;</span>
-                      </button>
-                      <div class="faq-answer">
-                        <p>
-                          To access our recorded courses, browse our courses, choose the course you're interested in, and make a
-                          purchase.
-                          You'll receive access instructions via email.
-                        </p>
+                      <div class="faq-grid">
+                        <div class="faq-item">
+                          <button class="faq-question text-[16px] font-semibold">
+                            How do I access the recorded courses?
+                            <span class="arrow">&#9650;</span>
+                          </button>
+                          <div class="faq-answer">
+                            <p>
+                              To access our recorded courses, browse our courses, choose the course you're interested in, and make a
+                              purchase.
+                              You'll receive access instructions via email.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="faq-item">
+                          <button class="faq-question text-[16px] font-semibold">
+                            Will I receive a certificate upon course completion?
+                            <span class="arrow">&#9650;</span>
+                          </button>
+                          <div class="faq-answer">
+                            <p>
+                              Yes, you will receive a certificate for course completion once you have finished the course.
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="faq-item">
-                      <button class="faq-question text-[16px] font-semibold">
-                        Will I receive a certificate upon course completion?
-                        <span class="arrow">&#9650;</span>
-                      </button>
-                      <div class="faq-answer">
-                        <p>
-                          Yes, you will receive a certificate for course completion once you have finished the course.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p class="faq-footer">Have questions? <a href="#">Talk to our Support Team</a></p>
-                </section> -->
+                      <p class="faq-footer">Have questions? <a href="#">Talk to our Support Team</a></p>
+                    </section> -->
 
         <section class="py-12 sm:py-16 bg-gray-50 px-4 sm:px-6" id="faqs">
             <div class="container mx-auto max-w-5xl">

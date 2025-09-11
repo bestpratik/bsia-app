@@ -47,10 +47,16 @@ class FrontController extends Controller
 
     public function course_learning($slug)
     {
+        $course = Course::first();
         $learn = Course::all();
         $learning = Course::where('slug', $slug)->firstOrFail();
         $faqs = CourseFaqs::all();
-        return view('frontend.courselearning', compact('learn', 'learning', 'faqs'));
+        $testimonial = Testimonial::all();
+        $modules = CourseModules::where('course_id', $learning->id)
+                ->where('status', 1)
+                ->orderBy('order_no', 'desc')
+                ->get();
+        return view('frontend.courselearning', compact('course', 'learn', 'learning', 'faqs', 'testimonial', 'modules'));
     }
 
     public function ebooks()
