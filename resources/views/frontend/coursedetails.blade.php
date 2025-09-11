@@ -240,12 +240,7 @@
                                  </li>
 
 
-                                 <!-- 
-                                 <li class="flex items-center text-gray-700">
-                                     <i class="fas fa-file-alt text-brand-blue mr-3"></i>
-                                     <span>{!! $lesson->content !!}</span>
-                                     <span class="ml-auto text-gray-500 text-sm">Reading</span>
-                                 </li> -->
+                    
 
                                  <!-- @foreach ($module->quizzes as $quiz)
                                  <li class="flex items-center text-gray-700">
