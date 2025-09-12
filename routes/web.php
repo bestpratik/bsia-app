@@ -30,6 +30,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    if (auth()->user()->role !== 'admin') {
+        return redirect()->route('front.login');
+    }
+
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -132,7 +136,7 @@ Route::get('courses', [FrontController::class, 'course'])->name('courses');
 Route::get('course-details/{slug}', [FrontController::class, 'course_details'])->name('course.details');
 Route::get('course-learning/{slug}', [FrontController::class, 'course_learning'])->name('course.learning');
 Route::get('ebooks', [FrontController::class, 'ebooks'])->name('ebooks');
-Route::get('log_in', [FrontController::class, 'login'])->name('front.login');
-// Route::get('dash', [FrontController::class, 'dashboard'])->name('front.dashboard');
+Route::get('user-login', [FrontController::class, 'login'])->name('front.login');
+Route::get('user-dashboard', [FrontController::class, 'dashboard'])->name('user.dashboard');
 
 require __DIR__ . '/auth.php';

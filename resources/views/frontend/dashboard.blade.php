@@ -30,7 +30,9 @@
             <div class="mb-8 md:mb-12">
                 <h1
                     class="font-playfair font-bold text-2xl md:text-3xl lg:text-4xl text-brand-dark mb-4 wow animate__animated animate__fadeInUp">
-                    Hi, Sujit Pathak
+                    @auth
+                        <p>{{ Auth::user()->name }}!</p>
+                    @endauth
                 </h1>
                 <p class="font-roboto text-gray-600 max-w-3xl wow animate__animated animate__fadeInUp"
                     data-wow-delay="0.2s">
@@ -108,7 +110,7 @@
                     <!-- Course 1 -->
                     <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 wow animate__animated animate__fadeInUp"
                         data-wow-delay="0.1s">
-                        <img src="{{  asset('photo/c1.jpg') }}" alt="Infinite Astrology" class="w-full h-48 object-cover"
+                        <img src="{{ asset('photo/c1.jpg') }}" alt="Infinite Astrology" class="w-full h-48 object-cover"
                             loading="lazy" decoding="async" />
                         <div class="p-5">
                             <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">
@@ -131,7 +133,7 @@
                     <!-- Course 2 -->
                     <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 wow animate__animated animate__fadeInUp"
                         data-wow-delay="0.2s">
-                        <img src="{{  asset('photo/c2.jpg') }}" alt="Advance Numerology Mentorship Program"
+                        <img src="{{ asset('photo/c2.jpg') }}" alt="Advance Numerology Mentorship Program"
                             class="w-full h-48 object-cover" loading="lazy" decoding="async" />
                         <div class="p-5">
                             <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">
@@ -144,8 +146,8 @@
                             </p>
                             <div class="flex justify-between items-center">
                                 <span class="text-brand-red font-bold">₹24,500</span>
-                                <a href="{{ route('course.details') }}"
-                                    class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">Enroll</a>
+                                {{-- <a href="{{ route('course.details') }}"
+                                    class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">Enroll</a> --}}
                             </div>
                         </div>
                     </div>
@@ -153,7 +155,7 @@
                     <!-- Course 3 -->
                     <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 wow animate__animated animate__fadeInUp"
                         data-wow-delay="0.3s">
-                        <img src="{{  asset('photo/c3.jpg') }}" alt="The Ultimate Astrology Course"
+                        <img src="{{ asset('photo/c3.jpg') }}" alt="The Ultimate Astrology Course"
                             class="w-full h-48 object-cover" loading="lazy" decoding="async" />
                         <div class="p-5">
                             <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">
@@ -169,9 +171,9 @@
                                     <span class="text-brand-red font-bold mr-2">100% Complete</span>
                                     <i class="fas fa-check-circle text-green-500"></i>
                                 </div>
-                                <a href="{{ route('course.details') }}"
+                                {{-- <a href="{{ route('course.details') }}"
                                     class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm font-medium">Start
-                                    Learning</a>
+                                    Learning</a> --}}
                             </div>
                         </div>
                     </div>

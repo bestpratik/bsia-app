@@ -53,13 +53,43 @@
             <!-- Buttons + Mobile Toggle -->
             <div class="flex items-center space-x-4">
                 <!-- Log in -->
-                <a href="{{ route('front.login') }}">
-                    <button
-                        class="hidden md:inline-block enroll-button h-8 xl:h-10 px-4 rounded-lg border-2 border-brand-red font-roboto text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 transform hover:scale-105 wow animate__animated animate__bounceIn"
-                        data-wow-delay="0.8s">
-                        Log in
-                    </button>
-                </a>
+                @guest
+                    {{-- Show login if not logged in --}}
+                    <a href="{{ route('front.login') }}">
+                        <button
+                            class="hidden md:inline-block enroll-button h-8 xl:h-10 px-4 rounded-lg border-2 border-brand-red font-roboto text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 transform hover:scale-105 wow animate__animated animate__bounceIn"
+                            data-wow-delay="0.8s">
+                            Log in
+                        </button>
+                    </a>
+                @endguest
+
+                @auth
+                    {{-- Show logout if logged in --}}
+                    @if (Auth::user()->role === 'user')
+                        {{-- Show logout only for normal users --}}
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="hidden md:inline-block enroll-button h-8 xl:h-10 px-4 rounded-lg border-2 border-brand-red font-roboto text-brand-red hover:bg-brand-red hover:text-white transition-all duration-300 transform hover:scale-105 wow animate__animated animate__bounceIn"
+                                data-wow-delay="0.8s">
+                                Log out
+                            </button>
+                        </form>
+                    @endif
+
+                    @if (Auth::user()->role === 'admin')
+                        {{-- Example: Show admin dashboard button --}}
+                        <a href="{{ route('front.login') }}">
+                            <button
+                                class="hidden md:inline-block enroll-button h-8 xl:h-10 px-4 rounded-lg border-2 border-brand-red font-roboto text-white bg-brand-red hover:bg-red-700 transition-all duration-300 transform hover:scale-105 wow animate__animated animate__bounceIn"
+                                data-wow-delay="0.8s">
+                                Log in
+                            </button>
+                        </a>
+                    @endif
+                @endauth
+
 
                 <!-- Enroll Now -->
                 <button

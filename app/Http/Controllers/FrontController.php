@@ -67,11 +67,29 @@ class FrontController extends Controller
 
     public function login()
     {
-        return view('frontend.login');
+        if (!auth()->check()) {
+            return view('frontend.login');
+        }
+
+        if (auth()->user()->role == 'user') {
+            return redirect()->route('user.dashboard');
+        }elseif(auth()->user()->role == 'admin'){
+            return redirect()->route('dashboard');
+        }
+        
     }
 
     public function dashboard()
     {
-        return view('frontend.dashboard');
+        if (!auth()->check()) {
+        return redirect()->route('front.login');
+    }
+
+    if (auth()->user()->role !== 'user') {
+        return redirect()->route('front.login');
+    }
+
+    return view('frontend.dashboard');
+        
     }
 }
