@@ -34,4 +34,9 @@ class Course extends Model
     {
         return $this->hasMany(CourseModules::class);
     }
+
+    public function features()
+    {
+        return $this->belongsToMany(FeatureMaster::class, 'course_feature', 'course_id', 'feature_id');
+    }
 }

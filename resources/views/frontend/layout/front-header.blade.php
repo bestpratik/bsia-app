@@ -6,9 +6,11 @@
         <div class="flex items-center justify-between">
             <!-- Logo + Title -->
             <div class="flex items-center flex-1 lg:flex-none">
-                <img src="{{ asset('photo/logo-bisa.png') }}" alt="BSIA Logo"
-                    class="h-10 w-10 sm:h-12 sm:w-12 lg:h-16 lg:w-16 rounded-xl shadow-lg wow animate__animated animate__zoomIn"
-                    data-wow-delay="0.5s" decoding="async" />
+                <a href="/">
+                    <img src="{{ asset('photo/logo-bisa.png') }}" alt="BSIA Logo"
+                        class="h-10 w-10 sm:h-12 sm:w-12 lg:h-16 lg:w-16 rounded-xl shadow-lg wow animate__animated animate__zoomIn"
+                        data-wow-delay="0.5s" decoding="async" />
+                </a>
                 <div class="ml-3">
                     <h1 class="font-playfair font-bold text-brand-dark text-xl sm:text-2xl lg:text-3xl">
                         BS Institute Of Astrology

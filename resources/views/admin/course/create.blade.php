@@ -22,7 +22,8 @@
             <!-- Title -->
             <div>
                 <label class="block">Title<span class="text-red-700">*</span></label>
-                <input name="title" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Title" value="{{ old('title') }}">
+                <input name="title" type="text" class="w-full mt-1 p-2 border rounded" placeholder="Enter Title"
+                    value="{{ old('title') }}">
                 @error('title')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                 @enderror
@@ -69,7 +70,8 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block">MRP<span class="text-red-700">*</span></label>
-                    <input name="mrp" type="number" class="w-full mt-1 p-2 border rounded" placeholder="Enter MRP" value="{{ old('mrp') }}">
+                    <input name="mrp" type="number" class="w-full mt-1 p-2 border rounded" placeholder="Enter MRP"
+                        value="{{ old('mrp') }}">
                     @error('mrp')
                         <span class="text-sm text-red-500">{{ $message }}</span>
                     @enderror
@@ -150,12 +152,28 @@
                     Provides Certificate
                 </label>
 
-                <!-- <label class="inline-flex items-center">
+                 {{-- <label class="inline-flex items-center">
                     <input type="checkbox" name="status" value="1"
                         {{ old('status', $course->status ?? false) ? 'checked' : '' }} class="mr-2">
                     Active
-                </label> -->
+                </label>  --}}
             </div>
+
+            <!-- Course Features -->
+            <div>
+                <label class="block font-semibold mb-2">This Course Includes:</label>
+                <div class="grid grid-cols-2 gap-2">
+                    @foreach ($allFeatures as $feature)
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" name="features[]" value="{{ $feature->id }}"
+                                {{ in_array($feature->id, old('features', [])) ? 'checked' : '' }} class="mr-2">
+                            <i class="{{ $feature->icon }} mr-2"></i>
+                            {{ $feature->name }}
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+
             <button type="submit" class="w-full mt-4 p-2 bg-blue-600 text-white rounded">Submit</button>
         </form>
 </x-app-layout>

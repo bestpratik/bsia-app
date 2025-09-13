@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\CourseFaqs;
 use App\Models\CourseModules;
+use App\Models\FeatureMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -25,7 +26,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('admin.course.create');
+        $allFeatures = FeatureMaster::all();
+        return view('admin.course.create', compact('allFeatures'));
     }
 
     /**
@@ -77,6 +79,8 @@ class CourseController extends Controller
         $course->updated_at = null;
 
         $course->save();
+        $course->features()->sync($request->features ?? []);
+
         return redirect('course')->with('success', 'Course created successfully!');
     }
 
@@ -108,7 +112,8 @@ class CourseController extends Controller
     public function edit($id)
     {
         $course = Course::find($id);
-        return view('admin.course.edit', compact('course'));
+        $allFeatures = FeatureMaster::all();
+        return view('admin.course.edit', compact('course', 'allFeatures'));
     }
 
     /**
@@ -175,6 +180,7 @@ class CourseController extends Controller
         $course->updated_at = null;
 
         $course->update();
+        $course->features()->sync($request->features ?? []);
         return redirect('course')->with('success', 'Course updated successfully!');
     }
 
