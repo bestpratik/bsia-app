@@ -40,3 +40,4 @@ class Course extends Model
         return $this->belongsToMany(FeatureMaster::class, 'course_feature', 'course_id', 'feature_id');
     }
 }
+ 

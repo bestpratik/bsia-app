@@ -11,6 +11,7 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\VideoTestimonialController;
+use App\Http\Controllers\PurchaseController;
 // use App\Models\CourseFaqs;
 use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
@@ -140,4 +141,8 @@ Route::get('user-login', [FrontController::class, 'login'])->name('front.login')
 Route::get('user-dashboard', [FrontController::class, 'dashboard'])->name('user.dashboard');
 Route::get('user-register', [FrontController::class, 'userRegister'])->name('user.register');
 
+// Route::get('purchase-form/{id}', [FrontController::class, 'purchase'])->name('purchase.form');
+Route::get('purchase-form/{type}/{id}', [FrontController::class, 'purchase'])->name('purchase.form');
+Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
+Route::get('ebook-details/{id}', [FrontController::class, 'ebook_details'])->name('ebook.details');
 require __DIR__ . '/auth.php';

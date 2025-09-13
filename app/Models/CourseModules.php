@@ -30,3 +30,4 @@ class CourseModules extends Model
         return $this->hasMany(Quiz::class, 'course_module_id');
     }
 }
+ 

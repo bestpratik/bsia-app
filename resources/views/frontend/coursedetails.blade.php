@@ -251,7 +251,11 @@
                          @endforeach
 
 
-                         {{-- <!-- Module 2 -->
+
+                        
+
+                     {{-- <!-- Module 2 -->
+
                          <div class="border border-gray-200 rounded-lg mb-4 overflow-hidden">
                              <div class="bg-gray-50 p-4 flex justify-between items-center cursor-pointer">
                                  <div class="flex items-center">
