@@ -80,13 +80,13 @@
             <div class="col-md-6 mb-3">
               <label class="form-label">Full Name<span class="text-danger">*</span></label>
               <input type="text" name="billing_name" class="form-control" placeholder="Enter your full name"
-                     value="{{ old('billing_name', Auth::check() ? Auth::user()->name : '') }}">
+                     value="{{ old('billing_name', (Auth::check() && Auth::user()->role !== 'admin') ? Auth::user()->name : '') }}">
               <small class="text-danger error-billing_name"></small>
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label">Email<span class="text-danger">*</span></label>
               <input type="email" name="billing_email" class="form-control" placeholder="Enter your email"
-                     value="{{ old('billing_email', Auth::check() ? Auth::user()->email : '') }}">
+                     value="{{ old('billing_email', (Auth::check() && Auth::user()->role !== 'admin') ? Auth::user()->email : '') }}">
               <small class="text-danger error-billing_email"></small>
             </div>
           </div>
@@ -94,7 +94,7 @@
             <div class="col-12 mb-3">
               <label class="form-label">WhatsApp Number<span class="text-danger">*</span></label>
               <input type="tel" name="billing_phone" class="form-control" placeholder="Enter your WhatsApp number"
-                     value="{{ old('billing_phone', Auth::check() ? Auth::user()->phone : '') }}">
+                     value="{{ old('billing_phone', (Auth::check() && Auth::user()->role !== 'admin') ? Auth::user()->phone : '') }}">
               <small class="text-danger error-billing_phone"></small>
             </div>
           </div>
@@ -105,7 +105,7 @@
             <div class="col-12 mb-3">
               <label class="form-label">Country<span class="text-danger">*</span></label>
               <input type="text" name="country" class="form-control" placeholder="Enter your country"
-                     value="{{ old('country', Auth::check() ? Auth::user()->country : '') }}">
+                     value="{{ old('country', (Auth::check() && Auth::user()->role !== 'admin') ? Auth::user()->country : '') }}">
               <small class="text-danger error-country"></small>
             </div>
           </div>
@@ -113,20 +113,20 @@
             <div class="col-md-6 mb-3">
               <label class="form-label">State<span class="text-danger">*</span></label>
               <input type="text" name="state" class="form-control" placeholder="Enter your state"
-                     value="{{ old('state', Auth::check() ? Auth::user()->state : '') }}">
+                     value="{{ old('state', (Auth::check() && Auth::user()->role !== 'admin') ? Auth::user()->state : '') }}">
               <small class="text-danger error-state"></small>
             </div>
             <div class="col-md-6 mb-3">
               <label class="form-label">City<span class="text-danger">*</span></label>
               <input type="text" name="city" class="form-control" placeholder="Enter your city"
-                     value="{{ old('city', Auth::check() ? Auth::user()->city : '') }}">
+                     value="{{ old('city', (Auth::check() && Auth::user()->role !== 'admin') ? Auth::user()->city : '') }}">
               <small class="text-danger error-city"></small>
             </div>
           </div>
           <div class="row">
             <div class="col-12 mb-3">
               <label class="form-label">Full Address<span class="text-danger">*</span></label>
-              <textarea class="form-control" name="address" rows="3" placeholder="Enter your complete billing address">{{ old('address', Auth::check() ? Auth::user()->address : '') }}</textarea>
+              <textarea class="form-control" name="address" rows="3" placeholder="Enter your complete billing address">{{ old('address', (Auth::check() && Auth::user()->role !== 'admin') ? Auth::user()->address : '') }}</textarea>
               <small class="text-danger error-address"></small>
             </div>
           </div>
