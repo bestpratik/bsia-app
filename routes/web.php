@@ -138,5 +138,6 @@ Route::get('course-learning/{slug}', [FrontController::class, 'course_learning']
 Route::get('ebooks', [FrontController::class, 'ebooks'])->name('ebooks');
 Route::get('user-login', [FrontController::class, 'login'])->name('front.login');
 Route::get('user-dashboard', [FrontController::class, 'dashboard'])->name('user.dashboard');
+Route::get('user-register', [FrontController::class, 'userRegister'])->name('user.register');
 
 require __DIR__ . '/auth.php';

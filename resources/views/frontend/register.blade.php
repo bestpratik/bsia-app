@@ -8,7 +8,7 @@
                     <i class="fas fa-home"></i>
                 </a>
                 <span class="text-gray-400">/</span>
-                <span class="text-brand-red font-medium">Login</span>
+                <span class="text-brand-red font-medium">Sign-up</span>
             </nav>
         </div>
     </div>
@@ -21,17 +21,35 @@
                     <!-- Header -->
                     <div class="text-center mb-8">
                         <h2 class="font-playfair font-bold text-3xl sm:text-4xl text-brand-dark mb-2">
-                            Welcome Back
+                            Create an account
                         </h2>
                         <p class="font-roboto text-gray-600 text-base">
-                            Sign in to your BSIA account
+                            Create your BSIA account
                         </p>
                     </div>
 
                     <!-- Login Form -->
-                    <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('register') }}" class="space-y-6">
                         @csrf
 
+                        <!-- Name Field -->
+                        <div class="space-y-2">
+                            <label for="name" class="block font-roboto font-medium text-gray-700 text-sm">
+                                Name
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-envelope text-gray-400"></i>
+                                </div>
+                                <input type="text" id="name" name="name"
+                                    value="{{ old('name') }}"
+                                    class="block w-full pl-10 pr-4 py-3 border @error('name') border-red-500 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all duration-300 font-roboto text-gray-900 placeholder-gray-500"
+                                    placeholder="Enter name" required autofocus />
+                            </div>
+                            @error('email')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <!-- Email Field -->
                         <div class="space-y-2">
                             <label for="email" class="block font-roboto font-medium text-gray-700 text-sm">
@@ -73,6 +91,27 @@
                             @enderror
                         </div>
 
+                        <div class="space-y-2">
+                            <label for="password" class="block font-roboto font-medium text-gray-700 text-sm">
+                               Confirm Password
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-gray-400"></i>
+                                </div>
+                                <input type="password" id="password" name="password_confirmation"
+                                    class="block w-full pl-10 pr-4 py-3 border @error('password') border-red-500 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all duration-300 font-roboto text-gray-900 placeholder-gray-500"
+                                    placeholder="Password Confirmation" required />
+                                <button type="button" id="toggle-password"
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            @error('password')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <!-- Remember Me & Forgot Password -->
                         <div class="flex items-center justify-between">
                             <label class="flex items-center">
@@ -93,7 +132,7 @@
                         <button type="submit"
                             class="w-full mt-3 bg-gradient-to-r from-brand-red to-red-700 text-white font-roboto font-semibold py-3 px-6 rounded-xl hover:from-red-700 hover:to-brand-red transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                             <i class="fas fa-sign-in-alt mr-2"></i>
-                            Sign In
+                            Sign up
                         </button>
                     </form>
 
@@ -126,13 +165,12 @@
                     <!-- Sign Up Link -->
                     <div class="text-center mt-8 pt-6 border-t border-gray-200">
                         <p class="font-roboto text-gray-600 text-sm">
-                            Don't have an account?
-                            @if (Route::has('register'))
-                                <a href="{{ route('user.register') }}"
+                            Already have an account?
+                                <a href="{{ route('front.login') }}"
                                     class="text-brand-red hover:text-red-700 font-medium transition-colors">
-                                    Sign up here
+                                    Sign in here
                                 </a>
-                            @endif
+                        
                         </p>
                     </div>
                 </div>

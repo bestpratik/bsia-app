@@ -92,4 +92,9 @@ class FrontController extends Controller
     return view('frontend.dashboard');
         
     }
+
+    public function userRegister(){
+
+        return view('frontend.register');
+    }
 }
