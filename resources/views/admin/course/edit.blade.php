@@ -12,7 +12,7 @@
         </h2>
         <a href="{{ route('course') }}"
             class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500  dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-            <x-heroicon-o-arrow-left class="w-4 h-4"/>
+            <x-heroicon-o-arrow-left class="w-4 h-4" />
         </a>
 
         <form class="bg-white w-full space-y-4" method="post" action="{{ route('update.course', $course->id) }}"
@@ -22,8 +22,8 @@
             <!-- Title -->
             <div>
                 <label class="block">Title<span class="text-red-700">*</span></label>
-                <input name="title" type="text" value="{{ $course->title ?? '' }}" class="w-full mt-1 p-2 border rounded"
-                    placeholder="Enter Title">
+                <input name="title" type="text" value="{{ $course->title ?? '' }}"
+                    class="w-full mt-1 p-2 border rounded" placeholder="Enter Title">
                 @error('title')
                     <span class="text-sm text-red-500">{{ $message }}</span>
                 @enderror
@@ -56,8 +56,8 @@
                 </div>
                 <div>
                     <label class="block">Instructor Designation</label>
-                    <input name="instructor_designation" type="text" value="{{ $course->instructor_designation ?? '' }}"
-                        class="w-full mt-1 p-2 border rounded">
+                    <input name="instructor_designation" type="text"
+                        value="{{ $course->instructor_designation ?? '' }}" class="w-full mt-1 p-2 border rounded">
                 </div>
             </div>
 
@@ -72,17 +72,17 @@
                     <label class="block">MRP</label>
                     <input name="mrp" type="number" value="{{ $course->mrp ?? '' }}"
                         class="w-full mt-1 p-2 border rounded">
-                        @error('mrp')
-                    <span class="text-sm text-red-500">{{ $message }}</span>
-                @enderror
+                    @error('mrp')
+                        <span class="text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div>
                     <label class="block">Sellable Price</label>
                     <input name="sellable_price" type="number" value="{{ $course->sellable_price ?? '' }}"
                         class="w-full mt-1 p-2 border rounded">
-                        @error('sellable_price')
-                    <span class="text-sm text-red-500">{{ $message }}</span>
-                @enderror
+                    @error('sellable_price')
+                        <span class="text-sm text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
@@ -158,6 +158,22 @@
                     Active
                 </label> -->
             </div>
+            <!-- Course Features -->
+            <div>
+                <label class="block font-semibold mb-2">This Course Includes:</label>
+                <div class="grid grid-cols-2 gap-2">
+                    @foreach ($allFeatures as $feature)
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" name="features[]" value="{{ $feature->id }}"
+                                {{ in_array($feature->id, old('features', $course->features->pluck('id')->toArray())) ? 'checked' : '' }}
+                                class="mr-2">
+                            <i class="{{ $feature->icon }} mr-2"></i>
+                            {{ $feature->name }}
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+
             <button type="submit" class="w-full mt-4 p-2 bg-blue-600 text-white rounded">Submit</button>
         </form>
 </x-app-layout>
@@ -189,20 +205,20 @@
 </script>
 
 <script>
-        function previewPdf(event) {
-            const input = event.target;
-            const fileNameDisplay = document.getElementById('pdfFileName');
-            const previewWrapper = document.getElementById('pdfPreview');
+    function previewPdf(event) {
+        const input = event.target;
+        const fileNameDisplay = document.getElementById('pdfFileName');
+        const previewWrapper = document.getElementById('pdfPreview');
 
-            if (input.files && input.files[0]) {
-                fileNameDisplay.textContent = input.files[0].name;
-                previewWrapper.style.display = 'block';
-            } else {
-                previewWrapper.style.display = 'none';
-                fileNameDisplay.textContent = '';
-            }
+        if (input.files && input.files[0]) {
+            fileNameDisplay.textContent = input.files[0].name;
+            previewWrapper.style.display = 'block';
+        } else {
+            previewWrapper.style.display = 'none';
+            fileNameDisplay.textContent = '';
         }
-    </script>   
+    }
+</script>
 
 <!-- Summernote) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

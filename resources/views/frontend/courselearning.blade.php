@@ -26,7 +26,7 @@
                             <i class="fas fa-chevron-right text-gray-400 text-xs mx-2"></i>
                             <a href="{{ route('course.details', $learning->slug) }}"
                                 class="text-sm font-medium text-gray-700 hover:text-brand-red whitespace-nowrap">
-                                <span class="hidden xs:inline">Infinite Astrology</span>
+                                <span class="hidden xs:inline">{{ $learning->title }}</span>
                                 <span class="xs:hidden">Astrology</span>
                             </a>
                         </div>
@@ -50,9 +50,12 @@
         <section class="bg-gradient-to-br from-brand-dark via-brand-red to-red-900 bg-cover bg-center py-10 md:py-16">
             <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 items-center gap-8">
                 <!-- Video -->
+                @php
+                    $courses = App\Models\Videotestimonial::first();
+                @endphp
                 <div class="w-full">
                     <video class="w-full rounded-2xl shadow-xl border-4 border-white/10" controls>
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+                        <source src="{{ asset('uploads/testimonialvideos/' . $courses->video_path) }}" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -60,7 +63,7 @@
                 <!-- Text -->
                 <div class="text-white md:pl-8 text-center md:text-left">
                     <h1 class="text-3xl md:text-5xl font-playfair font-bold leading-tight mb-6">
-                        Infinite Astrology <br />
+                        {{ $learning->title }} <br />
                         Course
                     </h1>
                     <a href="#enroll"
@@ -111,7 +114,7 @@
                         Beginner-friendly Vedic Astrology Program
                     </p>
                     <p class="mb-4 text-gray-700 font-roboto leading-relaxed text-sm sm:text-base">
-                        {!! $course->about_course !!}
+                        {!! $learning->about_course !!}
                     </p>
                     {{-- <p class="mb-4 text-gray-700 font-roboto leading-relaxed text-sm sm:text-base">
                         Whether you're a curious learner, a spiritual seeker, or someone
@@ -127,18 +130,40 @@
                     <h3 class="mt-8 mb-4 text-xl sm:text-2xl font-playfair font-bold text-brand-dark">
                         Why should you join this course?
                     </h3>
+
                     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                        <div
-                            class="bg-brand-dark text-white p-4 sm:p-5 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                            <h4 class="font-roboto font-medium mb-2 text-base sm:text-lg">
-                                Learn from Scratch
-                            </h4>
-                            <p class="text-sm text-white/90 font-roboto">
-                                No prior astrology knowledge required — perfect for total
-                                beginners.
-                            </p>
-                        </div>
-                        <div
+                        @foreach (preg_split('/\r\n|\r|\n/', trim($learning->why_join_the_course)) as $index => $line)
+                            @if (str_contains($line, ':'))
+                                @php
+                                    [$title, $desc] = explode(':', $line, 2);
+                                    $title = trim($title);
+                                    $desc = trim($desc);
+
+                                    // Assign background colors by index
+                                    $bgClasses = [
+                                        'bg-[#3d0000] text-white', // 1st card (dark red)
+                                        'bg-brand-orange/10 text-gray-800', // 2nd card
+                                        'bg-brand-red text-white', // 3rd card
+                                        'bg-gray-100 text-gray-800', // 4th card
+                                    ];
+                                    $class = $bgClasses[$index % count($bgClasses)];
+                                @endphp
+
+                                <div
+                                    class="{{ $class }} p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                                    <h4 class="font-roboto font-medium mb-2 text-base sm:text-lg">
+                                        {!! $title !!}
+                                    </h4>
+                                    <p
+                                        class="text-sm font-roboto {{ str_contains($class, 'text-white') ? 'text-white/90' : '' }}">
+                                        {!! $desc !!}
+                                    </p>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+
+                    {{-- <div
                             class="bg-brand-orange/10 text-gray-800 p-4 sm:p-5 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                             <h4 class="font-roboto font-medium mb-2 text-base sm:text-lg">
                                 Bengali Medium
@@ -167,15 +192,23 @@
                                 Start analyzing charts confidently and gain a high-paying
                                 skill.
                             </p>
-                        </div>
-                    </div>
+                        </div> --}}
                 </div>
 
                 <!-- Right Column (Course Details) -->
                 <div
                     class="bg-white p-6 rounded-xl shadow-md border border-gray-100 space-y-6 hover:shadow-lg transition-all duration-300">
                     <div class="flex items-start">
-                        <div
+                        <ul class="space-y-3">
+                            @foreach ($learning->features as $feature)
+                                <li class="flex items-center text-gray-700">
+                                    <i class="{{ $feature->icon }} mr-3"></i>
+                                    <span>{{ $feature->name }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    {{-- <div
                             class="bg-brand-orange/10 p-3 rounded-full mr-4 transition-all duration-300 hover:bg-brand-orange/20 flex items-center justify-center w-12 h-12">
                             <i class="fas fa-calendar-alt text-brand-orange text-xl"></i>
                         </div>
@@ -186,8 +219,8 @@
                             <p class="text-sm text-gray-600 font-roboto mt-1">
                                 Watch anytime anywhere with ease
                             </p>
-                        </div>
-                    </div>
+                        </div> 
+                    
 
                     <div class="flex items-start">
                         <div
@@ -247,7 +280,7 @@
                                 Enroll in multiple courses with single login
                             </p>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -255,7 +288,7 @@
             <div class="mt-10 text-center">
                 <a href="#enroll"
                     class="inline-block bg-brand-orange hover:bg-brand-orange/90 text-white font-roboto font-medium px-8 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-lg">
-                    Enroll Now - ₹4999
+                    Enroll Now - ₹{{ $learning->sellable_price }}
                 </a>
             </div>
         </section>
@@ -275,7 +308,7 @@
             </div>
 
             <!-- Accordion Item -->
-            @foreach ($modules as $index => $module)
+            @foreach ($modules as $mIndex => $module)
                 <div class="border-b border-gray-200 hover:border-brand-orange/30 transition-colors duration-300">
                     <button
                         class="w-full flex items-center justify-between py-4 sm:py-5 text-left text-lg font-medium text-brand-dark focus:outline-none accordion-header hover:text-brand-red transition-colors duration-300">
@@ -284,7 +317,7 @@
                         <div class="flex items-center gap-3 sm:gap-4">
                             <span
                                 class="bg-brand-red text-white rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-sm sm:text-base font-medium shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                                {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                                {{ str_pad($mIndex + 1, 2, '0', STR_PAD_LEFT) }}
                             </span>
                             <span class="font-playfair text-lg sm:text-xl">{{ $module->name }}</span>
                         </div>
@@ -294,9 +327,44 @@
                             class="transition-transform duration-300 accordion-icon text-brand-gold text-xl sm:text-2xl">➖</span>
                     </button>
 
-                    <!-- Content -->
-                    <div class="accordion-content pb-4 pl-4 sm:pl-16">
-                        <p class="text-gray-700 font-roboto">{!! $module->description !!}</p>
+                    <!-- Accordion Content -->
+                    <div class="accordion-content pb-4 pl-4 sm:pl-16 space-y-4">
+                        <!-- Module Description -->
+                        {{-- <p class="text-gray-700 font-roboto">{!! $module->description !!}</p> --}}
+
+                        <!-- Lessons List -->
+                        @if ($module->lessons->count())
+                            <ul class="space-y-2">
+                                @foreach ($module->lessons as $lesson)
+                                    <li class="flex items-center text-gray-700">
+                                        @if ($lesson->type == 'video')
+                                            <i class="fas fa-play-circle text-brand-orange mr-3"></i>
+                                        @else
+                                            <i class="fas fa-file-alt text-brand-blue mr-3"></i>
+                                        @endif
+
+                                        <span>{{ $lesson->title }}</span>
+
+                                        @if ($lesson->type == 'video')
+                                            {{-- <span class="ml-auto text-gray-500 text-sm">
+                                                {{ $lesson->duration ?? '' }} min
+                                            </span> --}}
+                                        @else
+                                            <span class="ml-auto text-gray-500 text-sm">Reading</span>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-sm text-gray-500 italic">No lessons available in this module.</p>
+                        @endif
+
+                        <!-- Quiz Item -->
+                        <li class="flex items-center text-gray-700">
+                            <i class="fas fa-tasks text-brand-purple mr-3"></i>
+                            <span>Module {{ $mIndex + 1 }} Quiz</span>
+                            <span class="ml-auto text-gray-500 text-sm">Quiz</span>
+                        </li>
                     </div>
                 </div>
             @endforeach
@@ -402,12 +470,12 @@
                         Meet your Mentor
                     </p>
                     <h2 class="text-2xl md:text-3xl lg:text-4xl font-playfair text-brand-dark mb-4 relative inline-block">
-                        {{ $course->instructor_name }} – {{ $course->instructor_designation }}
+                        {{ $learning->instructor_name }} – {{ $learning->instructor_designation }}
                         <span
                             class="absolute bottom-[-4px] left-0 w-full h-1 bg-gradient-to-r from-brand-orange to-brand-red"></span>
                     </h2>
                     <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
-                        {!! $course->instructor_details !!}
+                        {!! $learning->instructor_details !!}
                     </p>
                     {{-- <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">
                         Recognized as the “Most Trusted Astrologer” in North 24 Parganas,
@@ -534,14 +602,14 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Card 1 -->
-                @foreach ($learn as $learning)
+                @foreach ($ebook as $row)
                     <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center">
-                        <img src="{{ asset('uploads/' . $learning->featured_image) }}" alt="Course 1"
+                        <img src="{{ asset('uploads/' . $row->featured_image) }}" alt="Course 1"
                             class="w-full h-auto rounded-lg mb-4" />
                         <h3 class="text-lg font-medium text-gray-800 text-center">
-                            Lal Kitab E-book
+                            {{ $row->title }}
                         </h3>
-                        <p class="text-lg font-semibold text-gray-900 mt-2">₹199</p>
+                        <p class="text-lg font-semibold text-gray-900 mt-2">₹{{ $row->price }}</p>
                         <button class="mt-auto bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm">
                             Enroll
                         </button>
@@ -687,17 +755,39 @@
 
                 <!-- Right Content -->
                 <div class="flex flex-col items-center text-center md:text-left">
-                    <div
-                        class="relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 mb-4">
-                        <img src="https://lwfiles.mycourse.app/64f3160f01ac55bf5644e428-public/bba19f28a87db0f6cd7ee8828a7d406d.png"
-                            alt="Certificate" class="max-w-full h-auto rounded-lg" />
+                    @if (!empty($learning->certificate_file) && file_exists(public_path('uploads/' . $learning->certificate_file)))
+                        <!-- Small Preview -->
+                        <div class="cursor-pointer mb-6" onclick="openCertificateModal()">
+                            <canvas id="pdfPreview-{{ $learning->id }}" width="560" height="396"
+                                class="rounded-lg shadow-md"></canvas>
+                        </div>
+                    @else
+                        <!-- Fallback if no PDF -->
                         <div
-                            class="absolute inset-0 bg-gradient-to-t from-brand-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                            <span class="text-white font-medium px-4 py-2 rounded-full bg-brand-orange/80 text-sm">Preview
-                                Certificate</span>
+                            class="w-[560px] h-[396px] flex items-center justify-center 
+                bg-gray-100 rounded-lg shadow-md border border-dashed border-gray-400">
+                            <span class="text-gray-500 text-sm">No Certificate Available</span>
+                        </div>
+                    @endif
+                    <!-- Full Screen Modal -->
+                    <div id="certificateModal"
+                        class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+                        <div class="relative w-11/12 h-5/6 bg-white rounded-lg overflow-hidden">
+                            <button onclick="closeCertificateModal()"
+                                class="absolute top-2 right-2 text-white bg-red-500 px-3 py-1 rounded">
+                                ✕
+                            </button>
+                            <iframe id="pdfFull-{{ $learning->id }}" src="" class="w-full h-full"></iframe>
                         </div>
                     </div>
-                    <p class="text-gray-700 text-sm sm:text-base font-roboto">
+
+                    {{-- <div
+                        class="absolute inset-0 bg-gradient-to-t from-brand-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                        <span class="text-white font-medium px-4 py-2 rounded-full bg-brand-orange/80 text-sm">Preview
+                            Certificate</span>
+                    </div> --}}
+
+                    <p class="text-gray-700 text-sm sm:text-base font-roboto mb-6">
                         Showcase Your Certificate on LinkedIn, Twitter, Instagram, and
                         Mention Astro Arun Pandit. Additionally, you can feature it in
                         your LinkedIn Certifications section, or include it on printed
@@ -708,38 +798,38 @@
         </section>
 
         <!-- <section class="faq">
-                      <h2>Frequently asked questions</h2>
+                                                                              <h2>Frequently asked questions</h2>
 
-                      <div class="faq-grid">
-                        <div class="faq-item">
-                          <button class="faq-question text-[16px] font-semibold">
-                            How do I access the recorded courses?
-                            <span class="arrow">&#9650;</span>
-                          </button>
-                          <div class="faq-answer">
-                            <p>
-                              To access our recorded courses, browse our courses, choose the course you're interested in, and make a
-                              purchase.
-                              You'll receive access instructions via email.
-                            </p>
-                          </div>
-                        </div>
+                                                                              <div class="faq-grid">
+                                                                                <div class="faq-item">
+                                                                                  <button class="faq-question text-[16px] font-semibold">
+                                                                                    How do I access the recorded courses?
+                                                                                    <span class="arrow">&#9650;</span>
+                                                                                  </button>
+                                                                                  <div class="faq-answer">
+                                                                                    <p>
+                                                                                      To access our recorded courses, browse our courses, choose the course you're interested in, and make a
+                                                                                      purchase.
+                                                                                      You'll receive access instructions via email.
+                                                                                    </p>
+                                                                                  </div>
+                                                                                </div>
 
-                        <div class="faq-item">
-                          <button class="faq-question text-[16px] font-semibold">
-                            Will I receive a certificate upon course completion?
-                            <span class="arrow">&#9650;</span>
-                          </button>
-                          <div class="faq-answer">
-                            <p>
-                              Yes, you will receive a certificate for course completion once you have finished the course.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                                                                                <div class="faq-item">
+                                                                                  <button class="faq-question text-[16px] font-semibold">
+                                                                                    Will I receive a certificate upon course completion?
+                                                                                    <span class="arrow">&#9650;</span>
+                                                                                  </button>
+                                                                                  <div class="faq-answer">
+                                                                                    <p>
+                                                                                      Yes, you will receive a certificate for course completion once you have finished the course.
+                                                                                    </p>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
 
-                      <p class="faq-footer">Have questions? <a href="#">Talk to our Support Team</a></p>
-                    </section> -->
+                                                                              <p class="faq-footer">Have questions? <a href="#">Talk to our Support Team</a></p>
+                                                                            </section> -->
 
         <section class="py-12 sm:py-16 bg-gray-50 px-4 sm:px-6" id="faqs">
             <div class="container mx-auto max-w-5xl">
@@ -754,26 +844,30 @@
                 </h2>
 
                 <div class="space-y-4 sm:space-y-6">
-                    <!-- FAQ 1 -->
                     @foreach ($faqs as $faq)
                         <div
-                            class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
-                            <button
-                                class="faq-question w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
-                                <span class="font-medium text-brand-dark text-base sm:text-lg font-roboto">
+                            class="my-faq-item bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                            <button type="button"
+                                class="my-faq-question w-full text-left px-6 py-5 flex justify-between items-center focus:outline-none"
+                                aria-expanded="false">
+                                <span class="font-medium text-brand-dark text-sm sm:text-base font-roboto">
                                     {{ $faq->title }}
                                 </span>
-                                <span class="text-brand-orange transition-transform duration-300 transform">&#9650;</span>
+                                <span class="my-faq-arrow text-brand-orange transition-transform duration-300"
+                                    aria-hidden="true">&#9650;</span>
                             </button>
-                            <div
-                                class="faq-answer px-4 sm:px-6 pb-4 sm:pb-6 pt-0 text-gray-700 text-sm sm:text-base font-roboto">
-                                <p class="border-t border-gray-100 pt-4">
+
+                            <!-- answer: start collapsed via inline style -->
+                            <div class="my-faq-answer px-4 sm:px-6 pb-4 sm:pb-6 pt-0 text-gray-700 text-sm sm:text-base font-roboto"
+                                style="max-height: 0; overflow: hidden; transition: max-height 0.35s ease;">
+                                <p class="px-4 sm:px-6 pb-4 sm:pb-6 pt-4">
                                     {!! $faq->description !!}
                                 </p>
                             </div>
                         </div>
                     @endforeach
-                    {{-- <!-- FAQ 2 -->
+                </div>
+                {{-- <!-- FAQ 2 -->
                     <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
                         <button
                             class="faq-question w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
@@ -809,7 +903,6 @@
                             </p>
                         </div>
                     </div> --}}
-                </div>
 
                 <p class="text-center mt-8 text-brand-dark font-roboto">
                     Have questions?
@@ -842,6 +935,118 @@
                 // Toggle the clicked accordion
                 content.classList.toggle("hidden");
                 icon.textContent = content.classList.contains("hidden") ? "➕" : "➖";
+            });
+        });
+    });
+</script>
+<!-- Load PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var pdfUrl = "{{ asset('uploads/' . $learning->certificate_file) }}";
+
+        // Render small preview
+        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+            pdf.getPage(1).then(function(page) {
+                var canvas = document.getElementById("pdfPreview-{{ $learning->id }}");
+                var ctx = canvas.getContext("2d");
+
+                var canvasWidth = 560;
+                var canvasHeight = 396;
+                var viewport = page.getViewport({
+                    scale: 1
+                });
+
+                var scaleX = canvasWidth / viewport.width;
+                var scaleY = canvasHeight / viewport.height;
+                var scale = Math.max(scaleX, scaleY); // cover mode
+                var scaledViewport = page.getViewport({
+                    scale: scale
+                });
+
+                var offsetX = (canvasWidth - scaledViewport.width) / 2;
+                var offsetY = (canvasHeight - scaledViewport.height) / 2;
+
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+                page.render({
+                    canvasContext: ctx,
+                    viewport: scaledViewport,
+                    transform: [1, 0, 0, 1, offsetX, offsetY]
+                });
+            });
+        });
+
+        // Modal functions
+        window.openCertificateModal = function() {
+            document.getElementById("certificateModal").classList.remove("hidden");
+            document.getElementById("pdfFull-{{ $learning->id }}").src = pdfUrl;
+        }
+
+        window.closeCertificateModal = function() {
+            document.getElementById("certificateModal").classList.add("hidden");
+            document.getElementById("pdfFull-{{ $learning->id }}").src = "";
+        }
+    });
+</script>
+<!-- OPTIONAL: small fallback CSS (won't break Tailwind) -->
+<style>
+    /* fallback rotate if Tailwind rotate class missing */
+    .my-faq-arrow.rotate-180 {
+        transform: rotate(180deg);
+    }
+
+    .my-faq-arrow {
+        display: inline-block;
+    }
+
+    /* ensure transform origin works */
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const items = document.querySelectorAll('.my-faq-item');
+
+        items.forEach(item => {
+            const btn = item.querySelector('.my-faq-question');
+            const answer = item.querySelector('.my-faq-answer');
+            const arrow = btn.querySelector('.my-faq-arrow');
+
+            // ensure starting collapsed
+            answer.style.maxHeight = '0px';
+            btn.setAttribute('aria-expanded', 'false');
+
+            btn.addEventListener('click', function() {
+                const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+                if (isOpen) {
+                    // currently open -> collapse
+                    // If maxHeight was 'none', set it to its scrollHeight first so transition works
+                    if (answer.style.maxHeight === 'none') {
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        // force reflow so the next line animates
+                        answer.offsetHeight;
+                    }
+                    answer.style.maxHeight = '0px';
+                    btn.setAttribute('aria-expanded', 'false');
+                    arrow.classList.remove('rotate-180');
+                } else {
+                    // open this item
+                    // set to scrollHeight to animate
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    btn.setAttribute('aria-expanded', 'true');
+                    arrow.classList.add('rotate-180');
+
+                    // after animation completes, remove fixed max-height so content can reflow (images/responsive)
+                    const onTransitionEnd = function() {
+                        if (btn.getAttribute('aria-expanded') === 'true') {
+                            answer.style.maxHeight = 'none';
+                        }
+                        answer.removeEventListener('transitionend', onTransitionEnd);
+                    };
+                    answer.addEventListener('transitionend', onTransitionEnd);
+                }
             });
         });
     });

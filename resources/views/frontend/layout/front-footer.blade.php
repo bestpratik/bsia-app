@@ -5,8 +5,8 @@
             <!-- About Us -->
             <div class="wow animate__fadeInUp" data-wow-delay="0.1s">
                 <div class="flex items-center mb-6">
-                    <img src="{{ asset('photo/logo-bisa.png') }}" alt="BS Institute Of Astrology" class="w-12 h-12 rounded-xl mr-3"
-                        loading="lazy" decoding="async" />
+                    <img src="{{ asset('photo/logo-bisa.png') }}" alt="BS Institute Of Astrology"
+                        class="w-12 h-12 rounded-xl mr-3" loading="lazy" decoding="async" />
                     <div>
                         <h3 class="font-playfair font-bold text-white text-lg">
                             BS Institute Of Astrology
@@ -48,35 +48,46 @@
                     Our Courses
                 </h3>
                 <ul class="space-y-3">
-                    <li
-                        class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
-                        <i class="fas fa-star mr-3 text-brand-gold"></i> Infinite
-                        Astrology
-                    </li>
-                    <li
-                        class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
-                        <i class="fas fa-hand-paper mr-3 text-brand-gold"></i> The
-                        Ultimate Palmistry
-                    </li>
-                    <li
-                        class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
-                        <i class="fas fa-home mr-3 text-brand-gold"></i> Limitless Vastu
-                    </li>
-                    <li
-                        class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
-                        <i class="fas fa-graduation-cap mr-3 text-brand-gold"></i>
-                        Advance Astrology Program
-                    </li>
-                    <li
-                        class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
-                        <i class="fas fa-certificate mr-3 text-brand-gold"></i> Advance
-                        Palmistry Program
-                    </li>
-                    <li
-                        class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
-                        <i class="fas fa-chess-board mr-3 text-brand-gold"></i> 45
-                        Devtas of Vastu
-                    </li>
+                    @php
+                        $courses = App\Models\Course::all();
+                    @endphp
+                    @foreach ($courses as $course)
+                        <li>
+                            <a href="{{ route('course.details', ['slug' => $course->slug]) }}"
+                                class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
+                                <i class="mr-3 text-brand-gold"></i> {{ $course->title }}
+                            </a>
+                        </li>
+                    @endforeach
+                    {{-- <li><a href="{{ route('course.details', ['slug' => 'infinite-astrology']) }}"
+                            class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
+                            <i class="fas fa-star mr-3 text-brand-gold"></i> Infinite
+                            Astrology
+                        </a></li>
+                    <li><a href="{{ route('course.details', ['slug' => 'the-ultimate-palmistry']) }}"
+                            class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
+                            <i class="fas fa-hand-paper mr-3 text-brand-gold"></i> The
+                            Ultimate Palmistry
+                        </a></li>
+                    <li><a href="{{ route('course.details', ['slug' => 'limitless-vastu']) }}"
+                            class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
+                            <i class="fas fa-home mr-3 text-brand-gold"></i> Limitless Vastu
+                        </a></li>
+                    <li><a href="{{ route('course.details', ['slug' => 'advance-astrology-program']) }}"
+                            class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
+                            <i class="fas fa-graduation-cap mr-3 text-brand-gold"></i>
+                            Advance Astrology Program
+                        </a></li>
+                    <li><a href="{{ route('course.details', ['slug' => 'advance-palmistry-program']) }}"
+                            class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
+                            <i class="fas fa-certificate mr-3 text-brand-gold"></i> Advance
+                            Palmistry Program
+                        </a></li>
+                    <li><a href="{{ route('course.details', ['slug' => '45-devtas-of-vastu']) }}"
+                            class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
+                            <i class="fas fa-chess-board mr-3 text-brand-gold"></i> 45
+                            Devtas of Vastu
+                        </a></li> --}}
                 </ul>
             </div>
 
@@ -141,4 +152,3 @@
         </div>
     </div>
 </footer>
-

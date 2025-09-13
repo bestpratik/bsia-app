@@ -90,8 +90,8 @@ Route::delete('/ebook/{id}/delete', [EbookController::class, 'destroy'])->name('
 
 //About sections
 Route::get('about', [AboutController::class, 'index'])->name('about');
-Route::get('create/about', [AboutController::class, 'create'])->name('create.about');
-Route::post('save/about', [AboutController::class, 'store'])->name('save.about');
+Route::get('about/create', [AboutController::class, 'create'])->name('create.about');
+Route::post('about/save', [AboutController::class, 'store'])->name('save.about');
 Route::get('/about/{id}/edit', [AboutController::class, 'edit'])->name('edit.about');
 Route::put('/about/{id}/update', [AboutController::class, 'update'])->name('update.about');
 Route::delete('/about/{id}/delete', [AboutController::class, 'destroy'])->name('delete.about');
@@ -99,8 +99,8 @@ Route::delete('/about/{id}/delete', [AboutController::class, 'destroy'])->name('
 
 //Banner sections
 Route::get('banner', [BannerController::class, 'index'])->name('banner');
-Route::get('create/banner', [BannerController::class, 'create'])->name('create.banner');
-Route::post('save/banner', [BannerController::class, 'store'])->name('save.banner');
+Route::get('banner/create', [BannerController::class, 'create'])->name('create.banner');
+Route::post('banner/save', [BannerController::class, 'store'])->name('save.banner');
 Route::get('/banner/{id}/edit', [BannerController::class, 'edit'])->name('edit.banner');
 Route::put('/banner/{id}/update', [BannerController::class, 'update'])->name('update.banner');
 Route::delete('/banner/{id}/delete', [BannerController::class, 'destroy'])->name('delete.banner');
@@ -108,8 +108,8 @@ Route::delete('/banner/{id}/delete', [BannerController::class, 'destroy'])->name
 
 // Video Testimonial section
 Route::get('videotestimonial', [VideoTestimonialController::class, 'index'])->name('videotestimonial');
-Route::get('create/videotestimonial', [VideoTestimonialController::class, 'create'])->name('create.videotestimonial');
-Route::post('save/videotestimonial', [VideoTestimonialController::class, 'store'])->name('save.videotestimonial');
+Route::get('videotestimonial/create', [VideoTestimonialController::class, 'create'])->name('create.videotestimonial');
+Route::post('videotestimonial/save', [VideoTestimonialController::class, 'store'])->name('save.videotestimonial');
 Route::get('/videotestimonial/{id}/edit', [VideoTestimonialController::class, 'edit'])->name('edit.videotestimonial');
 Route::put('/videotestimonial/{id}/update', [VideoTestimonialController::class, 'update'])->name('update.videotestimonial');
 Route::delete('/videotestimonial/{id}/delete', [VideoTestimonialController::class, 'destroy'])->name('delete.videotestimonial');
@@ -117,8 +117,8 @@ Route::delete('/videotestimonial/{id}/delete', [VideoTestimonialController::clas
 
 // Testimonial section
 Route::get('testimonial', [TestimonialController::class, 'index'])->name('testimonial');
-Route::get('create/testimonial', [TestimonialController::class, 'create'])->name('create.testimonial');
-Route::post('save/testimonial', [TestimonialController::class, 'store'])->name('save.testimonial');
+Route::get('testimonial/create', [TestimonialController::class, 'create'])->name('create.testimonial');
+Route::post('testimonial/save', [TestimonialController::class, 'store'])->name('save.testimonial');
 Route::get('/testimonial/{id}/edit', [TestimonialController::class, 'edit'])->name('edit.testimonial');
 Route::put('/testimonial/{id}/update', [TestimonialController::class, 'update'])->name('update.testimonial');
 Route::delete('/testimonial/{id}/delete', [TestimonialController::class, 'destroy'])->name('delete.testimonial');
@@ -129,7 +129,7 @@ Route::resource('quizzes', QuizController::class);
 Route::get('quizzes/{id}/data', [QuizController::class, 'getQuiz']);
 
 
-
+// Frontend Section
 Route::get('/', [FrontController::class, 'home'])->name('home');
 Route::get('about-us', [FrontController::class, 'about'])->name('about.us');
 Route::get('courses', [FrontController::class, 'course'])->name('courses');
