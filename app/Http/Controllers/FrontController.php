@@ -6,6 +6,7 @@ use App\Models\About;
 use App\Models\Banner;
 use App\Models\Course;
 use App\Models\CourseFaqs;
+use App\Models\CourseFeature;
 use App\Models\CourseLesson;
 use App\Models\CourseModules;
 use App\Models\Ebook;
@@ -42,21 +43,26 @@ class FrontController extends Controller
             ->with(['lessons', 'quizzes'])
             ->get();
         $relatedCourses = Course::where('id', '!=', $course->id)->get();
-        return view('frontend.coursedetails', compact('lession', 'course', 'modules', 'relatedCourses'));
+        $learning = Course::where('slug', $slug)->firstOrFail();
+        return view('frontend.coursedetails', compact('lession', 'course', 'modules', 'relatedCourses', 'learning'));
     }
 
     public function course_learning($slug)
     {
-        $course = Course::first();
-        $learn = Course::all();
+        // $course = Course::first();
+        $ebook = Ebook::all();
         $learning = Course::where('slug', $slug)->firstOrFail();
         $faqs = CourseFaqs::all();
         $testimonial = Testimonial::all();
-        $modules = CourseModules::where('course_id', $learning->id)
-                ->where('status', 1)
-                ->orderBy('order_no', 'desc')
-                ->get();
-        return view('frontend.courselearning', compact('course', 'learn', 'learning', 'faqs', 'testimonial', 'modules'));
+
+        $modules = CourseModules::with(['lessons' => function ($q) {
+            $q->orderBy('id', 'asc');
+        }])
+            ->where('course_id', $learning->id)
+            ->orderBy('order_no', 'asc')
+            ->get();
+
+        return view('frontend.courselearning', compact('ebook', 'learning', 'faqs', 'testimonial', 'modules'));
     }
 
     public function ebooks()

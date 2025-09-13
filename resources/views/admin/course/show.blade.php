@@ -197,6 +197,19 @@
                         @endif
                     </ul>
                 </div>
+                <div class="p-6">
+                    <h3 class="font-bold text-lg text-brand-dark mb-4">
+                        This Course Includes:
+                    </h3>
+                    <ul class="space-y-3">
+                        @foreach ($course->features as $feature)
+                            <li class="flex items-center text-gray-700">
+                                <i class="{{ $feature->icon }} mr-3"></i>
+                                <span>{{ $feature->name }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
 
