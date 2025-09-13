@@ -127,12 +127,12 @@
                     <div class="text-center mt-8 pt-6 border-t border-gray-200">
                         <p class="font-roboto text-gray-600 text-sm">
                             Don't have an account?
-                            @if (Route::has('register'))
-                                <a href="{{ route('user.register') }}"
+                            
+                                <a href="{{ route('register') }}"
                                     class="text-brand-red hover:text-red-700 font-medium transition-colors">
                                     Sign up here
                                 </a>
-                            @endif
+                            
                         </p>
                     </div>
                 </div>
