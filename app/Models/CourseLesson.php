@@ -22,3 +22,4 @@ class CourseLesson extends Model
         return $this->belongsTo(CourseModules::class);
     }
 }
+ 

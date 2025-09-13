@@ -53,9 +53,9 @@ class FrontController extends Controller
         $faqs = CourseFaqs::all();
         $testimonial = Testimonial::all();
         $modules = CourseModules::where('course_id', $learning->id)
-                ->where('status', 1)
-                ->orderBy('order_no', 'desc')
-                ->get();
+            ->where('status', 1)
+            ->orderBy('order_no', 'desc')
+            ->get();
         return view('frontend.courselearning', compact('course', 'learn', 'learning', 'faqs', 'testimonial', 'modules'));
     }
 
@@ -65,6 +65,20 @@ class FrontController extends Controller
         return view('frontend.ebook', compact('ebook'));
     }
 
+    public function ebook_details($id)
+    {
+        $ebook = Ebook::findOrFail($id);
+
+        // ✅ Fetch related ebooks (example: by category, or just exclude the current one)
+        $relatedEbooks = Ebook::where('id', '!=', $ebook->id)
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
+
+        return view('frontend.ebookdetails', compact('ebook', 'relatedEbooks'));
+    }
+
+
     public function login()
     {
         return view('frontend.login');
@@ -73,5 +87,20 @@ class FrontController extends Controller
     public function dashboard()
     {
         return view('frontend.dashboard');
+    }
+
+    public function purchase($type, $id)
+    {
+        if ($type === 'course') {
+            $item = Course::findOrFail($id);
+            $itemType = 'course';
+        } elseif ($type === 'ebook') {
+            $item = Ebook::findOrFail($id);
+            $itemType = 'ebook';
+        } else {
+            abort(404);
+        }
+
+        return view('frontend.purchase_form', compact('item', 'itemType'));
     }
 }

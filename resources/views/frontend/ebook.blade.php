@@ -11,7 +11,7 @@
                 </ol>
             </nav>
             <h1 class="mt-2 font-playfair text-3xl md:text-5xl font-bold text-brand-dark">
-                eBooks
+                Ebooks
             </h1>
         </div>
     </section>
@@ -43,7 +43,7 @@
                         <img src="{{ $row->featured_image ? asset('uploads/' . $row->featured_image) : asset('photo/default-banner.jpg') }}"
                             class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
                             alt="Astrology Basics" />
-                        <span class="price-badge">₹299</span>
+                        <span class="price-badge">₹{{ $row->price ?? '' }}</span>
                     </div>
                     <div class="body p-4 sm:p-6">
                         <h3 class="font-roboto font-bold text-lg sm:text-xl lg:text-2xl text-brand-dark mb-2">
@@ -53,10 +53,13 @@
                             {!! $row->description ?? '' !!}
                         </p>
                         <div class="mt-4 flex items-center justify-between">
-                            <span class="text-brand-orange text-sm">PDF • 120 pages</span>
-                            <button class="buy-button">
+                            <!-- <span class="text-brand-orange text-sm">PDF • 120 pages</span> -->
+                            <a href="{{ route('ebook.details', ['id' => $row->id]) }}">
+                                <button class="buy-button">
                                 <i class="fa fa-shopping-cart mr-2"></i>Buy Now
                             </button>
+                            </a>
+                            
                         </div>
                     </div>
                 </article>

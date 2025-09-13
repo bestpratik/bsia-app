@@ -35,3 +35,4 @@ class Course extends Model
         return $this->hasMany(CourseModules::class);
     }
 }
+ 

@@ -63,7 +63,7 @@
                         Infinite Astrology <br />
                         Course
                     </h1>
-                    <a href="#enroll"
+                    <a href="{{ route('purchase.form', ['id' => $learning->id]) }}"
                         class="inline-block bg-gradient-to-r from-brand-orange to-brand-gold text-white hover:from-brand-gold hover:to-brand-orange font-roboto font-medium px-8 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
                         Enroll Now
                     </a>
@@ -253,7 +253,7 @@
 
             <!-- Enroll Button -->
             <div class="mt-10 text-center">
-                <a href="#enroll"
+                <a href="{{ route('purchase.form', ['id' => $learning->id]) }}"
                     class="inline-block bg-brand-orange hover:bg-brand-orange/90 text-white font-roboto font-medium px-8 py-3 rounded-full transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-lg">
                     Enroll Now - ₹4999
                 </a>
@@ -679,7 +679,10 @@
 
                     <button
                         class="mt-8 bg-gradient-to-r from-brand-orange to-brand-red text-white font-roboto font-medium py-3 px-6 rounded-lg shadow-md hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:scale-105 relative overflow-hidden group">
-                        <span class="relative z-10">Enroll Now</span>
+                        <a href="{{ route('purchase.form', ['id' => $learning->id]) }}">
+                            <span class="relative z-10">Enroll Now</span>
+                        </a>
+                        
                         <span
                             class="absolute top-0 left-0 w-full h-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
                     </button>
