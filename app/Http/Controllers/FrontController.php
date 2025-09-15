@@ -11,8 +11,9 @@ use App\Models\CourseLesson;
 use App\Models\CourseModules;
 use App\Models\Ebook;
 use App\Models\Testimonial;
+use App\Models\Quiz;
 use App\Models\VideoTestimonial;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 
 class FrontController extends Controller
 {
@@ -39,12 +40,13 @@ class FrontController extends Controller
         $course = Course::where('slug', $slug)->firstOrFail();
         $modules = CourseModules::where('course_id', $course->id)
             ->where('status', 1)
-            ->orderBy('order_no', 'desc')
+            ->orderBy('order_no', 'asc')
             ->with(['lessons', 'quizzes'])
             ->get();
         $relatedCourses = Course::where('id', '!=', $course->id)->get();
         $learning = Course::where('slug', $slug)->firstOrFail();
-        return view('frontend.coursedetails', compact('lession', 'course', 'modules', 'relatedCourses', 'learning'));
+        $quizzes = Quiz::all();
+        return view('frontend.coursedetails', compact('lession', 'course', 'modules', 'relatedCourses', 'learning', 'quizzes'));
     }
 
     public function course_learning($slug)
@@ -54,6 +56,7 @@ class FrontController extends Controller
         $learning = Course::where('slug', $slug)->firstOrFail();
         $faqs = CourseFaqs::all();
         $testimonial = Testimonial::all();
+        $courses = Videotestimonial::first();
 
 
         $modules = CourseModules::with(['lessons' => function ($q) {
@@ -63,7 +66,7 @@ class FrontController extends Controller
             ->orderBy('order_no', 'asc')
             ->get();
 
-        return view('frontend.courselearning', compact('ebook', 'learning', 'faqs', 'testimonial', 'modules'));
+        return view('frontend.courselearning', compact('ebook', 'learning', 'faqs', 'testimonial', 'modules', 'courses'));
 
     }
 

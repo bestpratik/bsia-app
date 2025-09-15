@@ -59,11 +59,13 @@
                                  class="font-roboto font-bold text-lg sm:text-xl lg:text-2xl text-brand-dark mb-2 sm:mb-3 group-hover:text-brand-red transition-colors">
                                  {{ $row->title ?? '' }}
                              </h3>
+                             @if($row->about_course)
                              <p
                                  class="font-roboto text-xs sm:text-sm lg:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed line-clamp-3">
                                  {!! \Illuminate\Support\Str::limit(strip_tags($row->about_course), 150) ?? '' !!}
                                  <span class="text-blue-400 text-sm cursor-pointer">Read More</span>
                              </p>
+                             @endif
 
                              <div class="flex items-center justify-between mb-3 sm:mb-4 text-xs sm:text-sm">
                                  <div class="flex items-center text-brand-orange">

@@ -105,7 +105,7 @@
                      </h2>
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                          <div class="flex items-start">
-                      
+
                          </div>
 
                          {{-- <div class="flex items-start">
@@ -174,7 +174,7 @@
                      </div>
                  </div>
 
-               
+
                  <!-- Instructor -->
                  <div class="bg-white rounded-xl shadow-md p-6 md:p-8 wow animate__animated animate__fadeInUp"
                      data-wow-delay="0.4s">
@@ -189,7 +189,7 @@
                              <p class="text-brand-orange font-medium mb-3">
                                  {{ $ebook->title }}
                              </p>
-                          
+
 
                              <div class="flex space-x-3">
                                  <a href="#" class="text-gray-400 hover:text-brand-red transition-colors">
@@ -235,7 +235,7 @@
                      </div>
 
                      <!-- Course Features -->
-                     <div class="p-6">
+                     <!-- <div class="p-6">
                          <h3 class="font-bold text-lg text-brand-dark mb-4">
                              This Course Includes:
                          </h3>
@@ -269,7 +269,7 @@
                                  <span>1-on-1 mentorship</span>
                              </li>
                          </ul>
-                     </div>
+                     </div> -->
 
                      <!-- Share Section -->
                      <div class="p-6 border-t border-gray-100">
@@ -299,6 +299,7 @@
              </div>
          </div>
 
+         @if($relatedEbooks ->count() > 0)
          <!-- Related Courses -->
          <div class="mt-12 md:mt-16 wow animate__animated animate__fadeInUp" data-wow-delay="0.5s">
              <h2 class="font-playfair font-bold text-2xl md:text-3xl text-brand-dark mb-8">
@@ -331,60 +332,9 @@
                      </a>
                  </div>
                  @endforeach
-
-
-                 {{-- <!-- Course 2 -->
-                 <div>
-                     <a href="{{ route('course.details') }}">
-                 <div
-                     class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                     <img src="{{ asset('photo/c3.jpg') }}" alt="The Ultimate Astrology Course"
-                         class="w-full h-48 object-cover" loading="lazy" decoding="async" />
-                     <div class="p-5">
-                         <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">
-                             The Ultimate Astrology Course
-                         </h3>
-                         <p class="text-gray-600 text-sm mb-4">
-                             Looking to advance your knowledge in the field of
-                             Astrology, our advance level mentorship course is the
-                             ideal choice for you.
-                         </p>
-                         <div class="flex justify-between items-center">
-                             <span class="text-brand-red font-bold">₹18,500</span>
-                             <a href="#"
-                                 class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">Enroll</a>
-                         </div>
-                     </div>
-                 </div>
-                 </a>
              </div>
-
-             <!-- Course 3 -->
-             <div>
-                 <a href="{{ route('course.details') }}">
-                     <div
-                         class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                         <img src="{{ asset('photo/c4.png') }}" alt="Palmistry Fundamentals"
-                             class="w-full h-48 object-cover" loading="lazy" decoding="async" />
-                         <div class="p-5">
-                             <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">
-                                 Palmistry Fundamentals
-                             </h3>
-                             <p class="text-gray-600 text-sm mb-4">
-                                 Discover the ancient art of palm reading with our
-                                 comprehensive course on palmistry fundamentals.
-                             </p>
-                             <div class="flex justify-between items-center">
-                                 <span class="text-brand-red font-bold">₹1,499</span>
-                                 <a href="#"
-                                     class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">Enroll</a>
-                             </div>
-                         </div>
-                     </div>
-                 </a>
-             </div> --}}
          </div>
-     </div>
+         @endif
      </div>
  </main>
  @endsection
