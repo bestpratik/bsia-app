@@ -7,14 +7,16 @@ use App\Http\Controllers\CourseFaqsController;
 use App\Http\Controllers\CourseLessonController;
 use App\Http\Controllers\CourseModuleController;
 use App\Http\Controllers\EbookController;
+use App\Http\Controllers\FeatureMasterController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\QuizController;
+// use App\Models\CourseFaqs;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\VideoTestimonialController;
-use App\Http\Controllers\PurchaseController;
-// use App\Models\CourseFaqs;
-use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -123,6 +125,15 @@ Route::post('testimonial/save', [TestimonialController::class, 'store'])->name('
 Route::get('/testimonial/{id}/edit', [TestimonialController::class, 'edit'])->name('edit.testimonial');
 Route::put('/testimonial/{id}/update', [TestimonialController::class, 'update'])->name('update.testimonial');
 Route::delete('/testimonial/{id}/delete', [TestimonialController::class, 'destroy'])->name('delete.testimonial');
+
+
+// Feature section
+Route::get('features', [FeatureMasterController::class, 'index'])->name('features');
+Route::get('features/create', [FeatureMasterController::class, 'create'])->name('create.features');
+Route::post('features/save', [FeatureMasterController::class, 'store'])->name('save.features');
+Route::get('/features/{id}/edit', [FeatureMasterController::class, 'edit'])->name('edit.features');
+Route::put('/features/{id}/update', [FeatureMasterController::class, 'update'])->name('update.features');
+Route::delete('/features/{id}/delete', [FeatureMasterController::class, 'destroy'])->name('delete.features');
 
 
 //Quiz Section

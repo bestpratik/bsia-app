@@ -78,13 +78,13 @@
         <span>Video Testimonial</span>
     </a>
 
-    <!--Quiz-->
-    <!-- <a href="{{ url('quizzes') }}"
+    <!--Features-->
+    <a href="{{ url('features') }}"
         class="flex items-center px-2 py-2 text-sm font-medium rounded-md transition-all
-           @if (request()->is('quizzes*')) bg-[#112695] text-white @else text-gray-600 hover:bg-blue-100 hover:text-blue-700 @endif">
-        <x-heroicon-o-question-mark-circle 
-    class="w-5 h-5 mr-3 flex-shrink-0 
-        @if (request()->is('quizzes*')) text-white @else text-[25304e] @endif" />
-        <span>Quizzes</span>
-    </a> -->
+           @if (request()->is('features*')) bg-[#112695] text-white @else text-gray-600 hover:bg-blue-100 hover:text-blue-700 @endif">
+        <x-heroicon-o-question-mark-circle
+            class="w-5 h-5 mr-3 flex-shrink-0 
+        @if (request()->is('features*')) text-white @else text-[25304e] @endif" />
+        <span>Features</span>
+    </a>
 </nav>

@@ -50,7 +50,8 @@
                         <div class="w-12 h-12 bg-brand-red/10 rounded-full flex items-center justify-center mb-3">
                             <i class="fas fa-graduation-cap text-brand-red text-xl"></i>
                         </div>
-                        <h2 class="text-3xl font-bold text-brand-dark mb-1">2</h2>
+                        <h2 class="text-3xl font-bold text-brand-dark mb-1">{{ $stats['courses'] }}</h2>
+
                         <p class="text-gray-500 text-sm">Courses</p>
                     </div>
                 </div>
@@ -62,7 +63,8 @@
                         <div class="w-12 h-12 bg-brand-orange/10 rounded-full flex items-center justify-center mb-3">
                             <i class="fas fa-clock text-brand-orange text-xl"></i>
                         </div>
-                        <h2 class="text-3xl font-bold text-brand-dark mb-1">11</h2>
+                        <h2 class="text-3xl font-bold text-brand-dark mb-1">{{ $stats['hours'] }}</h2>
+
                         <p class="text-gray-500 text-sm">Hours</p>
                     </div>
                 </div>
@@ -86,7 +88,8 @@
                         <div class="w-12 h-12 bg-brand-blue/10 rounded-full flex items-center justify-center mb-3">
                             <i class="fas fa-certificate text-brand-blue text-xl"></i>
                         </div>
-                        <h2 class="text-3xl font-bold text-brand-dark mb-1">1</h2>
+                        <h2 class="text-3xl font-bold text-brand-dark mb-1">{{ $stats['certificates'] }}</h2>
+
                         <p class="text-gray-500 text-sm">Certificates</p>
                     </div>
                 </div>
@@ -108,30 +111,30 @@
                 <!-- Courses Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Course 1 -->
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 wow animate__animated animate__fadeInUp"
-                        data-wow-delay="0.1s">
-                        <img src="{{ asset('photo/c1.jpg') }}" alt="Infinite Astrology" class="w-full h-48 object-cover"
-                            loading="lazy" decoding="async" />
-                        <div class="p-5">
-                            <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">
-                                Infinite Astrology
-                            </h3>
-                            <p class="text-gray-600 text-sm mb-4">
-                                A beginner-friendly Vedic astrology course in Bengali,
-                                teaching you how to read charts, decode planets, and
-                                understand cosmic influences from Day 1 — no prior knowledge
-                                required.
-                            </p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-brand-red font-bold">₹12,000</span>
-                                <a href="coursedetails-infinite-astrology.html"
-                                    class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">Enroll</a>
+                    @foreach ($courses as $course)
+                        <div
+                            class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                            <img src="{{ $course->featured_image ? asset('uploads/' . $course->featured_image) : asset('photo/default-banner.jpg') }}"
+                                alt="{{ $course->title }}" class="w-full h-48 object-cover" />
+
+                            <div class="p-5">
+                                <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">{{ $course->title }}</h3>
+                                <p class="text-gray-600 text-sm mb-4">{{ Str::limit($course->short_description, 100) }}</p>
+
+                                <div class="flex justify-between items-center">
+                                    <span class="text-brand-red font-bold">₹{{ $course->sellable_price }}</span>
+                                    <a href="{{ route('course.details', $course->slug) }}"
+                                        class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">
+                                        Enroll
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
+
 
                     <!-- Course 2 -->
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 wow animate__animated animate__fadeInUp"
+                    {{-- <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 wow animate__animated animate__fadeInUp"
                         data-wow-delay="0.2s">
                         <img src="{{ asset('photo/c2.jpg') }}" alt="Advance Numerology Mentorship Program"
                             class="w-full h-48 object-cover" loading="lazy" decoding="async" />
@@ -146,8 +149,8 @@
                             </p>
                             <div class="flex justify-between items-center">
                                 <span class="text-brand-red font-bold">₹24,500</span>
-                                {{-- <a href="{{ route('course.details') }}"
-                                    class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">Enroll</a> --}}
+                                 <a href="{{ route('course.details') }}"
+                                    class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">Enroll</a> 
                             </div>
                         </div>
                     </div>
@@ -173,10 +176,10 @@
                                 </div>
                                 {{-- <a href="{{ route('course.details') }}"
                                     class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm font-medium">Start
-                                    Learning</a> --}}
+                                    Learning</a> 
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -191,23 +194,30 @@
                     data-wow-delay="0.1s">
                     <div class="space-y-6">
                         <!-- Activity 1 -->
-                        <div class="flex items-start">
-                            <div class="w-10 h-10 bg-brand-red/10 rounded-full flex items-center justify-center mr-4">
-                                <i class="fas fa-certificate text-brand-red"></i>
+                        @forelse($activities as $activity)
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-brand-red/10 rounded-full flex items-center justify-center mr-4">
+                                    <i
+                                        class="fas {{ $activity['type'] === 'certificate' ? 'fa-certificate text-brand-red' : 'fa-graduation-cap text-brand-purple' }}"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-brand-dark">
+                                        {{ $activity['type'] === 'certificate' ? 'Certificate Earned' : 'Course Enrolled' }}
+                                    </h3>
+                                    <p class="text-gray-600 text-sm">
+                                        {{ $activity['type'] === 'certificate'
+                                            ? "You've earned a certificate for completing {$activity['course']}"
+                                            : "You've enrolled in {$activity['course']}" }}
+                                    </p>
+                                    <p class="text-gray-400 text-xs mt-1">{{ $activity['date'] }}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="font-medium text-brand-dark">
-                                    Certificate Earned
-                                </h3>
-                                <p class="text-gray-600 text-sm">
-                                    You've earned a certificate for completing The Ultimate
-                                    Astrology Course
-                                </p>
-                                <p class="text-gray-400 text-xs mt-1">2 days ago</p>
-                            </div>
-                        </div>
+                        @empty
+                            <p class="text-gray-500">No recent activity yet.</p>
+                        @endforelse
 
-                        <!-- Activity 2 -->
+
+                        {{-- <!-- Activity 2 -->
                         <div class="flex items-start">
                             <div class="w-10 h-10 bg-brand-orange/10 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-play-circle text-brand-orange"></i>
@@ -234,7 +244,7 @@
                                 </p>
                                 <p class="text-gray-400 text-xs mt-1">1 week ago</p>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -246,9 +256,10 @@
                         class="font-playfair font-bold text-xl md:text-2xl lg:text-3xl text-brand-dark wow animate__animated animate__fadeInUp">
                         Messages
                     </h2>
-                    <span
-                        class="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-sm wow animate__animated animate__fadeInUp">0
-                        Messages</span>
+                    <span class="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-sm">
+                        {{ count($messages) }} Messages
+                    </span>
+
                 </div>
 
                 <div class="bg-white rounded-xl shadow-md p-8 border border-gray-100 text-center wow animate__animated animate__fadeInUp"
