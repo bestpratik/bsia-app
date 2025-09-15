@@ -118,12 +118,13 @@ class FrontController extends Controller
 
         // Courses purchased by the user (assuming pivot table user_courses)
         $courses = $user->courses()->latest()->take(3)->get();
+        $ebooks = $user->ebooks()->latest()->take(3)->get();
 
         // Stats
         $stats = [
             'courses'      => $user->courses()->count(),
-            'hours'        => $user->courses()->sum('duration') ?? 0, // add duration field in courses
-            'posts'        => 0, // replace with real relation if needed
+            'hours'        => $user->courses()->sum('duration') ?? 0, 
+            'ebook'        => $user->ebooks()->count() ?? 0, 
             'certificates' => $user->courses()->where('is_certificate', 1)->count(),
         ];
 
@@ -148,6 +149,7 @@ class FrontController extends Controller
             'user',
             'stats',
             'courses',
+            'ebooks',
             'activities',
             'messages'
         ));
@@ -161,11 +163,14 @@ class FrontController extends Controller
 
     public function purchase($type, $id)
     {
+        $user = Auth::user();
         if ($type === 'course') {
             $item = Course::findOrFail($id);
+            $user->courses()->syncWithoutDetaching([$item->id]);
             $itemType = 'course';
         } elseif ($type === 'ebook') {
             $item = Ebook::findOrFail($id);
+            $user->ebooks()->syncWithoutDetaching([$item->id]);
             $itemType = 'ebook';
         } else {
             abort(404);

@@ -76,8 +76,8 @@
                         <div class="w-12 h-12 bg-brand-purple/10 rounded-full flex items-center justify-center mb-3">
                             <i class="fas fa-file-alt text-brand-purple text-xl"></i>
                         </div>
-                        <h2 class="text-3xl font-bold text-brand-dark mb-1">0</h2>
-                        <p class="text-gray-500 text-sm">Posts</p>
+                        <h2 class="text-3xl font-bold text-brand-dark mb-1">{{ $stats['ebook'] }}</h2>
+                        <p class="text-gray-500 text-sm">Ebook</p>
                     </div>
                 </div>
 
@@ -100,12 +100,12 @@
                 <div class="flex justify-between items-center mb-6">
                     <h2
                         class="font-playfair font-bold text-xl md:text-2xl lg:text-3xl text-brand-dark wow animate__animated animate__fadeInUp">
-                        Our Courses
+                        Course purchased
                     </h2>
-                    <a href="{{ route('courses') }}"
+                    {{-- <a href="{{ route('courses') }}"
                         class="text-brand-red hover:text-brand-dark transition-colors font-medium text-sm wow animate__animated animate__fadeInUp">
                         View All <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
+                    </a> --}}
                 </div>
 
                 <!-- Courses Grid -->
@@ -119,7 +119,7 @@
 
                             <div class="p-5">
                                 <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">{{ $course->title }}</h3>
-                                <p class="text-gray-600 text-sm mb-4">{{ Str::limit($course->short_description, 100) }}</p>
+                                <p class="text-gray-600 text-sm mb-4">{!! Str::limit($course->short_description, 100) !!}</p>
 
                                 <div class="flex justify-between items-center">
                                     <span class="text-brand-red font-bold">₹{{ $course->sellable_price }}</span>
