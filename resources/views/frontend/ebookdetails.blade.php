@@ -55,10 +55,12 @@
                                      {{ $ebook->title }}
                                  </h1>
                                  <div class="flex flex-wrap items-center text-white/90 text-sm gap-4 mt-2">
+                                    @if($ebook->author)
                                      <div class="flex items-center">
                                          <i class="fas fa-user-tie mr-2"></i>
                                          <span>By: {{ $ebook->author }}</span>
                                      </div>
+                                    @endif
                                      <div class="flex items-center">
                                          <i class="fas fa-clock mr-2"></i>
                                          <span>Beginner Friendly</span>
@@ -79,22 +81,14 @@
                      <h2 class="font-playfair font-bold text-xl md:text-2xl text-brand-dark mb-4">
                          About This Ebook
                      </h2>
+                     @if($ebook->about_ebook)
                      <p class="text-gray-700">
                          {!! $ebook->about_ebook !!}
                      </p>
-                     {{-- <p class="text-gray-700">
-                         Bengali Medium: Simple, conversational explanations.
-                     </p>
-                     <p class="text-gray-700">
-                         Decode Your Life: Understand planets, signs, houses, and their
-                         meanings.
-                     </p>
-                     <p class="text-gray-700">
-                         Chart Reading Basics: Start analyzing charts confidently.
-                     </p>
-                     <p class="text-gray-700">
-                         High Paying Skill: Unlock career opportunities in astrology.
-                     </p> --}}
+                     @else
+                        <p class="text-gray-500">No data available.</p>
+                     @endif
+                     
                  </div>
 
                  <!-- What You'll Learn -->
@@ -183,9 +177,13 @@
                      </h2>
                      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
                          <div>
+                            @if($ebook->author)
                              <h3 class="font-bold text-lg text-brand-dark mb-2">
                                  {{ $ebook->author }}
                              </h3>
+                            @else
+                                <p class="text-gray-500">No data available.</p>
+                            @endif
                              <p class="text-brand-orange font-medium mb-3">
                                  {{ $ebook->title }}
                              </p>
