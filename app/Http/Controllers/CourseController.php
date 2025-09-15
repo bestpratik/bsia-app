@@ -58,7 +58,15 @@ class CourseController extends Controller
             $course->certificate_file = $filename;
         }
 
+        // Generate unique slug
         $slug = Str::slug($request['title']);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Course::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
         $course->title = $request['title'];
         $course->slug = $slug;
         $course->short_description = $request->short_description;
@@ -92,7 +100,6 @@ class CourseController extends Controller
         $course = Course::findOrFail($id);
         $courseModules = CourseModules::where('course_id', $id)->get();
         $courseFaq = CourseFaqs::where('course_id', $id)->get();
-        // dd($courseModules);
         return view('admin.course.show', compact('course', 'courseModules', 'courseFaq'));
     }
 
@@ -104,7 +111,6 @@ class CourseController extends Controller
 
         return redirect('course')->with('success', 'Course status updated successfully.');
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -131,8 +137,6 @@ class CourseController extends Controller
         $course = Course::find($id);
 
         if ($request->hasfile('featured_image')) {
-
-            //Delete previous file
             $destination = public_path('uploads/' . $course->featured_image);
             if (File::exists($destination)) {
                 File::delete($destination);
@@ -145,9 +149,6 @@ class CourseController extends Controller
         }
 
         if ($request->hasFile('certificate_file')) {
-
-            //Delete previous file
-
             $destination = public_path('uploads/' . $course->certificate_file);
             if (File::exists($destination)) {
                 File::delete($destination);
@@ -159,7 +160,15 @@ class CourseController extends Controller
             $course->certificate_file = $filename;
         }
 
+        // Generate unique slug (ignoring current course ID)
         $slug = Str::slug($request['title']);
+        $originalSlug = $slug;
+        $counter = 1;
+        while (Course::where('slug', $slug)->where('id', '!=', $id)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
+
         $course->title = $request['title'];
         $course->slug = $slug;
         $course->short_description = $request->short_description;
@@ -174,13 +183,13 @@ class CourseController extends Controller
         $course->show_on_home = $request->show_on_home;
         $course->is_certificate = $request->is_certificate;
         $course->language = $request->language;
-        // $course->status = $request->status;
         $course->order_no = $request->order_no;
         $course->created_at = date("Y-m-d H:i:s");
         $course->updated_at = null;
 
         $course->update();
         $course->features()->sync($request->features ?? []);
+
         return redirect('course')->with('success', 'Course updated successfully!');
     }
 
