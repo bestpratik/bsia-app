@@ -10,7 +10,8 @@ class FeatureMaster extends Model
     protected $fillable = [
         'name', 
         'icon',
-        'order_no'
+        'order_no',
+        'description'
     ];
 
     public function courses()

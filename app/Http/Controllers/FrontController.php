@@ -13,7 +13,8 @@ use App\Models\Ebook;
 use App\Models\Testimonial;
 use App\Models\Quiz;
 use App\Models\VideoTestimonial;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
 {
@@ -98,27 +99,62 @@ class FrontController extends Controller
 
         if (auth()->user()->role == 'user') {
             return redirect()->route('user.dashboard');
-        }elseif(auth()->user()->role == 'admin'){
+        } elseif (auth()->user()->role == 'admin') {
             return redirect()->route('dashboard');
         }
-        
     }
 
     public function dashboard()
     {
         if (!auth()->check()) {
-        return redirect()->route('front.login');
+            return redirect()->route('front.login');
+        }
+
+        if (auth()->user()->role !== 'user') {
+            return redirect()->route('front.login');
+        }
+
+        $user = Auth::user();
+
+        // Courses purchased by the user (assuming pivot table user_courses)
+        $courses = $user->courses()->latest()->take(3)->get();
+
+        // Stats
+        $stats = [
+            'courses'      => $user->courses()->count(),
+            'hours'        => $user->courses()->sum('duration') ?? 0, // add duration field in courses
+            'posts'        => 0, // replace with real relation if needed
+            'certificates' => $user->courses()->where('is_certificate', 1)->count(),
+        ];
+
+        // Recent activity (simple example from pivot created_at)
+        $activities = $user->courses()
+            ->withPivot('created_at')
+            ->latest('user_courses.created_at')
+            ->take(5)
+            ->get()
+            ->map(function ($course) {
+                return [
+                    'type' => $course->is_certificate ? 'certificate' : 'enrolled',
+                    'course' => $course->title,
+                    'date' => $course->pivot->created_at->diffForHumans(),
+                ];
+            });
+
+        // Messages (you can swap with your message model)
+        $messages = [];
+
+        return view('frontend.dashboard', compact(
+            'user',
+            'stats',
+            'courses',
+            'activities',
+            'messages'
+        ));
     }
 
-    if (auth()->user()->role !== 'user') {
-        return redirect()->route('front.login');
-    }
-
-    return view('frontend.dashboard');
-        
-    }
-
-    public function userRegister(){
+    public function userRegister()
+    {
 
         return view('frontend.register');
     }

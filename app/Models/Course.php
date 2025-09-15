@@ -39,5 +39,9 @@ class Course extends Model
     {
         return $this->belongsToMany(FeatureMaster::class, 'course_feature', 'course_id', 'feature_id');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_courses')->withTimestamps();
+    }
 }
- 
