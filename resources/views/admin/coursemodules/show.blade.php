@@ -82,7 +82,7 @@
                         </div>
                     </li>
                     @empty
-                    <li class="text-gray-600">No lessons available.</li>
+                    <p class="text-gray-600">No lessons available.</p>
                     @endforelse
                 </ul>
             </div>

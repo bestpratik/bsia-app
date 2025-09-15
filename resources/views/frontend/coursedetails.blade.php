@@ -79,22 +79,14 @@
                      <h2 class="font-playfair font-bold text-xl md:text-2xl text-brand-dark mb-4">
                          About This Course
                      </h2>
+                     @if ($course->about_course)
                      <p class="text-gray-700">
                          {!! $course->about_course !!}
                      </p>
-                     {{-- <p class="text-gray-700">
-                         Bengali Medium: Simple, conversational explanations.
-                     </p>
-                     <p class="text-gray-700">
-                         Decode Your Life: Understand planets, signs, houses, and their
-                         meanings.
-                     </p>
-                     <p class="text-gray-700">
-                         Chart Reading Basics: Start analyzing charts confidently.
-                     </p>
-                     <p class="text-gray-700">
-                         High Paying Skill: Unlock career opportunities in astrology.
-                     </p> --}}
+                     @else
+                     <p class="text-gray-500">No data available.</p>
+                     @endif
+
                  </div>
 
                  <!-- What You'll Learn -->
@@ -104,6 +96,7 @@
                          What You'll Learn
                      </h2>
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                         @if ($course->why_join_the_course)
                          @foreach (preg_split('/\r\n|\r|\n/', trim($course->why_join_the_course)) as $line)
                          @if (str_contains($line, ':'))
                          @php
@@ -120,72 +113,10 @@
                          </div>
                          @endif
                          @endforeach
+                         @else
+                         <p class="text-gray-500">No data available.</p>
+                         @endif
                      </div>
-
-                     {{-- <div class="flex items-start">
-                             <div
-                                 class="flex-shrink-0 w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                 <i class="fas fa-check text-brand-red"></i>
-                             </div>
-                             <p class="text-gray-700">
-                                 Interpret complex numerology charts
-                             </p>
-                         </div>
-                         <div class="flex items-start">
-                             <div
-                                 class="flex-shrink-0 w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                 <i class="fas fa-check text-brand-red"></i>
-                             </div>
-                             <p class="text-gray-700">
-                                 Understand karmic debt numbers and their impact
-                             </p>
-                         </div>
-                         <div class="flex items-start">
-                             <div
-                                 class="flex-shrink-0 w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                 <i class="fas fa-check text-brand-red"></i>
-                             </div>
-                             <p class="text-gray-700">
-                                 Apply numerology to business and career decisions
-                             </p>
-                         </div>
-                         <div class="flex items-start">
-                             <div
-                                 class="flex-shrink-0 w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                 <i class="fas fa-check text-brand-red"></i>
-                             </div>
-                             <p class="text-gray-700">
-                                 Analyze compatibility using numerological principles
-                             </p>
-                         </div>
-                         <div class="flex items-start">
-                             <div
-                                 class="flex-shrink-0 w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                 <i class="fas fa-check text-brand-red"></i>
-                             </div>
-                             <p class="text-gray-700">
-                                 Predict future trends using numerological forecasting
-                             </p>
-                         </div>
-                         <div class="flex items-start">
-                             <div
-                                 class="flex-shrink-0 w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                 <i class="fas fa-check text-brand-red"></i>
-                             </div>
-                             <p class="text-gray-700">
-                                 Integrate numerology with other spiritual practices
-                             </p>
-                         </div>
-                         <div class="flex items-start">
-                             <div
-                                 class="flex-shrink-0 w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                 <i class="fas fa-check text-brand-red"></i>
-                             </div>
-                             <p class="text-gray-700">
-                                 Build a successful numerology consultation practice
-                             </p>
-                         </div> 
-                         </div> --}}
                  </div>
 
                  <!-- Course Curriculum -->
@@ -195,6 +126,7 @@
                          Course Curriculum
                      </h2>
 
+                     @if ($modules->count() > 0)
                      <!-- Module 1 -->
                      @foreach ($modules as $module)
                      <div class="border border-gray-200 rounded-lg mb-4 overflow-hidden">
@@ -235,14 +167,8 @@
                                  </li>
                                  @endif
                                  @empty
-                                 <li class="text-gray-500">No lessons available.</li>
+                                 <p class="text-gray-500">No lessons available.</p>
                                  @endforelse
-
-                                 {{-- <li class="flex items-center text-gray-700">
-                                             <i class="fas fa-file-alt text-brand-blue mr-3"></i>
-                                             <span>{!! $lesson->content !!}</span>
-                                             <span class="ml-auto text-gray-500 text-sm">Reading</span>
-                                         </li> --}}
 
                                  @if($quizzes ->count() > 0)
                                  @foreach ($module->quizzes as $quiz)
@@ -258,97 +184,9 @@
                          </div>
                      </div>
                      @endforeach
-
-
-
-
-
-                     {{-- <!-- Module 2 -->
-
-                         <div class="border border-gray-200 rounded-lg mb-4 overflow-hidden">
-                             <div class="bg-gray-50 p-4 flex justify-between items-center cursor-pointer">
-                                 <div class="flex items-center">
-                                     <div
-                                         class="w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                         <i class="fas fa-book text-brand-red"></i>
-                                     </div>
-                                     <h3 class="font-medium text-brand-dark">
-                                         Module 2: Planets, Houses & Their Meanings
-                                     </h3>
-                                 </div>
-                                 <i class="fas fa-chevron-down text-gray-400"></i>
-                             </div>
-                             <div class="p-4 border-t border-gray-200">
-                                 <ul class="space-y-3">
-                                     <li class="flex items-center text-gray-700">
-                                         <i class="fas fa-play-circle text-brand-orange mr-3"></i>
-                                         <span>Grahas (Planets) & Their Effects</span>
-                                         <span class="ml-auto text-gray-500 text-sm">50 min</span>
-                                     </li>
-                                     <li class="flex items-center text-gray-700">
-                                         <i class="fas fa-play-circle text-brand-orange mr-3"></i>
-                                         <span>12 Houses & Life Areas</span>
-                                         <span class="ml-auto text-gray-500 text-sm">45 min</span>
-                                     </li>
-                                     <li class="flex items-center text-gray-700">
-                                         <i class="fas fa-file-alt text-brand-blue mr-3"></i>
-                                         <span>Planetary Symbols PDF</span>
-                                         <span class="ml-auto text-gray-500 text-sm">Reading</span>
-                                     </li>
-                                     <li class="flex items-center text-gray-700">
-                                         <i class="fas fa-tasks text-brand-purple mr-3"></i>
-                                         <span>Module 2 Quiz</span>
-                                         <span class="ml-auto text-gray-500 text-sm">Quiz</span>
-                                     </li>
-                                 </ul>
-                             </div>
-                         </div>
-
-                         <!-- Module 3 -->
-                         <div class="border border-gray-200 rounded-lg overflow-hidden">
-                             <div class="bg-gray-50 p-4 flex justify-between items-center cursor-pointer">
-                                 <div class="flex items-center">
-                                     <div
-                                         class="w-8 h-8 bg-brand-red/10 rounded-full flex items-center justify-center mr-3">
-                                         <i class="fas fa-book text-brand-red"></i>
-                                     </div>
-                                     <h3 class="font-medium text-brand-dark">
-                                         Module 3: Chart Reading & Predictions
-                                     </h3>
-                                 </div>
-                                 <i class="fas fa-chevron-down text-gray-400"></i>
-                             </div>
-                             <div class="p-4 border-t border-gray-200">
-                                 <ul class="space-y-3">
-                                     <li class="flex items-center text-gray-700">
-                                         <i class="fas fa-play-circle text-brand-orange mr-3"></i>
-                                         <span>Step-by-Step Birth Chart Analysis</span>
-                                         <span class="ml-auto text-gray-500 text-sm">60 min</span>
-                                     </li>
-                                     <li class="flex items-center text-gray-700">
-                                         <i class="fas fa-play-circle text-brand-orange mr-3"></i>
-                                         <span>Making Basic Predictions</span>
-                                         <span class="ml-auto text-gray-500 text-sm">55 min</span>
-                                     </li>
-                                     <li class="flex items-center text-gray-700">
-                                         <i class="fas fa-file-alt text-brand-blue mr-3"></i>
-                                         <span>Sample Case Studies</span>
-                                         <span class="ml-auto text-gray-500 text-sm">Reading</span>
-                                     </li>
-                                     <li class="flex items-center text-gray-700">
-                                         <i class="fas fa-tasks text-brand-purple mr-3"></i>
-                                         <span>Module 3 Quiz</span>
-                                         <span class="ml-auto text-gray-500 text-sm">Quiz</span>
-                                     </li>
-                                 </ul>
-                             </div>
-                         </div> --}}
-
-                     <p class="text-gray-500 text-sm mt-4">
-                         <i class="fas fa-info-circle mr-1"></i>
-                         This is a preview of the curriculum. The full course contains 12
-                         modules with over 60 hours of content.
-                     </p>
+                     @else
+                     <p class="text-gray-500">No Modules available.</p>
+                     @endif
                  </div>
 
                  <!-- Instructor -->
