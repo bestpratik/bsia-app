@@ -16,4 +16,9 @@ class Ebook extends Model
         'featured_image',
         'status'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_ebooks')->withTimestamps();
+    }
 }
