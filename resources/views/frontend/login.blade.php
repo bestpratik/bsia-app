@@ -41,8 +41,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-envelope text-gray-400"></i>
                                 </div>
-                                <input type="email" id="email" name="email"
-                                    value="{{ old('email') }}"
+                                <input type="email" id="email" name="email" value="{{ old('email') }}"
                                     class="block w-full pl-10 pr-4 py-3 border @error('email') border-red-500 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all duration-300 font-roboto text-gray-900 placeholder-gray-500"
                                     placeholder="Enter your email" required autofocus />
                             </div>
@@ -127,22 +126,29 @@
                     <div class="text-center mt-8 pt-6 border-t border-gray-200">
                         <p class="font-roboto text-gray-600 text-sm">
                             Don't have an account?
-                            
-                                <a href="{{ route('register') }}"
-                                    class="text-brand-red hover:text-red-700 font-medium transition-colors">
-                                    Sign up here
-                                </a>
-                            
+
+                            <a href="{{ route('register') }}"
+                                class="text-brand-red hover:text-red-700 font-medium transition-colors">
+                                Sign up here
+                            </a>
+
                         </p>
                     </div>
                 </div>
             </div>
     </section>
-    {{-- @auth
-        @if (auth()->user()->role === 'user')
-            <script>
-                window.location.href = "{{ route('dashboard') }}";
-            </script>
-        @endif
-    @endauth --}}
+    <script>
+        const togglePassword = document.querySelector("#toggle-password");
+        const password = document.querySelector("#password");
+        const eyeIcon = togglePassword.querySelector("i");
+
+        togglePassword.addEventListener("click", function() {
+            const isPassword = password.getAttribute("type") === "password";
+            password.setAttribute("type", isPassword ? "text" : "password");
+
+            // Toggle icon (eye / eye-slash)
+            eyeIcon.classList.toggle("fa-eye");
+            eyeIcon.classList.toggle("fa-eye-slash");
+        });
+    </script>
 @endsection

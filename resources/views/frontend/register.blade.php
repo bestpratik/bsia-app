@@ -41,8 +41,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-envelope text-gray-400"></i>
                                 </div>
-                                <input type="text" id="name" name="name"
-                                    value="{{ old('name') }}"
+                                <input type="text" id="name" name="name" value="{{ old('name') }}"
                                     class="block w-full pl-10 pr-4 py-3 border @error('name') border-red-500 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all duration-300 font-roboto text-gray-900 placeholder-gray-500"
                                     placeholder="Enter name" required autofocus />
                             </div>
@@ -59,8 +58,7 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-envelope text-gray-400"></i>
                                 </div>
-                                <input type="email" id="email" name="email"
-                                    value="{{ old('email') }}"
+                                <input type="email" id="email" name="email" value="{{ old('email') }}"
                                     class="block w-full pl-10 pr-4 py-3 border @error('email') border-red-500 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all duration-300 font-roboto text-gray-900 placeholder-gray-500"
                                     placeholder="Enter your email" required autofocus />
                             </div>
@@ -92,22 +90,22 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label for="password" class="block font-roboto font-medium text-gray-700 text-sm">
-                               Confirm Password
+                            <label for="password_confirmation" class="block font-roboto font-medium text-gray-700 text-sm">
+                                Confirm Password
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-lock text-gray-400"></i>
                                 </div>
-                                <input type="password" id="password" name="password_confirmation"
-                                    class="block w-full pl-10 pr-4 py-3 border @error('password') border-red-500 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all duration-300 font-roboto text-gray-900 placeholder-gray-500"
-                                    placeholder="Password Confirmation" required />
-                                <button type="button" id="toggle-password"
+                                <input type="password" id="password_confirmation" name="password_confirmation"
+                                    class="block w-full pl-10 pr-4 py-3 border @error('password_confirmation') border-red-500 @else border-gray-300 @enderror rounded-xl focus:ring-2 focus:ring-brand-red focus:border-brand-red transition-all duration-300 font-roboto text-gray-900 placeholder-gray-500"
+                                    placeholder="Confirm your password" required />
+                                <button type="button" id="toggle-password-confirm"
                                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>
-                            @error('password')
+                            @error('password_confirmation')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
@@ -166,21 +164,36 @@
                     <div class="text-center mt-8 pt-6 border-t border-gray-200">
                         <p class="font-roboto text-gray-600 text-sm">
                             Already have an account?
-                                <a href="{{ route('front.login') }}"
-                                    class="text-brand-red hover:text-red-700 font-medium transition-colors">
-                                    Sign in here
-                                </a>
-                        
+                            <a href="{{ route('front.login') }}"
+                                class="text-brand-red hover:text-red-700 font-medium transition-colors">
+                                Sign in here
+                            </a>
+
                         </p>
                     </div>
                 </div>
             </div>
     </section>
-    {{-- @auth
-        @if (auth()->user()->role === 'user')
-            <script>
-                window.location.href = "{{ route('dashboard') }}";
-            </script>
-        @endif
-    @endauth --}}
+   <script>
+    function setupPasswordToggle(toggleId, inputId) {
+        const toggleBtn = document.getElementById(toggleId);
+        const input = document.getElementById(inputId);
+        const eyeIcon = toggleBtn.querySelector("i");
+
+        if (!toggleBtn || !input) return; // Safety check
+
+        toggleBtn.addEventListener("click", function() {
+            const isPassword = input.getAttribute("type") === "password";
+            input.setAttribute("type", isPassword ? "text" : "password");
+
+            // Toggle icon
+            eyeIcon.classList.toggle("fa-eye");
+            eyeIcon.classList.toggle("fa-eye-slash");
+        });
+    }
+
+    // Initialize for both password fields
+    setupPasswordToggle("toggle-password", "password");
+    setupPasswordToggle("toggle-password-confirm", "password_confirmation");
+</script>
 @endsection
