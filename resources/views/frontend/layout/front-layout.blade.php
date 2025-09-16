@@ -396,6 +396,74 @@
             $(".video-reviews-slider").on("afterChange", autoStartFirstActiveVideo);
         });
     </script>
+
+     <script>
+(function () {
+  function initProfileDropdown() {
+    const toggle = document.getElementById('profileToggle');
+    const menu = document.getElementById('profileMenu');
+    if (!toggle || !menu) return;
+
+    // Helpers
+    const openMenu = () => {
+      menu.classList.remove('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+    };
+    const closeMenu = () => {
+      menu.classList.add('hidden');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+    const toggleMenu = () => (menu.classList.contains('hidden') ? openMenu() : closeMenu());
+
+    // Prevent duplicate listeners by removing existing listeners if any.
+    // We'll store a flag on elements to avoid adding multiple handlers.
+    if (!toggle.__profileInitialized) {
+      // Toggle click
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation(); // important: don't let the document click handler immediately close it
+        toggleMenu();
+      });
+
+      // Close when clicking outside
+      document.addEventListener('click', function (e) {
+        if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeMenu();
+      });
+
+      // Close when clicking an item inside menu (links and buttons)
+      menu.addEventListener('click', function (e) {
+        const tag = (e.target.tagName || '').toLowerCase();
+        if (tag === 'a' || tag === 'button' || e.target.closest('a') || e.target.closest('button')) {
+          // small timeout so navigation (or form submit) can start before hiding
+          setTimeout(closeMenu, 50);
+        }
+      });
+
+      toggle.__profileInitialized = true;
+    }
+  }
+
+  // Init on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProfileDropdown);
+  } else {
+    initProfileDropdown();
+  }
+
+  // If you use Livewire (DOM updates), re-init after Livewire processes messages
+  if (window.Livewire && typeof Livewire.hook === 'function') {
+    Livewire.hook('message.processed', () => {
+      initProfileDropdown();
+    });
+  }
+})();
+</script>
 </body>
 
 </html>

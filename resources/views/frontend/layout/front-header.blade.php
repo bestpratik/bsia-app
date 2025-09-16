@@ -100,6 +100,35 @@
                     Enroll Now
                 </button>
 
+                @auth
+                    <div class="relative" id="profileDropdownRoot">
+                        <!-- Toggle button: NOTE type="button" to avoid accidental form submits -->
+                        <button id="profileToggle" type="button" aria-expanded="false" aria-controls="profileMenu"
+                            class="w-10 h-10 rounded-full bg-brand-red text-white flex items-center justify-center shadow-md hover:scale-105 transition-transform">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </button>
+
+                        <!-- Menu (hidden by default) -->
+                        <div id="profileMenu"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50"
+                            role="menu" aria-orientation="vertical" aria-labelledby="profileToggle">
+                            <a href="{{ route('user.dashboard') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                role="menuitem">Dashboard</a>
+
+                        {{-- <a href="{{route('profile.edit')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                role="menuitem">Profile</a> --}}
+
+                            <form method="POST" action="{{ route('logout') }}" class="mt-1">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    role="menuitem">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @endauth
+
                 <!-- Mobile Menu Button -->
                 <button id="mobile-menu-btn"
                     class="lg:hidden p-2 rounded-lg text-gray-800 hover:text-brand-red transition-all duration-300 wow animate__animated animate__fadeInRight"

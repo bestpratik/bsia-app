@@ -26,6 +26,8 @@
                         <p class="font-roboto text-gray-600 text-base">
                             Sign in to your BSIA account
                         </p>
+
+                        <x-auth-session-status class="mb-4" :status="session('status')" />
                     </div>
 
                     <!-- Login Form -->
