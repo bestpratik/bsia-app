@@ -40,9 +40,11 @@
                 <article
                     class="ebook-card group bg-white rounded-2xl sm:rounded-3xl border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
                     <div class="relative overflow-hidden thumb">
-                        <img src="{{ $row->featured_image ? asset('uploads/' . $row->featured_image) : asset('photo/default-banner.jpg') }}"
-                            class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Astrology Basics" />
+                        <a href="{{ route('ebook.details', $row->slug) }}">
+                            <img src="{{ $row->featured_image ? asset('uploads/' . $row->featured_image) : asset('photo/default-banner.jpg') }}"
+                                class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+                                alt="Astrology Basics" />
+                        </a>
                         <span class="price-badge">₹{{ $row->price ?? '' }}</span>
                     </div>
                     <div class="body p-4 sm:p-6">
@@ -54,7 +56,7 @@
                         </p>
                         <div class="mt-4 flex items-center justify-between">
                             <!-- <span class="text-brand-orange text-sm">PDF • 120 pages</span> -->
-                            <a href="{{ route('ebook.details', ['id' => $row->id]) }}">
+                            <a href="{{ route('ebook.details', $row->slug) }}">
                                 <button class="buy-button">
                                 <i class="fa fa-shopping-cart mr-2"></i>Buy Now
                             </button>

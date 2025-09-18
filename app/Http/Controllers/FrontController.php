@@ -52,7 +52,6 @@ class FrontController extends Controller
 
     public function course_learning($slug)
     {
-        // $course = Course::first();
         $ebook = Ebook::all();
         $learning = Course::where('slug', $slug)->firstOrFail();
         $faqs = CourseFaqs::all();
@@ -68,7 +67,6 @@ class FrontController extends Controller
             ->get();
 
         return view('frontend.courselearning', compact('ebook', 'learning', 'faqs', 'testimonial', 'modules', 'courses'));
-
     }
 
     public function ebooks()
@@ -77,9 +75,9 @@ class FrontController extends Controller
         return view('frontend.ebook', compact('ebook'));
     }
 
-    public function ebook_details($id)
+    public function ebook_details($slug)
     {
-        $ebook = Ebook::findOrFail($id);
+        $ebook = Ebook::where('slug', $slug)->firstOrFail();
 
         // ✅ Fetch related ebooks (example: by category, or just exclude the current one)
         $relatedEbooks = Ebook::where('id', '!=', $ebook->id)
@@ -123,24 +121,45 @@ class FrontController extends Controller
         // Stats
         $stats = [
             'courses'      => $user->courses()->count(),
-            'hours'        => $user->courses()->sum('duration') ?? 0, 
-            'ebook'        => $user->ebooks()->count() ?? 0, 
+            'hours'        => $user->courses()->sum('duration') ?? 0,
+            'ebook'        => $user->ebooks()->count() ?? 0,
             'certificates' => $user->courses()->where('is_certificate', 1)->count(),
         ];
 
         // Recent activity (simple example from pivot created_at)
-        $activities = $user->courses()
+        $courseActivities = $user->courses()
             ->withPivot('created_at')
             ->latest('user_courses.created_at')
             ->take(5)
             ->get()
             ->map(function ($course) {
                 return [
-                    'type' => $course->is_certificate ? 'certificate' : 'enrolled',
-                    'course' => $course->title,
-                    'date' => $course->pivot->created_at->diffForHumans(),
+                    'type' => $course->is_certificate ? 'certificate' : 'course',
+                    'title' => $course->title, // unified key
+                    'date' => $course->pivot->created_at,
+                    'date_human' => $course->pivot->created_at->diffForHumans(),
                 ];
             });
+
+        $ebookActivities = $user->ebooks()
+            ->withPivot('created_at')
+            ->latest('user_ebooks.created_at')
+            ->take(5)
+            ->get()
+            ->map(function ($ebook) {
+                return [
+                    'type'   => 'ebook',
+                    'title'  => $ebook->title, // same key as course
+                    'date'   => $ebook->pivot->created_at,
+                    'date_human' => $ebook->pivot->created_at->diffForHumans(),
+                ];
+            });
+
+        $activities = $courseActivities
+            ->merge($ebookActivities)
+            ->sortByDesc('date')
+            ->take(5)
+            ->values();
 
         // Messages (you can swap with your message model)
         $messages = [];
@@ -151,6 +170,8 @@ class FrontController extends Controller
             'courses',
             'ebooks',
             'activities',
+            'courseActivities',
+            'ebookActivities',
             'messages'
         ));
     }

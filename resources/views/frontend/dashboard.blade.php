@@ -123,10 +123,10 @@
 
                                 <div class="flex justify-between items-center">
                                     <span class="text-brand-red font-bold">₹{{ $course->sellable_price }}</span>
-                                    <a href="{{ route('course.details', $course->slug) }}"
+                                    {{-- <a href="{{ route('course.details', $course->slug) }}"
                                         class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">
                                         Enroll
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                         </div>
@@ -183,6 +183,46 @@
                 </div>
             </div>
 
+            <!-- My Ebooks Section -->
+            <div class="mb-12">
+                <div class="flex justify-between items-center mb-6">
+                    <h2
+                        class="font-playfair font-bold text-xl md:text-2xl lg:text-3xl text-brand-dark wow animate__animated animate__fadeInUp">
+                        Ebook purchased
+                    </h2>
+                    {{-- <a href="{{ route('courses') }}"
+                        class="text-brand-red hover:text-brand-dark transition-colors font-medium text-sm wow animate__animated animate__fadeInUp">
+                        View All <i class="fas fa-arrow-right ml-1"></i>
+                    </a> --}}
+                </div>
+
+                <!-- Courses Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Course 1 -->
+                    @foreach ($ebooks as $row)
+                        <div
+                            class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                            <img src="{{ $row->featured_image ? asset('uploads/' . $row->featured_image) : asset('photo/default-banner.jpg') }}"
+                                alt="{{ $row->title }}" class="w-full h-48 object-cover" />
+
+                            <div class="p-5">
+                                <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">{{ $row->title }}</h3>
+                                <span class="text-sm text-gray-500">By {{ $row->author }}</span>
+                                <p class="text-gray-600 text-sm mb-4">{!! Str::limit($row->description, 100) !!}</p>
+
+                                <div class="flex justify-between items-center">
+                                    <span class="text-brand-red font-bold">₹{{ $row->price }}</span>
+                                    {{-- <a href="{{ route('ebook.details', $row->id) }}"
+                                        class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">
+                                        Enroll
+                                    </a> --}}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
             <!-- Recent Activity Section -->
             <div class="mb-12">
                 <h2
@@ -198,24 +238,36 @@
                             <div class="flex items-start">
                                 <div class="w-10 h-10 bg-brand-red/10 rounded-full flex items-center justify-center mr-4">
                                     <i
-                                        class="fas {{ $activity['type'] === 'certificate' ? 'fa-certificate text-brand-red' : 'fa-graduation-cap text-brand-purple' }}"></i>
+                                        class="fas 
+                @if ($activity['type'] === 'certificate') fa-certificate text-brand-red
+                @elseif($activity['type'] === 'course') fa-graduation-cap text-brand-purple
+                @else fa-book text-brand-orange @endif"></i>
                                 </div>
                                 <div>
                                     <h3 class="font-medium text-brand-dark">
-                                        {{ $activity['type'] === 'certificate' ? 'Certificate Earned' : 'Course Enrolled' }}
+                                        @if ($activity['type'] === 'certificate')
+                                            Certificate Earned
+                                        @elseif($activity['type'] === 'course')
+                                            Course Enrolled
+                                        @else
+                                            Ebook Purchased
+                                        @endif
                                     </h3>
                                     <p class="text-gray-600 text-sm">
-                                        {{ $activity['type'] === 'certificate'
-                                            ? "You've earned a certificate for completing {$activity['course']}"
-                                            : "You've enrolled in {$activity['course']}" }}
+                                        @if ($activity['type'] === 'certificate')
+                                            You've earned a certificate for completing {{ $activity['title'] }}
+                                        @elseif($activity['type'] === 'course')
+                                            You've enrolled in {{ $activity['title'] }}
+                                        @else
+                                            You've purchased the ebook "{{ $activity['title'] }}"
+                                        @endif
                                     </p>
-                                    <p class="text-gray-400 text-xs mt-1">{{ $activity['date'] }}</p>
+                                    <p class="text-gray-400 text-xs mt-1">{{ $activity['date_human'] }}</p>
                                 </div>
                             </div>
                         @empty
                             <p class="text-gray-500">No recent activity yet.</p>
                         @endforelse
-
 
                         {{-- <!-- Activity 2 -->
                         <div class="flex items-start">
