@@ -6,6 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BS Institute Of Astrology - Learn Ancient Wisdom</title>
 
+     @php
+            $seoManage = seoManageHelper(request());  
+            //dd($seoManage);
+            
+            $ogImage = asset('photo/logo-bisa.png');
+            //dd($ogImage);
+            if ($seoManage) {
+            
+               if (!empty($seoManage->featured_image)) {
+                    $ogImage = asset('uploads/' . $seoManage->featured_image);
+                }
+            }
+            
+            if ($seoManage) {
+                if (!empty($seoManage->short_description)) {
+                    $seoDesc = $seoManage->short_description;
+                } else {
+                    $seoDesc = "Learn Astrology, Palmistry & Vastu with expert guidance.";
+                }
+            } else {
+                $seoDesc = "BS Institute of Astrology brings you transformative learning in Astrology, Palmistry, and Vastu Shastra. Our expert-guided courses blend ancient wisdom with modern teaching, designed for beginners and enthusiasts alike. Unlock the mysteries of the stars, understand the science of palmistry, and harmonize your home with Vastu. Learn at your pace with lifetime guidance and support.";
+            }
+        
+            $seoDescClean = Str::limit(strip_tags($seoDesc), 160);
+        @endphp
+        
+         @if($seoManage == null)
+            <meta name="title" content="BS Institute Of Astrology - Learn Ancient Wisdom" />
+            <meta name="description" content="BS Institute of Astrology brings you transformative learning in Astrology, Palmistry, and Vastu Shastra. Our expert-guided courses blend ancient wisdom with modern teaching, designed for beginners and enthusiasts alike. Unlock the mysteries of the stars, understand the science of palmistry, and harmonize your home with Vastu. Learn at your pace with lifetime guidance and support."/>
+            <meta name="keywords" content="Astrology courses, Palmistry courses, Vastu Shastra courses, Learn Astrology online, Online Palmistry training, Beginner Astrology classes, Astrology institute, Spiritual learning, Vastu online course, Palmistry for beginners" />
+            <meta property="og:image" content="{{ asset('photo/logo-bisa.png') }}" />
+            <meta property="og:locale" content="en_US" />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="BS Institute Of Astrology - Learn Ancient Wisdom" />
+            <meta property="og:description" content="Learn Astrology, Palmistry & Vastu with expert guidance.">
+            <meta property="og:url" content="{{ url()->full() }}" />
+            <link rel="canonical" href="{{ url()->full() }}" />
+
+            <meta property="og:site_name" content="BS Institute Of Astrology" />
+        @else
+            <meta name="title" content="BS Institute Of Astrology - Learn Ancient Wisdom" />
+            <meta name="description" content="BS Institute of Astrology brings you transformative learning in Astrology, Palmistry, and Vastu Shastra. Our expert-guided courses blend ancient wisdom with modern teaching, designed for beginners and enthusiasts alike. Unlock the mysteries of the stars, understand the science of palmistry, and harmonize your home with Vastu. Learn at your pace with lifetime guidance and support."/>
+            <meta name="keywords" content="Astrology courses, Palmistry courses, Vastu Shastra courses, Learn Astrology online, Online Palmistry training, Beginner Astrology classes, Astrology institute, Spiritual learning, Vastu online course, Palmistry for beginners" />
+            <meta property="og:image" content="{{ $ogImage }}">
+            <meta property="og:locale" content="en_US" />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="{{$seoManage->title}}" />
+            <meta property="og:description" content="{!! $seoManage->short_description !!}" />
+            <meta property="og:site_name" content="BS Institute Of Astrology" />
+        @endif
+            <meta property="og:url" content="{{ url()->full() }}" />
+            <link rel="canonical" href="{{ url()->full() }}" />
+
+
+
+
+
+
+
+
     <!-- Performance: preconnect/dns-prefetch -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

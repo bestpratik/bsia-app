@@ -208,6 +208,7 @@
                              <p class="text-gray-700 mb-4">
                                  {!! $course->instructor_details !!}
                              </p>
+                             
 
                              <div class="flex space-x-3">
                                  <a href="#" class="text-gray-400 hover:text-brand-red transition-colors">
@@ -270,13 +271,49 @@
                      </div>
                      @endif
 
+                    @php
+                        $currentUrl = urlencode(Request::url());
+                        $pageTitle = urlencode('BS Institute of Astrology - Learn Astrology, Palmistry & Vastu Online');
+                    @endphp
                      <!-- Share Section -->
                      <div class="p-6 border-t border-gray-100">
                          <h3 class="font-bold text-lg text-brand-dark mb-4">
                              Share This Course:
                          </h3>
                          <div class="flex space-x-3">
-                             <a href="#"
+
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ $currentUrl }}"
+                                target="_blank" rel="noopener"
+                                class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors"
+                                title="Share on Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+
+                            <!-- Twitter -->
+                            <a href="https://twitter.com/intent/tweet?url={{ $currentUrl }}&text={{ $pageTitle }}"
+                            target="_blank" rel="noopener"
+                            class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors"
+                            title="Tweet on Twitter">
+                            <i class="fab fa-twitter"></i>
+                            </a>
+
+                            <!-- LinkedIn -->
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $currentUrl }}"
+                            target="_blank" rel="noopener"
+                            class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors"
+                            title="Share on LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                            </a>
+
+                            <!-- WhatsApp -->
+                            <a href="https://api.whatsapp.com/send?text={{ $pageTitle }}%20{{ $currentUrl }}"
+                            target="_blank" rel="noopener"
+                            class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors"
+                            title="Share on WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                            </a>
+
+                            {{-- <a href="#"
                                  class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors">
                                  <i class="fab fa-facebook-f"></i>
                              </a>
@@ -291,7 +328,7 @@
                              <a href="#"
                                  class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors">
                                  <i class="fab fa-whatsapp"></i>
-                             </a>
+                             </a> --}}
                          </div>
                      </div>
                  </div>
