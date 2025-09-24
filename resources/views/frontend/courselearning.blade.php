@@ -21,7 +21,7 @@
                             </a>
                         </div>
                     </li>
-                    <li class="flex-shrink-0">
+                    {{-- <li class="flex-shrink-0">
                         <div class="flex items-center">
                             <i class="fas fa-chevron-right text-gray-400 text-xs mx-2"></i>
                             <a href="{{ route('course.details', $learning->slug) }}"
@@ -30,7 +30,7 @@
                                 <span class="xs:hidden">Astrology</span>
                             </a>
                         </div>
-                    </li>
+                    </li> --}}
                     <li aria-current="page" class="flex-shrink-0">
                         <div class="flex items-center">
                             <i class="fas fa-chevron-right text-gray-400 text-xs mx-2"></i>
@@ -74,6 +74,11 @@
                         class="inline-block bg-gradient-to-r from-brand-orange to-brand-gold text-white hover:from-brand-gold hover:to-brand-orange font-roboto font-medium px-8 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
                         Enroll Now
                     </a>
+                    <button
+                        class="ml-4 inline-flex items-center py-3 px-6 border-2 border-brand-yellow text-brand-gold rounded-lg hover:bg-brand-red hover:text-white transition-all duration-300 font-medium transform hover:scale-105">
+                        <i class="far fa-heart mr-2"></i>
+                        Add to Wishlist
+                    </button>
                 </div>
             </div>
         </section>
@@ -200,91 +205,90 @@
                 </div>
 
                 <!-- Right Column (Course Details) -->
-                <div
-                    class="bg-white p-6 rounded-xl shadow-md border border-gray-100 space-y-6 hover:shadow-lg transition-all duration-300">
-                    <div class="flex items-start">
-                        <ul class="space-y-3">
-                            @foreach ($learning->features as $feature)
-                                <li class="flex items-center text-gray-700">
-                                    <i class="{{ $feature->icon }} mr-3"></i>
-                                    <span>{{ $feature->name }}</span>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    {{-- <div
-                            class="bg-brand-orange/10 p-3 rounded-full mr-4 transition-all duration-300 hover:bg-brand-orange/20 flex items-center justify-center w-12 h-12">
-                            <i class="fas fa-calendar-alt text-brand-orange text-xl"></i>
-                        </div>
-                        <div class="pt-1">
-                            <h4 class="font-roboto font-medium text-brand-dark text-base sm:text-lg leading-tight">
-                                RECORDED COURSE
-                            </h4>
-                            <p class="text-sm text-gray-600 font-roboto mt-1">
-                                Watch anytime anywhere with ease
-                            </p>
-                        </div> 
-                    
+                <div class="lg:col-span-1">
+                    <!-- Course Info Card -->
+                    <div
+                        class="bg-white rounded-xl shadow-md overflow-hidden sticky top-24 wow animate__animated animate__fadeInUp">
+                        @if ($learning->features->count() > 0)
+                            <!-- Course Features -->
+                            <div class="p-6">
+                                <h3 class="font-bold text-lg text-brand-dark mb-4">
+                                    This Course Includes:
+                                </h3>
+                                <ul class="space-y-3">
+                                    @foreach ($learning->features as $feature)
+                                        <li class="flex items-center text-gray-700">
+                                            <i class="{{ $feature->icon }} mr-3"></i>
+                                            <span>{{ $feature->name }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
-                    <div class="flex items-start">
-                        <div
-                            class="bg-brand-gold/10 p-3 rounded-full mr-4 transition-all duration-300 hover:bg-brand-gold/20 flex items-center justify-center w-12 h-12">
-                            <i class="fas fa-certificate text-brand-gold text-xl"></i>
-                        </div>
-                        <div class="pt-1">
-                            <h4 class="font-roboto font-medium text-brand-dark text-base sm:text-lg leading-tight">
-                                CERTIFICATE
-                            </h4>
-                            <p class="text-sm text-gray-600 font-roboto mt-1">
-                                Get certificate upon completion
-                            </p>
+                        @php
+                            $currentUrl = urlencode(Request::url());
+                            $pageTitle = urlencode(
+                                'BS Institute of Astrology - Learn Astrology, Palmistry & Vastu Online',
+                            );
+                        @endphp
+                        <!-- Share Section -->
+                        <div class="p-6 border-t border-gray-100">
+                            <h3 class="font-bold text-lg text-brand-dark mb-4">
+                                Share This Course:
+                            </h3>
+                            <div class="flex space-x-3">
+
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ $currentUrl }}" target="_blank"
+                                    rel="noopener"
+                                    class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors"
+                                    title="Share on Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+
+                                <!-- Twitter -->
+                                <a href="https://twitter.com/intent/tweet?url={{ $currentUrl }}&text={{ $pageTitle }}"
+                                    target="_blank" rel="noopener"
+                                    class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors"
+                                    title="Tweet on Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+
+                                <!-- LinkedIn -->
+                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $currentUrl }}"
+                                    target="_blank" rel="noopener"
+                                    class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors"
+                                    title="Share on LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+
+                                <!-- WhatsApp -->
+                                <a href="https://api.whatsapp.com/send?text={{ $pageTitle }}%20{{ $currentUrl }}"
+                                    target="_blank" rel="noopener"
+                                    class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors"
+                                    title="Share on WhatsApp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+
+                                {{-- <a href="#"
+                                 class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors">
+                                 <i class="fab fa-facebook-f"></i>
+                             </a>
+                             <a href="#"
+                                 class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors">
+                                 <i class="fab fa-twitter"></i>
+                             </a>
+                             <a href="#"
+                                 class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors">
+                                 <i class="fab fa-linkedin-in"></i>
+                             </a>
+                             <a href="#"
+                                 class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors">
+                                 <i class="fab fa-whatsapp"></i>
+                             </a> --}}
+                            </div>
                         </div>
                     </div>
-
-                    <div class="flex items-start">
-                        <div
-                            class="bg-brand-red/10 p-3 rounded-full mr-4 transition-all duration-300 hover:bg-brand-red/20 flex items-center justify-center w-12 h-12">
-                            <i class="fas fa-clock text-brand-red text-xl"></i>
-                        </div>
-                        <div class="pt-1">
-                            <h4 class="font-roboto font-medium text-brand-dark text-base sm:text-lg leading-tight">
-                                4 HOURS OF WATCH TIME
-                            </h4>
-                            <p class="text-sm text-gray-600 font-roboto mt-1">
-                                25 modules of theory with practical exercises
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start">
-                        <div
-                            class="bg-purple-100 p-3 rounded-full mr-4 transition-all duration-300 hover:bg-purple-200 flex items-center justify-center w-12 h-12">
-                            <i class="fas fa-language text-purple-500 text-xl"></i>
-                        </div>
-                        <div class="pt-1">
-                            <h4 class="font-roboto font-medium text-brand-dark text-base sm:text-lg leading-tight">
-                                LANGUAGE
-                            </h4>
-                            <p class="text-sm text-gray-600 font-roboto mt-1">
-                                Courses language is Hinglish
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-start">
-                        <div
-                            class="bg-brand-dark/10 p-3 rounded-full mr-4 transition-all duration-300 hover:bg-brand-dark/20 flex items-center justify-center w-12 h-12">
-                            <i class="fas fa-users text-brand-dark text-xl"></i>
-                        </div>
-                        <div class="pt-1">
-                            <h4 class="font-roboto font-medium text-brand-dark text-base sm:text-lg leading-tight">
-                                BULK ENROLL
-                            </h4>
-                            <p class="text-sm text-gray-600 font-roboto mt-1">
-                                Enroll in multiple courses with single login
-                            </p>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
 
@@ -355,8 +359,7 @@
                                             </button>
                                         @else
                                             <!-- Logged in -->
-                                            <a href=""
-                                                class="text-brand-dark hover:text-brand-orange transition">
+                                            <a href="" class="text-brand-dark hover:text-brand-orange transition">
                                                 {{ $lesson->title }}
                                             </a>
                                         @endguest
@@ -381,8 +384,7 @@
                                         Module {{ $mIndex + 1 }} Quiz
                                     </button>
                                 @else
-                                    <a href=""
-                                        class="text-brand-dark hover:text-brand-orange transition">
+                                    <a href="" class="text-brand-dark hover:text-brand-orange transition">
                                         Module {{ $mIndex + 1 }} Quiz
                                     </a>
                                 @endguest
@@ -549,6 +551,47 @@
             </div>
         </section>
 
+        <main class="py-8 md:py-12 bg-gray-50">
+            <div class="container mx-auto px-4 max-w-7xl">
+                @if ($relatedCourses->count() > 0)
+                    <!-- Related Courses -->
+                    <div class="mt-12 md:mt-16 wow animate__animated animate__fadeInUp" data-wow-delay="0.5s">
+                        <h2 class="font-playfair font-bold text-2xl md:text-3xl text-brand-dark mb-8">
+                            Related Courses
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Course 1 -->
+                            @foreach ($relatedCourses as $related)
+                                <div>
+                                    <a href="{{ route('course.learning', $related->slug) }}">
+                                        <div
+                                            class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                            <img src="{{ asset('uploads/' . $related->featured_image) }}"
+                                                alt="{{ $related->title }}" class="w-full h-48 object-cover"
+                                                loading="lazy" decoding="async" />
+                                            <div class="p-5">
+                                                <h3 class="font-roboto font-bold text-lg text-brand-dark mb-2">
+                                                    {{ $related->title }}
+                                                </h3>
+                                                <p class="text-gray-600 text-sm mb-4">
+                                                    {!! Str::limit($related->short_description, 100) !!}</p>
+                                                <div class="flex justify-between items-center">
+                                                    <span
+                                                        class="text-brand-red font-bold">₹{{ number_format($related->sellable_price) }}</span>
+                                                    <a href="{{ route('course.learning', $related->slug) }}"
+                                                        class="px-4 py-2 bg-brand-red text-white rounded-lg hover:bg-brand-dark transition-colors text-sm font-medium">Enroll</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </main>
+
         <section class="testimonial-section text-center py-12 sm:py-16 bg-gray-50" id="reviews">
             <div class="container mx-auto px-4">
                 <p class="text-sm sm:text-base text-brand-orange font-medium mb-2">
@@ -657,7 +700,7 @@
                 <!-- Card 1 -->
                 @foreach ($ebook as $row)
                     <div class="bg-white rounded-xl shadow p-4 flex flex-col items-center">
-                        <a href="{{ route('ebook.details', ['id' => $row->id]) }}">
+                        <a href="{{ route('ebook.details', ['slug' => $row->slug]) }}">
                             <img src="{{ asset('uploads/' . $row->featured_image) }}" alt="Course 1"
                                 class="w-full h-auto rounded-lg mb-4" />
                             <h3 class="text-lg font-medium text-gray-800 text-center">
@@ -859,40 +902,6 @@
             </div>
         </section>
 
-        <!-- <section class="faq">
-                                                                                      <h2>Frequently asked questions</h2>
-
-                                                                                      <div class="faq-grid">
-                                                                                        <div class="faq-item">
-                                                                                          <button class="faq-question text-[16px] font-semibold">
-                                                                                            How do I access the recorded courses?
-                                                                                            <span class="arrow">&#9650;</span>
-                                                                                          </button>
-                                                                                          <div class="faq-answer">
-                                                                                            <p>
-                                                                                              To access our recorded courses, browse our courses, choose the course you're interested in, and make a
-                                                                                              purchase.
-                                                                                              You'll receive access instructions via email.
-                                                                                            </p>
-                                                                                          </div>
-                                                                                        </div>
-
-                                                                                        <div class="faq-item">
-                                                                                          <button class="faq-question text-[16px] font-semibold">
-                                                                                            Will I receive a certificate upon course completion?
-                                                                                            <span class="arrow">&#9650;</span>
-                                                                                          </button>
-                                                                                          <div class="faq-answer">
-                                                                                            <p>
-                                                                                              Yes, you will receive a certificate for course completion once you have finished the course.
-                                                                                            </p>
-                                                                                          </div>
-                                                                                        </div>
-                                                                                      </div>
-
-                                                                                      <p class="faq-footer">Have questions? <a href="#">Talk to our Support Team</a></p>
-                                                                                    </section> -->
-
         <section class="py-12 sm:py-16 bg-gray-50 px-4 sm:px-6" id="faqs">
             <div class="container mx-auto max-w-5xl">
                 <p class="text-sm sm:text-base text-brand-orange font-medium mb-2 text-center">
@@ -929,42 +938,6 @@
                         </div>
                     @endforeach
                 </div>
-                {{-- <!-- FAQ 2 -->
-                    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
-                        <button
-                            class="faq-question w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
-                            <span class="font-medium text-brand-dark text-base sm:text-lg font-roboto">
-                                Will I get a certificate?
-                            </span>
-                            <span class="text-brand-orange transition-transform duration-300 transform">&#9650;</span>
-                        </button>
-                        <div
-                            class="faq-answer px-4 sm:px-6 pb-4 sm:pb-6 pt-0 text-gray-700 text-sm sm:text-base font-roboto">
-                            <p class="border-t border-gray-100 pt-4">
-                                Yes, you will receive a digital certificate after completing
-                                the course, which you can showcase on social media or your
-                                professional portfolio.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- FAQ 3 -->
-                    <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
-                        <button
-                            class="faq-question w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
-                            <span class="font-medium text-brand-dark text-base sm:text-lg font-roboto">
-                                Can I watch the course on my mobile?
-                            </span>
-                            <span class="text-brand-orange transition-transform duration-300 transform">&#9650;</span>
-                        </button>
-                        <div
-                            class="faq-answer px-4 sm:px-6 pb-4 sm:pb-6 pt-0 text-gray-700 text-sm sm:text-base font-roboto">
-                            <p class="border-t border-gray-100 pt-4">
-                                Absolutely! You can watch it on any device — mobile, tablet,
-                                or desktop — anytime you want.
-                            </p>
-                        </div>
-                    </div> --}}
 
                 <p class="text-center mt-8 text-brand-dark font-roboto">
                     Have questions?

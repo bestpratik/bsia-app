@@ -35,37 +35,39 @@ class FrontController extends Controller
         return view('frontend.course', compact('course'));
     }
 
-    public function course_details($slug)
-    {
-        $lession = CourseLesson::all();
-        $course = Course::where('slug', $slug)->firstOrFail();
-        $modules = CourseModules::where('course_id', $course->id)
-            ->where('status', 1)
-            ->orderBy('order_no', 'asc')
-            ->with(['lessons', 'quizzes'])
-            ->get();
-        $relatedCourses = Course::where('id', '!=', $course->id)->get();
-        $learning = Course::where('slug', $slug)->firstOrFail();
-        $quizzes = Quiz::all();
-        return view('frontend.coursedetails', compact('lession', 'course', 'modules', 'relatedCourses', 'learning', 'quizzes'));
-    }
+    // public function course_details($slug)
+    // {
+    //     $lession = CourseLesson::all();
+    //     $course = Course::where('slug', $slug)->firstOrFail();
+    //     $modules = CourseModules::where('course_id', $course->id)
+    //         ->where('status', 1)
+    //         ->orderBy('order_no', 'asc')
+    //         ->with(['lessons', 'quizzes'])
+    //         ->get();
+    //     $relatedCourses = Course::where('id', '!=', $course->id)->get();
+    //     $learning = Course::where('slug', $slug)->firstOrFail();
+    //     $quizzes = Quiz::all();
+    //     return view('frontend.coursedetails', compact('lession', 'course', 'modules', 'relatedCourses', 'learning', 'quizzes'));
+    // }
 
     public function course_learning($slug)
     {
+        $lession = CourseLesson::all();
         $ebook = Ebook::all();
         $learning = Course::where('slug', $slug)->firstOrFail();
         $faqs = CourseFaqs::all();
         $testimonial = Testimonial::all();
         $courses = Videotestimonial::first();
-
+        $relatedCourses = Course::where('id', '!=', $learning->id)->get();
         $modules = CourseModules::with(['lessons' => function ($q) {
             $q->orderBy('id', 'asc');
         }])
             ->where('course_id', $learning->id)
             ->orderBy('order_no', 'asc')
             ->get();
+        $quizzes = Quiz::all();
 
-        return view('frontend.courselearning', compact('ebook', 'learning', 'faqs', 'testimonial', 'modules', 'courses'));
+        return view('frontend.courselearning', compact('lession', 'ebook', 'learning', 'faqs', 'testimonial', 'relatedCourses', 'modules', 'courses', 'quizzes'));
     }
 
     public function ebooks()

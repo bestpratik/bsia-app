@@ -17,17 +17,6 @@ use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\VideoTestimonialController;
 use Illuminate\Support\Facades\Route;
 
-
-
-
-
-
-
-
-
-
-
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -46,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//Course section
+// Course section
 Route::get('course', [CourseController::class, 'index'])->name('course');
 Route::get('course/create', [CourseController::class, 'create'])->name('create.course');
 Route::post('course/save', [CourseController::class, 'store'])->name('save.course');
@@ -56,31 +45,25 @@ Route::get('/course/{id}/edit', [CourseController::class, 'edit'])->name('edit.c
 Route::put('/course/{id}/update', [CourseController::class, 'update'])->name('update.course');
 Route::delete('/course/{id}/delete', [CourseController::class, 'destroy'])->name('delete.course');
 
-
-//Course Module section
-Route::post('/course/modules', [CourseModuleController::class, 'store'])->name('course-modules.store'); 
+// Course Module section
+Route::post('/course/modules', [CourseModuleController::class, 'store'])->name('course-modules.store');
 Route::put('/course-modules/{id}', [CourseModuleController::class, 'update'])->name('course-modules.update');
 Route::delete('/course-modules/{id}', [CourseModuleController::class, 'destroy'])->name('course-modules.destroy');
 Route::get('/coursemodules/{id}/show', [CourseModuleController::class, 'show'])->name('show.coursemodules');
 
-
-//Course Lesson section
+// Course Lesson section
 Route::post('/courselessons', [CourseLessonController::class, 'store'])->name('courselessons.store');
 Route::put('/courselessons/{id}', [CourseLessonController::class, 'update'])->name('courselessons.update');
 Route::delete('/courselessons/{id}', [CourseLessonController::class, 'destroy'])->name('courselessons.destroy');
 Route::get('/courselessons/{id}/show', [CourseLessonController::class, 'show'])->name('show.courselessons');
 
-
-
-//CourseFaq section
+// CourseFaq section
 Route::post('/course/faq/store', [CourseFaqsController::class, 'store'])->name('courseFaq.store');
 Route::post('/course/faq/{id}/update', [CourseFaqsController::class, 'update'])->name('courseFaq.update');
 Route::delete('/course-faq/{id}/delete', [CourseFaqsController::class, 'destroy'])->name('courseFaq.destroy');
 Route::get('/coursefaq/{id}', [CourseFaqsController::class, 'show'])->name('show.coursefaq');
 
-
-
-//Ebook section
+// Ebook section
 Route::get('ebook', [EbookController::class, 'index'])->name('ebook');
 Route::get('ebook/create', [EbookController::class, 'create'])->name('create.ebook');
 Route::post('ebook/save', [EbookController::class, 'store'])->name('save.ebook');
@@ -90,8 +73,7 @@ Route::get('/ebook/{id}/edit', [EbookController::class, 'edit'])->name('edit.ebo
 Route::put('/ebook/{id}/update', [EbookController::class, 'update'])->name('update.ebook');
 Route::delete('/ebook/{id}/delete', [EbookController::class, 'destroy'])->name('delete.ebook');
 
-
-//About sections
+// About sections
 Route::get('about', [AboutController::class, 'index'])->name('about');
 Route::get('about/create', [AboutController::class, 'create'])->name('create.about');
 Route::post('about/save', [AboutController::class, 'store'])->name('save.about');
@@ -99,15 +81,13 @@ Route::get('/about/{id}/edit', [AboutController::class, 'edit'])->name('edit.abo
 Route::put('/about/{id}/update', [AboutController::class, 'update'])->name('update.about');
 Route::delete('/about/{id}/delete', [AboutController::class, 'destroy'])->name('delete.about');
 
-
-//Banner sections
+// Banner sections
 Route::get('banner', [BannerController::class, 'index'])->name('banner');
 Route::get('banner/create', [BannerController::class, 'create'])->name('create.banner');
 Route::post('banner/save', [BannerController::class, 'store'])->name('save.banner');
 Route::get('/banner/{id}/edit', [BannerController::class, 'edit'])->name('edit.banner');
 Route::put('/banner/{id}/update', [BannerController::class, 'update'])->name('update.banner');
 Route::delete('/banner/{id}/delete', [BannerController::class, 'destroy'])->name('delete.banner');
-
 
 // Video Testimonial section
 Route::get('videotestimonial', [VideoTestimonialController::class, 'index'])->name('videotestimonial');
@@ -117,7 +97,6 @@ Route::get('/videotestimonial/{id}/edit', [VideoTestimonialController::class, 'e
 Route::put('/videotestimonial/{id}/update', [VideoTestimonialController::class, 'update'])->name('update.videotestimonial');
 Route::delete('/videotestimonial/{id}/delete', [VideoTestimonialController::class, 'destroy'])->name('delete.videotestimonial');
 
-
 // Testimonial section
 Route::get('testimonial', [TestimonialController::class, 'index'])->name('testimonial');
 Route::get('testimonial/create', [TestimonialController::class, 'create'])->name('create.testimonial');
@@ -125,7 +104,6 @@ Route::post('testimonial/save', [TestimonialController::class, 'store'])->name('
 Route::get('/testimonial/{id}/edit', [TestimonialController::class, 'edit'])->name('edit.testimonial');
 Route::put('/testimonial/{id}/update', [TestimonialController::class, 'update'])->name('update.testimonial');
 Route::delete('/testimonial/{id}/delete', [TestimonialController::class, 'destroy'])->name('delete.testimonial');
-
 
 // Feature section
 Route::get('features', [FeatureMasterController::class, 'index'])->name('features');
@@ -135,17 +113,15 @@ Route::get('/features/{id}/edit', [FeatureMasterController::class, 'edit'])->nam
 Route::put('/features/{id}/update', [FeatureMasterController::class, 'update'])->name('update.features');
 Route::delete('/features/{id}/delete', [FeatureMasterController::class, 'destroy'])->name('delete.features');
 
-
-//Quiz Section
+// Quiz Section
 Route::resource('quizzes', QuizController::class);
 Route::get('quizzes/{id}/data', [QuizController::class, 'getQuiz']);
-
 
 // Frontend Section
 Route::get('/', [FrontController::class, 'home'])->name('home');
 Route::get('about-us', [FrontController::class, 'about'])->name('about.us');
 Route::get('courses', [FrontController::class, 'course'])->name('courses');
-Route::get('course-details/{slug}', [FrontController::class, 'course_details'])->name('course.details');
+// Route::get('course-details/{slug}', [FrontController::class, 'course_details'])->name('course.details');
 Route::get('course-learning/{slug}', [FrontController::class, 'course_learning'])->name('course.learning');
 Route::get('ebooks', [FrontController::class, 'ebooks'])->name('ebooks');
 Route::get('user-login', [FrontController::class, 'login'])->name('front.login');
@@ -155,5 +131,5 @@ Route::get('user-register', [FrontController::class, 'userRegister'])->name('use
 // Route::get('purchase-form/{id}', [FrontController::class, 'purchase'])->name('purchase.form');
 Route::get('purchase-form/{type}/{id}', [FrontController::class, 'purchase'])->name('purchase.form');
 Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
-Route::get('ebook-details/{id}', [FrontController::class, 'ebook_details'])->name('ebook.details');
-require __DIR__ . '/auth.php';
+Route::get('ebook-details/{slug}', [FrontController::class, 'ebook_details'])->name('ebook.details');
+require __DIR__.'/auth.php';

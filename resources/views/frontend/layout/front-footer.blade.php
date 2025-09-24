@@ -53,7 +53,7 @@
                     @endphp
                     @foreach ($courses as $course)
                         <li>
-                            <a href="{{ route('course.details', ['slug' => $course->slug]) }}"
+                            <a href="{{ route('course.learning', ['slug' => $course->slug]) }}"
                                 class="font-roboto text-white/90 hover:text-brand-gold transition-colors cursor-pointer flex items-center">
                                 <i class="mr-3 text-brand-gold"></i> {{ $course->title }}
                             </a>

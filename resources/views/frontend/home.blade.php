@@ -68,7 +68,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                 @foreach ($courses as $row)
                     <!-- Course 1 -->
-                    <a href="{{ route('course.details', $row->slug) }}"
+                    <a href="{{ route('course.learning', $row->slug) }}"
                         class="bg-white rounded-3xl border-2 border-brand-orange overflow-hidden transform transition-transform duration-300 hover:shadow-xl hover:-translate-y-1 wow animate__animated animate__slideInUp animate__faster"
                         data-wow-delay="0.1s">
                         <div class="p-4 lg:p-6">

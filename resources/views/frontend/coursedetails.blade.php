@@ -1,4 +1,4 @@
- @extends('frontend.layout.front-layout')
+ {{-- @extends('frontend.layout.front-layout')
  @section('content')
  <!-- Breadcrumb -->
  <div class="bg-gray-100 py-3 border-b border-gray-200">
@@ -328,7 +328,7 @@
                              <a href="#"
                                  class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-brand-red hover:text-white transition-colors">
                                  <i class="fab fa-whatsapp"></i>
-                             </a> --}}
+                             </a> 
                          </div>
                      </div>
                  </div>
@@ -397,4 +397,4 @@
              });
          });
      });
- </script>
+ </script> --}}
