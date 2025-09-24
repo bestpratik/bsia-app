@@ -6,14 +6,12 @@ use App\Models\About;
 use App\Models\Banner;
 use App\Models\Course;
 use App\Models\CourseFaqs;
-use App\Models\CourseFeature;
 use App\Models\CourseLesson;
 use App\Models\CourseModules;
 use App\Models\Ebook;
-use App\Models\Testimonial;
 use App\Models\Quiz;
+use App\Models\Testimonial;
 use App\Models\VideoTestimonial;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
@@ -25,6 +23,7 @@ class FrontController extends Controller
         $courses = Course::all();
         $testimonial = Testimonial::all();
         $videotestimonial = VideoTestimonial::all();
+
         // dd($videotestimonial);
         return view('frontend.home', compact('about', 'banners', 'courses', 'testimonial', 'videotestimonial'));
     }
@@ -32,6 +31,7 @@ class FrontController extends Controller
     public function course()
     {
         $course = Course::all();
+
         return view('frontend.course', compact('course'));
     }
 
@@ -58,7 +58,6 @@ class FrontController extends Controller
         $testimonial = Testimonial::all();
         $courses = Videotestimonial::first();
 
-
         $modules = CourseModules::with(['lessons' => function ($q) {
             $q->orderBy('id', 'asc');
         }])
@@ -72,6 +71,7 @@ class FrontController extends Controller
     public function ebooks()
     {
         $ebook = Ebook::all();
+
         return view('frontend.ebook', compact('ebook'));
     }
 
@@ -88,10 +88,9 @@ class FrontController extends Controller
         return view('frontend.ebookdetails', compact('ebook', 'relatedEbooks'));
     }
 
-
     public function login()
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return view('frontend.login');
         }
 
@@ -104,7 +103,7 @@ class FrontController extends Controller
 
     public function dashboard()
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return redirect()->route('front.login');
         }
 
@@ -120,9 +119,9 @@ class FrontController extends Controller
 
         // Stats
         $stats = [
-            'courses'      => $user->courses()->count(),
-            'hours'        => $user->courses()->sum('duration') ?? 0,
-            'ebook'        => $user->ebooks()->count() ?? 0,
+            'courses' => $user->courses()->count(),
+            'hours' => $user->courses()->sum('duration') ?? 0,
+            'ebook' => $user->ebooks()->count() ?? 0,
             'certificates' => $user->courses()->where('is_certificate', 1)->count(),
         ];
 
@@ -148,9 +147,9 @@ class FrontController extends Controller
             ->get()
             ->map(function ($ebook) {
                 return [
-                    'type'   => 'ebook',
-                    'title'  => $ebook->title, // same key as course
-                    'date'   => $ebook->pivot->created_at,
+                    'type' => 'ebook',
+                    'title' => $ebook->title, // same key as course
+                    'date' => $ebook->pivot->created_at,
                     'date_human' => $ebook->pivot->created_at->diffForHumans(),
                 ];
             });
@@ -185,6 +184,15 @@ class FrontController extends Controller
     public function purchase($type, $id)
     {
         $user = Auth::user();
+
+        if (! $user) {
+            // Either redirect to login page
+            return redirect('/login')->with('error', 'Please login first.');
+
+            // OR if you want guest checkout, handle it differently:
+            // $user = User::find(1); // e.g. default user
+        }
+
         if ($type === 'course') {
             $item = Course::findOrFail($id);
             $user->courses()->syncWithoutDetaching([$item->id]);
