@@ -132,7 +132,7 @@
                         </div>
                     @endforeach
                     @if ($courses->isEmpty())
-                        <div class="col-span-3 text-center text-gray-500 py-8">
+                        <div class="col-span-3 text-gray-500 py-8">
                             You have not purchased any course yet.
                         </div>
                     @endif
@@ -226,7 +226,7 @@
                         </div>
                     @endforeach
                     @if ($ebooks->isEmpty())
-                        <div class="col-span-3 text-center text-gray-500 py-8">
+                        <div class="col-span-3 text-gray-500 py-8">
                             You have not purchased any ebook yet.
                         </div>
                     @endif

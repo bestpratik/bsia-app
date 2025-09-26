@@ -12,6 +12,7 @@ use App\Models\Ebook;
 use App\Models\Quiz;
 use App\Models\Testimonial;
 use App\Models\VideoTestimonial;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
@@ -156,7 +157,8 @@ class FrontController extends Controller
                 ];
             });
 
-        $activities = $courseActivities
+        $activities = collect() // always start with a Collection
+            ->merge($courseActivities)
             ->merge($ebookActivities)
             ->sortByDesc('date')
             ->take(5)
@@ -188,25 +190,36 @@ class FrontController extends Controller
         $user = Auth::user();
 
         if (! $user) {
-            // Either redirect to login page
-            return redirect('/login')->with('error', 'Please login first.');
-
-            // OR if you want guest checkout, handle it differently:
-            // $user = User::find(1); // e.g. default user
+            return redirect()->route('login')->with('error', 'Please login first.')
+                ->with('redirect_after_login', route('purchase.form', ['type' => $type, 'id' => $id]));
         }
 
         if ($type === 'course') {
             $item = Course::findOrFail($id);
-            $user->courses()->syncWithoutDetaching([$item->id]);
             $itemType = 'course';
         } elseif ($type === 'ebook') {
             $item = Ebook::findOrFail($id);
-            $user->ebooks()->syncWithoutDetaching([$item->id]);
             $itemType = 'ebook';
         } else {
             abort(404);
         }
 
+        // ✅ just show purchase form, do not attach yet
         return view('frontend.purchase_form', compact('item', 'itemType'));
+    }
+
+    public function completePurchase(Request $request, $type, $id)
+    {
+        $user = Auth::user();
+
+        if ($type === 'course') {
+            $item = Course::findOrFail($id);
+            $user->courses()->syncWithoutDetaching([$item->id]);
+        } elseif ($type === 'ebook') {
+            $item = Ebook::findOrFail($id);
+            $user->ebooks()->syncWithoutDetaching([$item->id]);
+        }
+
+        return redirect()->route('user.dashboard')->with('success', ucfirst($type) . ' purchased successfully!');
     }
 }

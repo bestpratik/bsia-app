@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Course;
+use App\Models\CourseLesson;
+use App\Models\Ebook;
 use App\Models\Order;
 use App\Models\Purchase;
-use App\Models\CourseLesson;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class PurchaseController extends Controller
 {
@@ -18,7 +22,6 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        // ✅ Custom validation messages
         $messages = [
             'billing_name.required'   => 'Full Name is required.',
             'billing_email.required'  => 'Email is required.',
@@ -33,7 +36,6 @@ class PurchaseController extends Controller
             'price.numeric'           => 'Price must be a number.',
         ];
 
-        // ✅ Common rules
         $rules = [
             'billing_name'   => 'required|string|max:255',
             'billing_email'  => 'required|email|max:255',
@@ -46,54 +48,51 @@ class PurchaseController extends Controller
             'price'          => 'required|numeric',
         ];
 
-        // ✅ At least one of course_id or ebook_id must be present
-        if ($request->has('course_id')) {
-            $rules['course_id'] = 'required|integer';
-        } elseif ($request->has('ebook_id')) {
-            $rules['ebook_id'] = 'required|integer';
+        // require either course_id or ebook_id depending on item_type
+        $validated = $request->validate($rules, $messages);
+
+        if ($request->filled('course_id')) {
+            $referenceId = $request->course_id;
+            $courseType  = 'course';
+            $itemModel   = Course::find($referenceId);
+            if (! $itemModel) {
+                return response()->json(['status' => 'error', 'message' => 'Course not found.'], 404);
+            }
+        } elseif ($request->filled('ebook_id')) {
+            $referenceId = $request->ebook_id;
+            $courseType  = 'ebook';
+            $itemModel   = Ebook::find($referenceId);
+            if (! $itemModel) {
+                return response()->json(['status' => 'error', 'message' => 'Ebook not found.'], 404);
+            }
         } else {
-            return response()->json([
-                'status'  => 'error',
-                'message' => 'Invalid purchase: Course or Ebook ID is required.'
-            ], 422);
+            return response()->json(['status' => 'error', 'message' => 'No item selected.'], 422);
         }
 
-        $request->validate($rules, $messages);
 
         DB::beginTransaction();
         try {
-            // 1️⃣ Determine if user is logged in
+            // Get or create user
             if (Auth::check()) {
-                // Use logged-in user
                 $user = Auth::user();
             } else {
-                // Guest user: create or fetch existing by email
+                // For guests: create or fetch by email. Use a random password instead of a known one.
                 $user = User::firstOrCreate(
                     ['email' => $request->billing_email],
                     [
                         'name'     => $request->billing_name,
-                        'password' => Hash::make('password123'),
-                        'role'     => 'guest'
+                        'password' => Hash::make(Str::random(12)),
+                        'role'     => 'guest',
                     ]
                 );
 
-                // Always update name (optional: do not overwrite role if existing user)
+                // update name if changed (don't overwrite role if existing)
                 $user->update([
                     'name' => $request->billing_name,
-                    'role' => $user->wasRecentlyCreated ? 'guest' : $user->role
                 ]);
             }
 
-            // 2️⃣ Determine course type
-            if ($request->has('course_id')) {
-                $referenceId = $request->course_id;
-                $courseType  = 'course';
-            } else {
-                $referenceId = $request->ebook_id;
-                $courseType  = 'ebook';
-            }
-
-            // 3️⃣ Create Order
+            // Create order (marking completed here because this is a simple demo flow)
             $order = Order::create([
                 'user_id'        => $user->id,
                 'order_number'   => 'ORD-' . strtoupper(uniqid()),
@@ -107,7 +106,7 @@ class PurchaseController extends Controller
                 'payment_date'   => now(),
             ]);
 
-            // 4️⃣ Create Purchase
+            // Create purchase record (keep fields you already have)
             Purchase::create([
                 'order_id'       => $order->id,
                 'payable_amount' => $request->price,
@@ -121,6 +120,24 @@ class PurchaseController extends Controller
                 'payment_method' => $request->payment_method,
             ]);
 
+            // Attach purchased item to user (so dashboard shows it)
+            if ($courseType === 'course') {
+                // attach course pivot
+                $user->courses()->syncWithoutDetaching([$referenceId]);
+
+                // // optional: attach lessons to user (if you track lesson access)
+                // $lessonIds = CourseLesson::where('course_id', $referenceId)->pluck('id')->toArray();
+                // foreach ($lessonIds as $lid) {
+                //     DB::table('user_lessons')->updateOrInsert(
+                //         ['user_id' => $user->id, 'lesson_id' => $lid],
+                //         ['created_at' => now(), 'updated_at' => now()]
+                //     );
+                // }
+            } else {
+                // attach ebook pivot
+                $user->ebooks()->syncWithoutDetaching([$referenceId]);
+            }
+
             DB::commit();
 
             return response()->json([
@@ -129,6 +146,7 @@ class PurchaseController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Purchase.store error: ' . $e->getMessage());
             return response()->json([
                 'status'  => 'error',
                 'message' => 'Something went wrong: ' . $e->getMessage()

@@ -245,53 +245,58 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $("input, select, textarea").on("input change", function() {
-                let name = $(this).attr("name");
-                if ($(this).val().trim() !== "") {
-                    $(".error-" + name).text("");
-                }
-            });
+        $("form#purchaseForm").on("submit", function(e) {
+            e.preventDefault();
+            let $form = $(this);
+            let $btn = $form.find("button[type=submit]");
+            let formData = $form.serialize();
 
-            $("form#purchaseForm").on("submit", function(e) {
-                e.preventDefault();
-                let formData = $(this).serialize();
-
-                $.ajax({
-                    url: "{{ route('purchase.store') }}",
-                    type: "POST",
-                    data: formData,
-                    success: function(response) {
-                        if (response.status === "success") {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Success!",
-                                text: response.message,
-                            }).then(() => location.reload());
-                        } else {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Error!",
-                                text: response.message,
-                            });
-                        }
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            let errors = xhr.responseJSON.errors;
-                            $.each(errors, function(key, value) {
-                                $(".error-" + key).text(value[0]);
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Error!",
-                                text: xhr.responseJSON ? xhr.responseJSON.message :
-                                    "Something went wrong",
-                            });
-                        }
+            $.ajax({
+                url: "{{ route('purchase.store') }}",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                beforeSend: function() {
+                    $btn.prop('disabled', true).html(
+                        '<i class="fas fa-spinner fa-spin me-2"></i>Processing...');
+                    $(".text-danger").text("");
+                },
+                success: function(response) {
+                    if (response.status === "success") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Success!",
+                            text: response.message,
+                        }).then(() => {
+                            // redirect to dashboard to reflect new purchase
+                            window.location.href = "{{ route('dashboard') }}";
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error!",
+                            text: response.message || "Server error"
+                        });
                     }
-                });
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422 && xhr.responseJSON.errors) {
+                        let errors = xhr.responseJSON.errors;
+                        $.each(errors, function(key, value) {
+                            $(".error-" + key).text(value[0]);
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error!",
+                            text: xhr.responseJSON && xhr.responseJSON.message ? xhr
+                                .responseJSON.message : "Something went wrong"
+                        });
+                    }
+                },
+                complete: function() {
+                    $btn.prop('disabled', false).text('Confirm & Proceed to Payment');
+                }
             });
         });
     </script>

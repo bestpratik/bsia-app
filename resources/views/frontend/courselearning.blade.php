@@ -71,14 +71,16 @@
                         Course
                     </h1>
                     <a href="{{ route('purchase.form', ['type' => 'course', 'id' => $learning->id]) }}"
-                        class="inline-block bg-gradient-to-r from-brand-orange to-brand-gold text-white hover:from-brand-gold hover:to-brand-orange font-roboto font-medium px-8 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                        class="inline-block bg-white text-red-900 border-2 border-transparent font-roboto font-medium px-6 py-3 me-2 rounded-full hover:bg-transparent hover:text-white hover:border-white transition">
+                        <i class="fa-solid fa-user-pen mr-2"></i>
                         Enroll Now
                     </a>
-                    <button
-                        class="ml-4 inline-flex items-center py-3 px-6 border-2 border-brand-yellow text-brand-gold rounded-lg hover:bg-brand-red hover:text-white transition-all duration-300 font-medium transform hover:scale-105">
+                    <a href="#"
+                        class="px-6 md:px-8 py-3 border-2 border-white hover:bg-white hover:text-brand-dark rounded-full font-roboto font-medium transition">
                         <i class="far fa-heart mr-2"></i>
                         Add to Wishlist
-                    </button>
+                    </a>
+
                 </div>
             </div>
         </section>
@@ -359,7 +361,8 @@
                                             </button>
                                         @else
                                             <!-- Logged in -->
-                                            <a href="" class="text-brand-dark hover:text-brand-orange transition">
+                                            <a href="{{ route('purchase.form', ['type' => 'course', 'id' => $learning->id]) }}"
+                                                class="text-brand-dark hover:text-brand-orange transition">
                                                 {{ $lesson->title }}
                                             </a>
                                         @endguest
@@ -384,7 +387,8 @@
                                         Module {{ $mIndex + 1 }} Quiz
                                     </button>
                                 @else
-                                    <a href="" class="text-brand-dark hover:text-brand-orange transition">
+                                    <a href="{{ route('purchase.form', ['type' => 'course', 'id' => $learning->id]) }}"
+                                        class="text-brand-dark hover:text-brand-orange transition">
                                         Module {{ $mIndex + 1 }} Quiz
                                     </a>
                                 @endguest

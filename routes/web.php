@@ -122,7 +122,7 @@ Route::get('/', [FrontController::class, 'home'])->name('home');
 Route::get('about-us', [FrontController::class, 'about'])->name('about.us');
 Route::get('courses', [FrontController::class, 'course'])->name('courses');
 // Route::get('course-details/{slug}', [FrontController::class, 'course_details'])->name('course.details');
-Route::get('course-learning/{slug}', [FrontController::class, 'course_learning'])->name('course.learning');
+Route::get('course-details/{slug}', [FrontController::class, 'course_learning'])->name('course.learning');
 Route::get('ebooks', [FrontController::class, 'ebooks'])->name('ebooks');
 Route::get('user-login', [FrontController::class, 'login'])->name('front.login');
 Route::get('user-dashboard', [FrontController::class, 'dashboard'])->name('user.dashboard');
@@ -130,6 +130,7 @@ Route::get('user-register', [FrontController::class, 'userRegister'])->name('use
 
 // Route::get('purchase-form/{id}', [FrontController::class, 'purchase'])->name('purchase.form');
 Route::get('purchase-form/{type}/{id}', [FrontController::class, 'purchase'])->name('purchase.form');
+Route::post('/purchase/complete/{type}/{id}', [FrontController::class, 'completePurchase'])->name('purchase.complete');
 Route::post('/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
 Route::get('ebook-details/{slug}', [FrontController::class, 'ebook_details'])->name('ebook.details');
 require __DIR__.'/auth.php';
